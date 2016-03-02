@@ -1,8 +1,5 @@
 package com.BookStore.Model;
 
-/**
- * Created by victor on 3/2/16.
- */
 public class Client {
     private Integer id;
     private String firstName;
