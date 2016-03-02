@@ -3,7 +3,7 @@ package com.BookStore.Model;
 /**
  * Created by victor on 3/2/16.
  */
-public class Book extends Purchase {
+public class Book {
     private Integer id;
     private String title;
     private String author;
