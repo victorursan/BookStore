@@ -1,0 +1,40 @@
+@startuml
+
+class Book {
+    - Integer id
+    - String title
+    - String author
+    - Long ISBN
+    - String genre
+    - String publisher
+    - Integer price
+    + Integer getId()
+    + Long getISBN()
+    + void setISBN(Long ISBN)
+    + String getGenre()
+    + void setGenre(String genre)
+    + String getPublisher()
+    + void setPublisher(String publisher)
+    + Integer getPrice()
+    + void setPrice(Integer price)
+    + String getAuthor()
+    + void setAuthor(String author)
+    + String getTitle()
+    + void setTitle(String title)
+}
+
+class Client {
+    - Integer id
+    - String firstName
+    - String lastName
+    - List<Book> books
+    + Integer getId()
+    + String getFirstName()
+    + void setFirstName(String firstName)
+    + String getLastName()
+    + void setLastName(String lastName)
+    + List<Book> getBooks()
+    + void setBooks(List<Book> books)
+}
+
+@enduml
