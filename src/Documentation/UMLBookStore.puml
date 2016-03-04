@@ -37,4 +37,7 @@ class Client {
     + void setBooks(List<Book> books)
 }
 
+Client - "0..*" Book
+
+
 @enduml
