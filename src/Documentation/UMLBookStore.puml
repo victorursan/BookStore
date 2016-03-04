@@ -19,6 +19,7 @@ class Book {
     - String genre
     - String publisher
     - Integer price
+    - Boolean available
     + Integer getId()
     + Long getISBN()
     + void setISBN(Long ISBN)
@@ -32,6 +33,8 @@ class Book {
     + void setAuthor(String author)
     + String getTitle()
     + void setTitle(String title)
+    + Boolean isAvailable()
+    + void setAvailable(Boolean available)
 }
 
 
@@ -49,8 +52,6 @@ class Client {
     + void setBooks(List<Book> books)
 }
 
-Client - "0..*" Book
-
 interface IRepository<E> {
     void add(E elem)
     E get(int id)
@@ -59,7 +60,14 @@ interface IRepository<E> {
     void delete(int id);
 }
 
-class BookRepository implements IRepository
-class ClientRepository implements IRepository
+class BookRepository implements IRepository {
+    private List<Book> books
+}
+class ClientRepository implements IRepository {
+    private List<Client> clients
+}
+
+
+Client "0" *-- "many" Book : contains
 
 @enduml

@@ -8,6 +8,18 @@ public class Book {
     private String genre;
     private String publisher;
     private Integer price;
+    private Boolean available;
+
+    public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.genre = genre;
+        this.publisher = publisher;
+        this.price = price;
+        this.available = available;
+    }
 
     public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher, Integer price) {
         this.id = id;
@@ -17,6 +29,7 @@ public class Book {
         this.genre = genre;
         this.publisher = publisher;
         this.price = price;
+        this.available = true;
     }
 
     public Integer getId() {
@@ -70,4 +83,13 @@ public class Book {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public Boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
 }
