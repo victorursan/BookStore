@@ -1,5 +1,16 @@
 @startuml
 
+package Models {
+class Book
+class Client
+}
+
+package Repository {
+interface IRepository<E>
+class BookRepository
+class ClientRepository
+}
+
 class Book {
     - Integer id
     - String title
@@ -23,6 +34,7 @@ class Book {
     + void setTitle(String title)
 }
 
+
 class Client {
     - Integer id
     - String firstName
@@ -39,5 +51,15 @@ class Client {
 
 Client - "0..*" Book
 
+interface IRepository<E> {
+    void add(E elem)
+    E get(int id)
+    ArrayList<E> getAll()
+    void update(int id, E elem)
+    void delete(int id);
+}
+
+class BookRepository implements IRepository
+class ClientRepository implements IRepository
 
 @enduml
