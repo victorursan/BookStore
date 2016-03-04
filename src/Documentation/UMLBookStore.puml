@@ -68,6 +68,6 @@ class ClientRepository implements IRepository {
 }
 
 
-Client "0" *-- "many" Book : contains
+Client "0" *-- "many" Book : has
 
 @enduml

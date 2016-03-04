@@ -1,7 +1,6 @@
 package com.BookStore.Model;
 
-public class Book {
-    private Integer id;
+public class Book extends BaseEntity<Integer> {
     private String title;
     private String author;
     private Long ISBN;
@@ -11,7 +10,7 @@ public class Book {
     private Boolean available;
 
     public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) {
-        this.id = id;
+        super(id);
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
@@ -22,7 +21,7 @@ public class Book {
     }
 
     public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher, Integer price) {
-        this.id = id;
+        super(id);
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
@@ -30,10 +29,6 @@ public class Book {
         this.publisher = publisher;
         this.price = price;
         this.available = true;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public Long getISBN() {
@@ -92,4 +87,16 @@ public class Book {
         this.available = available;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "-> Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", ISBN=" + ISBN +
+                ", genre='" + genre + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", price=" + price +
+                ", available=" + available +
+                '}';
+    }
 }

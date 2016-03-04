@@ -3,28 +3,23 @@ package com.BookStore.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client {
-    private Integer id;
+public class Client extends BaseEntity<Integer>{
     private String firstName;
     private String lastName;
     private List<Book> books;
 
     public Client(Integer id, String firstName, String lastName) {
-        this.id = id;
+        super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.books = new ArrayList<>();
     }
 
     public Client(Integer id, String firstName, String lastName, List<Book> books) {
-        this.id = id;
+        super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.books = books;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getFirstName() {
@@ -49,5 +44,14 @@ public class Client {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "-> Client{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", books=" + books +
+                '}';
     }
 }
