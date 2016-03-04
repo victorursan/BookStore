@@ -1,0 +1,15 @@
+@startuml
+
+title Buy a book
+
+skinparam packageStyle rect
+actor customer
+actor cashier
+
+customer -> (ask for book)
+cashier -> (retrieve book)
+
+customer -- (buy book)
+(buy book) -- cashier
+
+@enduml
