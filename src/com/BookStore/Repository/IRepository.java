@@ -2,14 +2,14 @@ package com.BookStore.Repository;
 
 import java.util.ArrayList;
 
-public interface IRepository<E> {
-    void add(E elem);
+public interface IRepository<T> {
+    void add(T elem);
 
-    E get(int id);
+    T get(int id);
 
-    ArrayList<E> getAll();
+    ArrayList<T> getAll();
 
-    void update(int id, E elem);
+    void update(int id, T elem);
 
     void delete(int id);
 }
