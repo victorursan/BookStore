@@ -1,12 +1,14 @@
 package com.BookStore.Repository;
 
+import com.BookStore.Model.Validators.ValidatorException;
+
 import java.util.Optional;
 
 public interface IRepository<T> {
     /** Adds a new element
      * @param elem element to be saved
      */
-    void add(T elem);
+    void add(T elem) throws  ValidatorException;
 
     /** Finds the element with the given {@code id}
      * @param id the id of the element in the repository
@@ -25,7 +27,7 @@ public interface IRepository<T> {
      * @param elem the new element in the updated repository repository
      * @return an {@code Optional} - the entity if it wasn't updated, otherwise null
      */
-    Optional<T> update(int id, T elem);
+    Optional<T> update(int id, T elem) throws ValidatorException;
 
     /** Remove an element in the repository with an id
      * @param id the id of the element in the repository
