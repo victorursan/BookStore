@@ -1,8 +1,6 @@
 package com.BookStore;
 
 import com.BookStore.Controller.Controller;
-import com.BookStore.Model.Book;
-import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.BookValidator;
 import com.BookStore.Model.Validators.ClientValidator;
 import com.BookStore.Model.Validators.ValidatorException;
@@ -15,7 +13,6 @@ public class Main {
             ctrl.addClient("Ion", "Ion");
             ctrl.addClient("Ion1", "Ion4");
             ctrl.addClient("Ion2", "Ion3");
-            System.out.print(ctrl.getAllClients());
         } catch (ValidatorException e) {
             e.printStackTrace();
         }

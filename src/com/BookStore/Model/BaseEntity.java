@@ -1,8 +1,5 @@
 package com.BookStore.Model;
 
-/**
- * Created by victor on 3/4/16.
- */
 public class BaseEntity<ID> {
     private ID id;
 
