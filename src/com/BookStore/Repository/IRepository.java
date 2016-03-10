@@ -1,15 +1,35 @@
 package com.BookStore.Repository;
 
-import java.util.ArrayList;
+import java.util.Optional;
 
 public interface IRepository<T> {
+    /** Adds a new element
+     * @param elem element to be saved
+     */
     void add(T elem);
 
-    T get(int id);
+    /** Finds the element with the given {@code id}
+     * @param id the id of the element in the repository
+     * @return an {@code Optional} - null if the element doesn't exist, otherwise the element
 
-    ArrayList<T> getAll();
+     */
+    Optional<T> get(int id);
 
-    void update(int id, T elem);
+    /** Returns all the elements in the Repository
+     * @return all the elements
+     */
+    Iterable<T> getAll();
 
-    void delete(int id);
+    /**
+     * @param id the id of the element in the repository
+     * @param elem the new element in the updated repository repository
+     * @return an {@code Optional} - the entity if it wasn't updated, otherwise null
+     */
+    Optional<T> update(int id, T elem);
+
+    /** Remove an element in the repository with an id
+     * @param id the id of the element in the repository
+     * @return an {@code Optional} - null if there is no entity with the given id, otherwise the removed entity.
+     */
+    Optional<T> delete(int id);
 }

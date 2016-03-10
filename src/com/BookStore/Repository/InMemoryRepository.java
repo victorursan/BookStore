@@ -4,6 +4,7 @@ import com.BookStore.Model.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepository<T> {
 
@@ -19,8 +20,8 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
     }
 
     @Override
-    public T get(int id) {
-        return entities.get(id);
+    public Optional<T> get(int id) {
+        return Optional.ofNullable(entities.get(id));
     }
 
     @Override
@@ -29,12 +30,15 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
     }
 
     @Override
-    public void update(int id, T elem) {
+    public Optional<T> update(int id, T elem) {
+        if (!entities.contains(elem)) return Optional.of(elem);
         entities.set(id, elem);
+        return Optional.empty();
     }
 
     @Override
-    public void delete(int id) {
-        entities.remove(id);
+    public Optional<T> delete(int id) {
+       return Optional.ofNullable(entities.remove(id));
     }
 }
+
