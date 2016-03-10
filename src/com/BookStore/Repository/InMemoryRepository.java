@@ -1,6 +1,8 @@
 package com.BookStore.Repository;
 
 import com.BookStore.Model.BaseEntity;
+import com.BookStore.Model.Validators.IValidator;
+import com.BookStore.Model.Validators.ValidatorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +11,21 @@ import java.util.Optional;
 public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepository<T> {
 
     private List<T> entities;
+    private IValidator<T> validator;
 
-    public InMemoryRepository(List<T> entities) {
+    public InMemoryRepository(IValidator<T> validator) {
         this.entities = new ArrayList<>();
+        this.validator = validator;
+    }
+
+    public InMemoryRepository(List<T> elem, IValidator<T> validator) {
+        this.entities = elem;
+        this.validator = validator;
     }
 
     @Override
-    public void add(T elem) {
+    public void add(T elem) throws ValidatorException {
+        validator.validate(elem);
         entities.add(elem);
     }
 
@@ -25,13 +35,14 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
     }
 
     @Override
-    public ArrayList<T> getAll() {
-        return (ArrayList<T>) entities;
+    public List<T> getAll() {
+        return entities;
     }
 
     @Override
-    public Optional<T> update(int id, T elem) {
+    public Optional<T> update(int id, T elem) throws ValidatorException {
         if (!entities.contains(elem)) return Optional.of(elem);
+        validator.validate(elem);
         entities.set(id, elem);
         return Optional.empty();
     }
