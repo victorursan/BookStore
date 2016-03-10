@@ -28,7 +28,7 @@ public class Controller {
 
     public void addBook(String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) throws ValidatorException {
         Integer validID = getValidIDForIteratory(bookRepository.getAll());
-        Book book = new Book(getValidIDForIteratory(bookRepository.getAll()), title, author, ISBN, genre, publisher, price, available);
+        Book book = new Book(validID, title, author, ISBN, genre, publisher, price, available);
         bookRepository.add(book);
     }
 
