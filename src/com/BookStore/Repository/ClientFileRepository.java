@@ -12,16 +12,17 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class ClientFileRepository extends InMemoryRepository<Client> {
-    private String fileName;
+    private Path clientFilePath;
+    private Path purchaseFilePath;
 
-    public ClientFileRepository(IValidator<Client> validator, String file) {
+    public ClientFileRepository(IValidator<Client> validator, String clientFile, String purchaseFile) {
         super(validator);
-        this.fileName = file;
+        this.clientFilePath = Paths.get(clientFile);
+        this.purchaseFilePath = Paths.get(purchaseFile);
         loadFromFile();
     }
 
     private void loadFromFile() {
-        Path path = Paths.get(fileName);
 //        try {
 //            Files.lines(path).forEach(line -> {
 //                List<String> items = Arrays.asList(line.split(","));
@@ -55,13 +56,12 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
     }
 
     private void saveToFile(Client entity) {
-        Path path = Paths.get(fileName);
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            bufferedWriter.write(entity.toString());
-            bufferedWriter.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(clientFilePath, StandardOpenOption.APPEND)) {
+//            bufferedWriter.write(entity.toString());
+//            bufferedWriter.newLine();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
