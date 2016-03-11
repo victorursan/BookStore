@@ -6,7 +6,7 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends BaseEntity<Integer>{
+public class Client extends BaseEntity<Integer> {
     private String firstName;
     private String lastName;
     private List<Book> books;

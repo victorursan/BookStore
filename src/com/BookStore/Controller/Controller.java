@@ -17,14 +17,17 @@ public class Controller {
     private IRepository<Book> bookRepository;
     private IRepository<Client> clientRepository;
 
-    /** Default constructor
+    /**
+     * Default constructor
      */
     public Controller() {
-        this(new InMemoryRepository<>(),new InMemoryRepository<>() );
+        this(new InMemoryRepository<>(), new InMemoryRepository<>());
     }
 
-    /** Constructor
-     * @param bookRepository the book repository
+    /**
+     * Constructor
+     *
+     * @param bookRepository   the book repository
      * @param clientRepository the client repository
      */
     public Controller(IRepository<Book> bookRepository, IRepository<Client> clientRepository) {
@@ -32,7 +35,9 @@ public class Controller {
         this.clientRepository = clientRepository;
     }
 
-    /** Transforms an Iterable to Stream
+    /**
+     * Transforms an Iterable to Stream
+     *
      * @param iterable the Iterable to be transformed
      * @return {@code Stream}
      */
@@ -40,7 +45,9 @@ public class Controller {
         return StreamSupport.stream(iterable.spliterator(), false);
     }
 
-    /** Get a valid position/id from the iterable
+    /**
+     * Get a valid position/id from the iterable
+     *
      * @param iterable the iterable with entities
      * @return {@code id} that is valid in the iterable
      */
@@ -50,13 +57,15 @@ public class Controller {
         return validID.isPresent() ? validID.getAsInt() + 1 : 0;
     }
 
-    /** Adds a Book in the repository if possible, else throws ValidatorException
-     * @param title the Title
-     * @param author the Author
-     * @param ISBN the ISBN
-     * @param genre the Genre
+    /**
+     * Adds a Book in the repository if possible, else throws ValidatorException
+     *
+     * @param title     the Title
+     * @param author    the Author
+     * @param ISBN      the ISBN
+     * @param genre     the Genre
      * @param publisher the Publisher
-     * @param price the Price
+     * @param price     the Price
      * @throws ValidatorException if the book is not valid
      */
     public void addBook(String title, String author, Long ISBN, String genre, String publisher, Integer price)
@@ -66,9 +75,11 @@ public class Controller {
         bookRepository.add(book);
     }
 
-    /** Add a Client in the repository if possible, else throws ValidatorException
+    /**
+     * Add a Client in the repository if possible, else throws ValidatorException
+     *
      * @param firstName the First Name of the Client
-     * @param lastName the Last Name of the Client
+     * @param lastName  the Last Name of the Client
      * @throws ValidatorException if the client is not valid
      */
     public void addClient(String firstName, String lastName) throws ValidatorException {
@@ -77,16 +88,18 @@ public class Controller {
         clientRepository.add(client);
     }
 
-    /** Updates the Book int the repository if possible, else throws Validator Exception
-     * @param initId the id of the Book
-     * @param title the new Title
-     * @param author the new Author
-     * @param ISBN the new ISBN
-     * @param genre the new Genre
+    /**
+     * Updates the Book int the repository if possible, else throws Validator Exception
+     *
+     * @param initId    the id of the Book
+     * @param title     the new Title
+     * @param author    the new Author
+     * @param ISBN      the new ISBN
+     * @param genre     the new Genre
      * @param publisher the new Publisher
-     * @param price the new Price
+     * @param price     the new Price
      * @param available the new availability
-     * @throws ValidatorException if the books is not valid
+     * @throws ValidatorException        if the books is not valid
      * @throws IndexOutOfBoundsException if the id is not in the repository
      */
     public void updateBook(int initId, String title, String author, Long ISBN, String genre, String publisher,
@@ -96,7 +109,9 @@ public class Controller {
             throw new IndexOutOfBoundsException();
     }
 
-    /** Deletes the Book from repository by id
+    /**
+     * Deletes the Book from repository by id
+     *
      * @param initId the id of the book
      * @throws IndexOutOfBoundsException if the id is not in the repository
      */
@@ -105,21 +120,27 @@ public class Controller {
             throw new IndexOutOfBoundsException();
     }
 
-    /** Returns an Iterable with all the clients
+    /**
+     * Returns an Iterable with all the clients
+     *
      * @return {@code Iterable<Client>}
      */
     public Iterable<Client> getAllClients() {
         return clientRepository.getAll();
     }
 
-    /** Returns an Iterable with all the books
+    /**
+     * Returns an Iterable with all the books
+     *
      * @return {@code Iterable<Book>}
      */
     public Iterable<Book> getAllBooks() {
         return bookRepository.getAll();
     }
 
-    /** Returns a list of the books of the specified genre
+    /**
+     * Returns a list of the books of the specified genre
+     *
      * @param s the genre to search for
      * @return elements that have the specified genre
      */
