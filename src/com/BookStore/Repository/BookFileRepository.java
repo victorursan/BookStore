@@ -14,19 +14,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BookFileRepository extends InMemoryRepository<Book> {
-    private String fileName;
+    private Path filePath;
 
     public BookFileRepository(IValidator<Book> validator, String file) {
         super(validator);
-        this.fileName = file;
+        this.filePath = Paths.get(file);
         loadFromFile();
     }
 
     private void loadFromFile() {
-        Path path = Paths.get(fileName);
-
         try {
-            Files.lines(path).forEach(line -> {
+            Files.lines(filePath).forEach(line -> {
                 List<String> items = Arrays.asList(line.split(","));
 
                 int id = Integer.parseInt(items.get(0));
@@ -58,8 +56,7 @@ public class BookFileRepository extends InMemoryRepository<Book> {
     }
 
     private void saveToFile(Book entity) {
-        Path path = Paths.get(fileName);
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath, StandardOpenOption.APPEND)) {
             bufferedWriter.write(entity.toString());
             bufferedWriter.newLine();
         } catch (IOException e) {
