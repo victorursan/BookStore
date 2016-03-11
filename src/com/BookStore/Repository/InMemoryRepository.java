@@ -13,6 +13,10 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
     private List<T> entities;
     private IValidator<T> validator;
 
+    public InMemoryRepository() {
+        this(entity -> {});
+    }
+
     public InMemoryRepository(IValidator<T> validator) {
         this.entities = new ArrayList<>();
         this.validator = validator;
