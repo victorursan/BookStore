@@ -1,5 +1,8 @@
 package com.BookStore.Model;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
+
 public class Book extends BaseEntity<Integer> {
     private String title;
     private String author;
@@ -32,58 +35,72 @@ public class Book extends BaseEntity<Integer> {
         this.available = true;
     }
 
+    @Getter
     public Long getISBN() {
         return ISBN;
     }
 
+    @Setter
     public void setISBN(Long ISBN) {
         this.ISBN = ISBN;
     }
 
+    @Getter
     public String getGenre() {
         return genre;
     }
 
+    @Setter
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
+    @Getter
     public String getPublisher() {
         return publisher;
     }
 
+    @Setter
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
+    @Getter
     public Integer getPrice() {
         return price;
     }
 
+    @Setter
     public void setPrice(Integer price) {
         this.price = price;
     }
 
+    @Getter
     public String getAuthor() {
         return author;
     }
 
+    @Setter
     public void setAuthor(String author) {
         this.author = author;
     }
 
+    @Getter
     public String getTitle() {
         return title;
     }
 
+    @Setter
     public void setTitle(String title) {
         this.title = title;
     }
 
+    @Getter
     public Boolean isAvailable() {
         return available;
     }
 
+    @Setter
     public void setAvailable(Boolean available) {
         this.available = available;
     }

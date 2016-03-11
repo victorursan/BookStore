@@ -1,5 +1,9 @@
 package com.BookStore.Model;
 
+import jdk.nashorn.internal.objects.annotations.Constructor;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
+
 public class BaseEntity<ID> {
     private ID id;
 
@@ -7,10 +11,12 @@ public class BaseEntity<ID> {
         this.id = id;
     }
 
+    @Getter
     public ID getId() {
         return id;
     }
 
+    @Setter
     public void setId(ID id) {
         this.id = id;
     }
