@@ -9,7 +9,8 @@ public class Book extends BaseEntity<Integer> {
     private Integer price;
     private Boolean available;
 
-    public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) {
+    public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher,
+                Integer price, Boolean available) {
         super(id);
         this.title = title;
         this.author = author;
@@ -89,14 +90,6 @@ public class Book extends BaseEntity<Integer> {
 
     @Override
     public String toString() {
-        return super.toString() + "-> Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", ISBN=" + ISBN +
-                ", genre='" + genre + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", price=" + price +
-                ", available=" + available +
-                '}';
+        return title + "," + author + "," + ISBN + "," + genre + "," + publisher + "," + price + "," + available;
     }
 }
