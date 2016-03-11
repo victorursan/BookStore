@@ -57,10 +57,6 @@ public class Client extends BaseEntity<Integer> {
 
     @Override
     public String toString() {
-        return super.toString() + "-> Client{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", books=" + books +
-                '}';
+        return firstName + "," + lastName;
     }
 }
