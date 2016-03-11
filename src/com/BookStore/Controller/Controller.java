@@ -57,7 +57,7 @@ public class Controller {
      * @param genre the Genre
      * @param publisher the Publisher
      * @param price the Price
-     * @throws ValidatorException
+     * @throws ValidatorException if the book is not valid
      */
     public void addBook(String title, String author, Long ISBN, String genre, String publisher, Integer price)
             throws ValidatorException {
@@ -69,7 +69,7 @@ public class Controller {
     /** Add a Client in the repository if possible, else throws ValidatorException
      * @param firstName the First Name of the Client
      * @param lastName the Last Name of the Client
-     * @throws ValidatorException
+     * @throws ValidatorException if the client is not valid
      */
     public void addClient(String firstName, String lastName) throws ValidatorException {
         Integer validID = getValidIDForIterable(clientRepository.getAll());
@@ -78,6 +78,7 @@ public class Controller {
     }
 
     /** Updates the Book int the repository if possible, else throws Validator Exception
+     * @param initId the id of the Book
      * @param title the new Title
      * @param author the new Author
      * @param ISBN the new ISBN
@@ -85,7 +86,8 @@ public class Controller {
      * @param publisher the new Publisher
      * @param price the new Price
      * @param available the new availability
-     * @throws ValidatorException
+     * @throws ValidatorException if the books is not valid
+     * @throws IndexOutOfBoundsException if the id is not in the repository
      */
     public void updateBook(int initId, String title, String author, Long ISBN, String genre, String publisher,
                            Integer price, Boolean available) throws ValidatorException {
@@ -96,6 +98,7 @@ public class Controller {
 
     /** Deletes the Book from repository by id
      * @param initId the id of the book
+     * @throws IndexOutOfBoundsException if the id is not in the repository
      */
     public void deleteBook(int initId) throws IndexOutOfBoundsException {
         if (!bookRepository.delete(initId).isPresent())
