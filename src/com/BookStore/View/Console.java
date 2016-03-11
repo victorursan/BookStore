@@ -39,11 +39,19 @@ public class Console {
 
     private Integer readInteger(String message) {
         String input = readString(message);
-        println(input);
         try {
             return Integer.parseInt(input, 10);
         } catch (NumberFormatException e) {
             return readInteger(message);
+        }
+    }
+
+    private Boolean readBool(String message) {
+        String input = readString(message);
+        try {
+            return Boolean.parseBoolean(input);
+        } catch (NumberFormatException e) {
+            return readBool(message);
         }
     }
 
@@ -89,13 +97,5 @@ public class Console {
 
     public void run() {
         menu();
-//        try {
-//            controller.addClient("Ion", "Ion");
-//            controller.addClient("Ion1", "Ion4");
-//            controller.addClient("Ion2", "Ion3");
-//            print(controller.getAllClients());
-//        } catch (ValidatorException e) {
-//            e.printStackTrace();
-//        }
     }
 }

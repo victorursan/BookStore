@@ -89,7 +89,7 @@ public class Controller {
     }
 
     /**
-     * Updates the Book int the repository if possible, else throws Validator Exception
+     * Updates the Book in the repository if possible, else throws Validator Exception
      *
      * @param initId    the id of the Book
      * @param title     the new Title
@@ -110,6 +110,21 @@ public class Controller {
     }
 
     /**
+     * Updates the Client in the repository if possible, else throws Validator Exception
+     *
+     * @param initId    the id of the Client
+     * @param firstName the new first name
+     * @param lastName  the new last name
+     * @throws ValidatorException        if the books is not valid
+     * @throws IndexOutOfBoundsException if the id is not in the repository
+     */
+    public void updateClient(int initId, String firstName, String lastName) throws ValidatorException {
+        Client client = new Client(initId, firstName, lastName);
+        if (clientRepository.update(initId, client).isPresent())
+            throw new IndexOutOfBoundsException();
+    }
+
+    /**
      * Deletes the Book from repository by id
      *
      * @param initId the id of the book
@@ -117,6 +132,17 @@ public class Controller {
      */
     public void deleteBook(int initId) throws IndexOutOfBoundsException {
         if (!bookRepository.delete(initId).isPresent())
+            throw new IndexOutOfBoundsException();
+    }
+
+    /**
+     * Deletes the Client from repository by id
+     *
+     * @param initId the id of the client
+     * @throws IndexOutOfBoundsException if the id is not in the repository
+     */
+    public void deleteClient(int initId) throws IndexOutOfBoundsException {
+        if (!clientRepository.delete(initId).isPresent())
             throw new IndexOutOfBoundsException();
     }
 
