@@ -17,53 +17,58 @@ public class Controller {
     private IRepository<Book> bookRepository;
     private IRepository<Client> clientRepository;
 
-    /**
+    /** Default constructor
      */
     public Controller() {
         this(new InMemoryRepository<>(),new InMemoryRepository<>() );
     }
 
-    /**
-     * @param bookRepository
-     * @param clientRepository
+    /** Constructor
+     * @param bookRepository the book repository
+     * @param clientRepository the client repository
      */
     public Controller(IRepository<Book> bookRepository, IRepository<Client> clientRepository) {
         this.bookRepository = bookRepository;
         this.clientRepository = clientRepository;
     }
 
-    /**
-     * @param it
-     * @return
+    /** Transforms an Iterable to Stream
+     * @param iterable the Iterable to be transformed
+     * @return {@code Stream}
      */
-    private int getValidIDForIterable(Iterable<? extends BaseEntity<Integer>> it) {
-        Stream<? extends BaseEntity<Integer>> entities = StreamSupport.stream(it.spliterator(), false);
-        OptionalInt validID = entities.mapToInt(BaseEntity::getId).max();
-        int id = 0;
-        if (validID.isPresent()) id = validID.getAsInt() + 1;
-        return id;
+    private <T extends BaseEntity<Integer>> Stream<T> getStreamFromIterable(Iterable<T> iterable) {
+        return StreamSupport.stream(iterable.spliterator(), false);
     }
 
-    /**
-     * @param title
-     * @param author
-     * @param ISBN
-     * @param genre
-     * @param publisher
-     * @param price
-     * @param available
+    /** Get a valid position/id from the iterable
+     * @param iterable the iterable with entities
+     * @return {@code id} that is valid in the iterable
+     */
+    private <T extends BaseEntity<Integer>> int getValidIDForIterable(Iterable<T> iterable) {
+        Stream<T> entities = getStreamFromIterable(iterable);
+        OptionalInt validID = entities.mapToInt(BaseEntity::getId).max();
+        return validID.isPresent() ? validID.getAsInt() + 1 : 0;
+    }
+
+    /** Adds a Book in the repository if possible, else throws ValidatorException
+     * @param title the Title
+     * @param author the Author
+     * @param ISBN the ISBN
+     * @param genre the Genre
+     * @param publisher the Publisher
+     * @param price the Price
      * @throws ValidatorException
      */
-    public void addBook(String title, String author, Long ISBN, String genre, String publisher, Integer price,
-                        Boolean available) throws ValidatorException {
+    public void addBook(String title, String author, Long ISBN, String genre, String publisher, Integer price)
+            throws ValidatorException {
         Integer validID = getValidIDForIterable(bookRepository.getAll());
-        Book book = new Book(validID, title, author, ISBN, genre, publisher, price, available);
+        Book book = new Book(validID, title, author, ISBN, genre, publisher, price, true);
         bookRepository.add(book);
     }
 
-    /**
-     * @param firstName
-     * @param lastName
+    /** Add a Client in the repository if possible, else throws ValidatorException
+     * @param firstName the First Name of the Client
+     * @param lastName the Last Name of the Client
      * @throws ValidatorException
      */
     public void addClient(String firstName, String lastName) throws ValidatorException {
@@ -72,54 +77,52 @@ public class Controller {
         clientRepository.add(client);
     }
 
-    /**
-     * @param initId
-     * @param title
-     * @param author
-     * @param ISBN
-     * @param genre
-     * @param publisher
-     * @param price
-     * @param available
+    /** Updates the Book int the repository if possible, else throws Validator Exception
+     * @param title the new Title
+     * @param author the new Author
+     * @param ISBN the new ISBN
+     * @param genre the new Genre
+     * @param publisher the new Publisher
+     * @param price the new Price
+     * @param available the new availability
      * @throws ValidatorException
      */
     public void updateBook(int initId, String title, String author, Long ISBN, String genre, String publisher,
                            Integer price, Boolean available) throws ValidatorException {
-        Integer validID = getValidIDForIterable(bookRepository.getAll());
-        Book book = new Book(validID, title, author, ISBN, genre, publisher, price, available);
-        bookRepository.update(initId, book);
+        Book book = new Book(initId, title, author, ISBN, genre, publisher, price, available);
+        if (bookRepository.update(initId, book).isPresent())
+            throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * @param initId
+    /** Deletes the Book from repository by id
+     * @param initId the id of the book
      */
-    public void deleteBook(int initId) {
-        bookRepository.delete(initId);
+    public void deleteBook(int initId) throws IndexOutOfBoundsException {
+        if (!bookRepository.delete(initId).isPresent())
+            throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * @return
+    /** Returns an Iterable with all the clients
+     * @return {@code Iterable<Client>}
      */
     public Iterable<Client> getAllClients() {
         return clientRepository.getAll();
     }
 
-    /**
-     * @return
+    /** Returns an Iterable with all the books
+     * @return {@code Iterable<Book>}
      */
     public Iterable<Book> getAllBooks() {
         return bookRepository.getAll();
     }
 
-    /**
-     * Returns a list of the books of the specified genre
-     *
+    /** Returns a list of the books of the specified genre
      * @param s the genre to search for
      * @return elements that have the specified genre
      */
     public List<Book> filterBooksByGenre(String s) {
-        Iterable<Book> books = bookRepository.getAll();
-        return StreamSupport.stream(books.spliterator(), false)
-                .filter(book -> book.getGenre().equals(s)).collect(Collectors.toList());
+        return getStreamFromIterable(bookRepository.getAll())
+                .filter(book -> book.getGenre().equals(s))
+                .collect(Collectors.toList());
     }
 }
