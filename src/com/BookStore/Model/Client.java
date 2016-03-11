@@ -55,6 +55,10 @@ public class Client extends BaseEntity<Integer> {
         this.books = books;
     }
 
+    public void buyBook(Book book) {
+        books.add(book);
+    }
+
     @Override
     public String toString() {
         return firstName + "," + lastName;
