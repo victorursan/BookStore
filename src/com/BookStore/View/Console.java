@@ -2,27 +2,100 @@ package com.BookStore.View;
 
 
 import com.BookStore.Controller.Controller;
-import com.BookStore.Model.Validators.ValidatorException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Console {
+    private Controller controller;
 
-    public <T> void print(T message) {
+    public Console() {
+        this.controller = new Controller();
+    }
+
+    public Console(Controller controller) {
+        this.controller = controller;
+    }
+
+    private <T> void print(T message) {
         System.out.print(message);
     }
 
-    public <T> void println(T message) {
+    private <T> void println(T message) {
         System.out.println(message);
     }
 
-    public void run() {
-        Controller ctrl = new Controller();
+    private String readString(String message) {
         try {
-            ctrl.addClient("Ion", "Ion");
-            ctrl.addClient("Ion1", "Ion4");
-            ctrl.addClient("Ion2", "Ion3");
-            print(ctrl.getAllClients());
-        } catch (ValidatorException e) {
-            e.printStackTrace();
+            print(message);
+            BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+            return bufferRead.readLine();
+        } catch (IOException e) {
+            print(e.getMessage());
+            return readString(message);
         }
+    }
+
+    private Integer readInteger(String message) {
+        String input = readString(message);
+        println(input);
+        try {
+            return Integer.parseInt(input, 10);
+        } catch (NumberFormatException e) {
+            return readInteger(message);
+        }
+    }
+
+    private void addClient() {
+
+    }
+
+    private void addBook() {
+
+    }
+
+    private void deleteClient() {
+
+    }
+
+    private void deleteBook() {
+
+    }
+
+    private void menu() {
+        println("Options:" +
+                "\n1. Add client" +
+                "\n2. Add book" +
+                "\n3. Delete client" +
+                "\n4. Delete book" +
+                "\n0. Exit"
+        );
+        Integer option = readInteger("Option: ");
+        switch (option) {
+            case 1: addClient();
+                break;
+            case 2: addBook();
+                break;
+            case 3: deleteClient();
+                break;
+            case 4: deleteBook();
+                break;
+            case 0: return;
+            default: println("Invalid option, try again.");
+        }
+        menu();
+    }
+
+    public void run() {
+        menu();
+//        try {
+//            controller.addClient("Ion", "Ion");
+//            controller.addClient("Ion1", "Ion4");
+//            controller.addClient("Ion2", "Ion3");
+//            print(controller.getAllClients());
+//        } catch (ValidatorException e) {
+//            e.printStackTrace();
+//        }
     }
 }
