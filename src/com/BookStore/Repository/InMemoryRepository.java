@@ -14,8 +14,7 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
     private IValidator<T> validator;
 
     public InMemoryRepository() {
-        this(entity -> {
-        });
+        this(entity -> {});
     }
 
     public InMemoryRepository(IValidator<T> validator) {
