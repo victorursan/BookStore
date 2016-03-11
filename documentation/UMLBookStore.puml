@@ -1,18 +1,35 @@
 @startuml
 
 package Models {
-class Book
-class Client
+    class Book
+    class Client
+    class BaseEntity<ID>
 }
 
 package Repository {
-interface IRepository<E>
-class BookRepository
-class ClientRepository
+    interface IRepository<E>
+    class BookRepository
+    class ClientRepository
 }
 
-class Book {
+package Controller {
+    class Controller
+}
+
+package Validators {
+    class IValidator<E>
+    class BookValidator
+    class ClientValidator
+}
+
+class BaseEntity<ID> {
     - Integer id
+    + Integer getId()
+    + void setId()
+}
+
+
+class Book implements BaseEntity {
     - String title
     - String author
     - Long ISBN
@@ -20,7 +37,6 @@ class Book {
     - String publisher
     - Integer price
     - Boolean available
-    + Integer getId()
     + Long getISBN()
     + void setISBN(Long ISBN)
     + String getGenre()
@@ -38,12 +54,10 @@ class Book {
 }
 
 
-class Client {
-    - Integer id
+class Client implements BaseEntity{
     - String firstName
     - String lastName
     - List<Book> books
-    + Integer getId()
     + String getFirstName()
     + void setFirstName(String firstName)
     + String getLastName()
@@ -53,21 +67,41 @@ class Client {
 }
 
 interface IRepository<E> {
-    void add(E elem)
-    E get(int id)
-    ArrayList<E> getAll()
-    void update(int id, E elem)
-    void delete(int id);
+    + void add(E elem)
+    + Optional<E> get(int id)
+    + Iterable<E> getAll()
+    + Optional<E> update(int id, E elem)
+    + Optional<E> delete(int id);
 }
 
 class BookRepository implements IRepository {
-    private List<Book> books
+    - List<Book> books
 }
+
 class ClientRepository implements IRepository {
-    private List<Client> clients
+    - List<Client> clients
 }
 
+interface IValidator<E> {
+    + void validate(E entity)
+}
 
-Client "0" *-- "many" Book : has
+class BookValidator implements IValidator
+class ClientValidator implements IValidator
+
+class Controller {
+    - Stream<T> getStreamFromIterable(Iterable<T> iterable)
+    - int getValidIDForIterable(Iterable<T> iterable)
+    + void addBook(String title, String author, Long ISBN, String genre, String publisher, Integer price)
+    + void addClient(String firstName, String lastName)
+    + void updateBook(int initId, String title, String author, Long ISBN, String genre, String publisher)
+    + void deleteBook(int initId) throws IndexOutOfBoundsException
+    + Iterable<Client> getAllClients()
+    + Iterable<Book> getAllBooks()
+    + List<Book> filterBooksByGenre(String s)
+}
+
+Models +-- Validators
+Client "0,1" *-- "many" Book : has
 
 @enduml
