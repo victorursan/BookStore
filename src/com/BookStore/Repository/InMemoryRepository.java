@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepository<T> {
-
     private List<T> entities;
     private IValidator<T> validator;
 

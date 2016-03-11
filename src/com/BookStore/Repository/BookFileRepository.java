@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookFileRepository extends InMemoryRepository<Book> {
     private Path bookFilePath;
@@ -25,8 +26,7 @@ public class BookFileRepository extends InMemoryRepository<Book> {
     private void loadFromFile() {
         try {
             Files.lines(bookFilePath).forEach(line -> {
-                List<String> items = Arrays.asList(line.split(","));
-
+                List<String> items = Arrays.asList(line.split(",")).stream().map(String::trim).collect(Collectors.toList());
                 int id = Integer.parseInt(items.get(0));
                 String title = items.get(1);
                 String author = items.get((2));

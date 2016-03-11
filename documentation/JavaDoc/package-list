@@ -3,3 +3,4 @@ com.BookStore.Controller
 com.BookStore.Model
 com.BookStore.Model.Validators
 com.BookStore.Repository
+com.BookStore.View
