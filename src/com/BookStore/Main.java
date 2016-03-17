@@ -13,8 +13,12 @@ public class Main {
     public static void main(String[] args) throws ValidatorException {
 //        Console console = new Console();
 //        console.run();
-        IRepository<Book> bookrepo = new BookFileRepository(new BookValidator(), "./data/FileData/Books.txt");
-        IRepository<Client> clientrepo = new ClientFileRepository(new ClientValidator(), "./data/FileData/Clients.txt", "./data/FileData/Purchase.txt", bookrepo);
+        String bookPath = "./data/FileData/Books.txt";
+        String clientPath =  "./data/FileData/Clients.txt";
+        String purchasePath = "./data/FileData/Purchase.txt";
+
+        IRepository<Book> bookrepo = new BookFileRepository(new BookValidator(), bookPath);
+        IRepository<Client> clientrepo = new ClientFileRepository(new ClientValidator(), clientPath, purchasePath, bookrepo);
         System.out.print(clientrepo.getAll());
     }
 }
