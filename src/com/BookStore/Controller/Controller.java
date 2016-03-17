@@ -242,4 +242,46 @@ public class Controller {
         return getStreamFromIterable(clientRepository.getAll())
                 .sorted((c1, c2) -> c1.getBooks().size() - c2.getBooks().size()).findFirst();
     }
+
+
+    public void buyBook(int clientID, int bookID) {
+        Optional<Book> optBook = bookRepository.get(bookID);
+        Optional<Client> optClient = clientRepository.get(clientID);
+        optClient.ifPresent(client -> optBook.ifPresent(book -> {
+            book.setAvailable(false);
+            client.buyBook(book);
+            try {
+                bookRepository.update(book);
+                clientRepository.update(client);
+            } catch (ValidatorException e) {
+                e.printStackTrace();
+            }
+        }));
+
+    }
+
+    public void returnBook(int clientID, int bookID) {
+        Optional<Book> optBook = bookRepository.get(bookID);
+        Optional<Client> optClient = clientRepository.get(clientID);
+        optClient.ifPresent(client -> optBook.ifPresent(book -> {
+            book.setAvailable(false);
+            if (client.returnBook(book)) {
+                try {
+                    bookRepository.update(book);
+                    clientRepository.update(client);
+                } catch (ValidatorException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                book.setAvailable(true);
+            }
+        }));
+    }
+
+//    public Optional<List<Book>> clientBooks(int clientID) {
+//        Optional<List<Book>> books = Optional.empty();
+//        clientRepository.get(clientID).ifPresent(t -> {books = Optional.of(t.getBooks());});
+//        return books;
+//    }
+
 }

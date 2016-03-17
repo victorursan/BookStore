@@ -59,6 +59,11 @@ public class Client extends BaseEntity<Integer> {
         books.add(book);
     }
 
+    public boolean returnBook(Book book) {
+       return books.remove(book);
+    }
+
+
     public int moneySpent() {
         return this.getBooks().stream().map(Book::getPrice).reduce(0, Integer::sum);
     }
