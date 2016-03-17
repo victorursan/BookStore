@@ -11,8 +11,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ClientFileRepository extends InMemoryRepository<Client> {
     private Path clientFilePath;
@@ -26,30 +28,26 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
     }
 
     private void loadFromFile() {
-//        try {
-//            Files.lines(path).forEach(line -> {
-//                List<String> items = Arrays.asList(line.split(","));
-//
-//                int id = Integer.parseInt(items.get(0));
-//                String title = items.get(1);
-//                String author = items.get((2));
-//                Long ISBN = Long.valueOf(items.get(3));
-//                String genre = items.get(4);
-//                String publisher = items.get((5));
-//                int price = Integer.parseInt(items.get(6));
-//                Boolean available = Boolean.parseBoolean(items.get(7));
-//
-//                Book book = new Book(id, title, author, ISBN, genre, publisher, price, available);
-//
-//                try {
-//                    super.add(book);
-//                } catch (ValidatorException e) {
-//                    e.printStackTrace();
-//                }
-//            });
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Files.lines(clientFilePath).forEach(line -> {
+                List<String> items = Arrays.asList(line.split(",")).stream()
+                                    .map(String::trim)
+                                    .collect(Collectors.toList());
+                int id = Integer.parseInt(items.get(0));
+                String firstName = items.get(1);
+                String lastName = items.get((2));
+
+                Client client = new Client(id, firstName, lastName);
+
+                try {
+                    super.add(client);
+                } catch (ValidatorException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
