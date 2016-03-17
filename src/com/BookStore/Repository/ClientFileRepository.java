@@ -1,5 +1,6 @@
 package com.BookStore.Repository;
 
+import com.BookStore.Model.Book;
 import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
@@ -18,18 +19,20 @@ import java.util.stream.Collectors;
 public class ClientFileRepository extends InMemoryRepository<Client> {
     private Path clientFilePath;
     private Path purchaseFilePath;
+    private IRepository<Book> bookRepo;
 
-    public ClientFileRepository(IValidator<Client> validator, String clientFile, String purchaseFile) {
+    public ClientFileRepository(IValidator<Client> validator, String clientFile, String purchaseFile, IRepository<Book> bookRepo) {
         super(validator);
         this.clientFilePath = Paths.get(clientFile);
         this.purchaseFilePath = Paths.get(purchaseFile);
+        this.bookRepo = bookRepo;
         loadFromFile();
     }
 
     private void loadFromFile() {
         try {
             Files.lines(clientFilePath).forEach(line -> {
-                List<String> items = Arrays.asList(line.split(",")).stream()
+                List<String> items = Arrays.asList(line.split(", ")).stream()
                                     .map(String::trim)
                                     .collect(Collectors.toList());
                 int id = Integer.parseInt(items.get(0));
@@ -45,13 +48,12 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
                 }
             });
             Files.lines(purchaseFilePath).forEach(line -> {
-                List<String> items = Arrays.asList(line.split(",")).stream()
+                List<String> items = Arrays.asList(line.split(", ")).stream()
                         .map(String::trim)
                         .collect(Collectors.toList());
                 int clientId = Integer.parseInt(items.get(0));
                 int bookId = Integer.parseInt(items.get(1));
-
-                Client client = getAll().get(clientId);
+                super.get(clientId).ifPresent(client -> bookRepo.get(bookId).ifPresent(client::buyBook));
             });
         } catch (IOException e) {
             e.printStackTrace();

@@ -27,7 +27,7 @@ public class BookFileRepository extends InMemoryRepository<Book> {
     private void loadFromFile() {
         try {
             Files.lines(bookFilePath).forEach(line -> {
-                List<String> items = Arrays.asList(line.split(",")).stream().map(String::trim).collect(Collectors.toList());
+                List<String> items = Arrays.asList(line.split(", ")).stream().map(String::trim).collect(Collectors.toList());
                 int id = Integer.parseInt(items.get(0));
                 String title = items.get(1);
                 String author = items.get((2));
@@ -77,7 +77,9 @@ public class BookFileRepository extends InMemoryRepository<Book> {
 
     @Override
     public Optional<Book> delete(int id) {
-        return super.delete(id);
+        Optional<Book> book = super.delete(id);
+        book.ifPresent(t -> rewriteToFile());
+        return book;
     }
 
     private void saveToFile(Book entity) {

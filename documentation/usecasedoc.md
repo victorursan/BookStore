@@ -21,8 +21,8 @@ Alternate Flows
 -------
 A1. Buying a book that doesn't exist
 
-In step 1 of the basic flow there is no book matching the details in the book store,
-the system informs the client of this.
+In step 1 of the basic flow there is no book matching the details in the 
+book store, the system informs the client of this.
 
 
 
