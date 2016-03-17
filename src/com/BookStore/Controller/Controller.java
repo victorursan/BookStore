@@ -8,6 +8,7 @@ import com.BookStore.Repository.IRepository;
 import com.BookStore.Repository.InMemoryRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
@@ -306,5 +307,14 @@ public class Controller {
         return books;
     }
 
+    public Optional<List<Book>> booksWithISBN(long isbn) {
+        return Optional.ofNullable(getStreamFromIterable(bookRepository.getAll())
+                .filter(book -> book.getISBN() == isbn)
+                .collect(Collectors.toList()));
+    }
+
+    public Map<Long, Integer> uniqueAvailableBooks() {
+        return getStreamFromIterable(availableBooks()).collect(Collectors.groupingBy(Book::getISBN,Collectors.summingInt(e -> 1)));
+    }
 
 }
