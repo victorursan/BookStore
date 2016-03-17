@@ -278,10 +278,13 @@ public class Controller {
         }));
     }
 
-//    public Optional<List<Book>> clientBooks(int clientID) {
-//        Optional<List<Book>> books = Optional.empty();
-//        clientRepository.get(clientID).ifPresent(t -> {books = Optional.of(t.getBooks());});
-//        return books;
-//    }
+    public Optional<List<Book>> clientBooks(int clientID) {
+        Optional<List<Book>> books = Optional.empty();
+        Optional<Client> optClient = clientRepository.get(clientID);
+        if (optClient.isPresent()) {
+            books = Optional.of(optClient.get().getBooks());
+        }
+        return books;
+    }
 
 }
