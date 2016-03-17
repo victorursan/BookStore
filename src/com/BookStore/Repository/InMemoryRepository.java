@@ -35,7 +35,7 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
 
     @Override
     public Optional<T> get(int id) {
-        return Optional.ofNullable(entities.get(id));
+        return entities.stream().reduce((element, acc) -> {if (element.getId() == id) return element; return acc;});
     }
 
     @Override
