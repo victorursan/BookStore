@@ -9,7 +9,6 @@ import com.BookStore.Model.Validators.ValidatorException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.Optional;
 
 public class Console {
@@ -125,13 +124,13 @@ public class Console {
 
 
     private void clientBooks() {
-        int clientOpt = readInteger("Display books for client: ");
-        List<Book> books;
-        Optional<List<Book>> optBooks = ctrl.clientBooks(clientOpt);
-        if (optBooks.isPresent()) {
-            books = optBooks.get();
-            books.forEach(System.out::println);
-        }
+//        int clientOpt = readInteger("Display books for client: ");
+//        List<Book> books;
+//        Optional<List<Book>> optBooks = ctrl.clientBooks(clientOpt);
+//        if (optBooks.isPresent()) {
+//            books = optBooks.get();
+//            books.forEach(System.out::println);
+//        }
     }
 
     private void clientReturnMode() {
@@ -143,7 +142,7 @@ public class Console {
             System.out.println(item);
         }
         int bookOpt = readInteger("Which book is wanted?");
-        ctrl.buyBook(clientOpt, bookOpt);
+        //ctrl.returnBook(clientOpt, bookOpt);
         println("Book returned!");
     }
 
@@ -156,7 +155,7 @@ public class Console {
             System.out.println(item);
         }
         int bookOpt = readInteger("Which book is wanted?");
-        ctrl.buyBook(clientOpt, bookOpt);
+        //ctrl.buyBook(clientOpt, bookOpt);
         println("Book bought!");
     }
 
@@ -230,6 +229,7 @@ public class Console {
                         "\n16. Client purchase" +
                         "\n17. Client return" +
                         "\n18. Purchases by one client" +
+
                         "\n0. Exit"
         );
         Integer option = readInteger("Option: ");

@@ -59,18 +59,13 @@ public class Client extends BaseEntity<Integer> {
         books.add(book);
     }
 
-    public boolean returnBook(Book book) {
-       return books.remove(book);
-    }
-
-
     public int moneySpent() {
         return this.getBooks().stream().map(Book::getPrice).reduce(0, Integer::sum);
     }
 
     @Override
     public String toString() {
-        return "{" + getId() + ". First Name: " + firstName + ", Last Name: "
-                + lastName + ", Books: " + books.toString() + "}";
+        return "{" + getId() + ". First Name: " + firstName + ", Last Name: " + lastName +
+                ", Books: " + books.toString() + "}";
     }
 }
