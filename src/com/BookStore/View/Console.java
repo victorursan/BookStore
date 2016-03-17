@@ -121,13 +121,22 @@ public class Console {
 
     private void menu() {
         println("Options:" +
-                "\n1. Add client" +
-                "\n2. Add book" +
-                "\n3. Delete client" +
-                "\n4. Delete book" +
+                        "\n1. Add client" +
+                        "\n2. Add book" +
+                        "\n3. Delete client" +
+                        "\n4. Delete book" +
                         "\n5. Update client" +
                         "\n6. Update book" +
-                "\n0. Exit"
+                        "\n7. Show all clients" +
+                        "\n8. Show all books" +
+                        "\n9. Show available books" +
+                        "\n10. Books of a genre" +
+                        "\n11. Books by an author" +
+                        "\n12. Books cheaper than" +
+                        "\n13. Books more expensive than" +
+                        "\n14. Client with most books" +
+                        "\n15. Client who spent most" +
+                        "\n0. Exit"
         );
         Integer option = readInteger("Option: ");
         switch (option) {

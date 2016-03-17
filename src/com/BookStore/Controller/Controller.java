@@ -8,6 +8,7 @@ import com.BookStore.Repository.IRepository;
 import com.BookStore.Repository.InMemoryRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -165,6 +166,16 @@ public class Controller {
     }
 
     /**
+     * Return a list of available books
+     * @return elements that are available
+     */
+    public List<Book> availableBooks() {
+        return getStreamFromIterable(bookRepository.getAll())
+                .filter(Book::isAvailable)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Returns a list of the books of the specified genre
      *
      * @param s the genre to search for
@@ -174,5 +185,61 @@ public class Controller {
         return getStreamFromIterable(bookRepository.getAll())
                 .filter(book -> book.getGenre().equals(s))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a list of the books from the specified author
+     *
+     * @param s the author to search for
+     * @return elements that have the specified author
+     */
+    public List<Book> filterBooksByAuthor(String s) {
+        return getStreamFromIterable(bookRepository.getAll())
+                .filter(book -> book.getAuthor().equals(s))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a list of books cheaper than a value given
+     *
+     * @param value to compare with other prices
+     * @return elements that have the price attribute less than value given
+     */
+    public List<Book> filterBooksCheaperThan(int value) {
+        return getStreamFromIterable(bookRepository.getAll())
+                .filter(book -> book.getPrice() < value)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a list of books more expensive than a value given
+     *
+     * @param value to compare with other prices
+     * @return elements that have the price attribute more than value given
+     */
+    public List<Book> filterBooksMoreExpensiveThan(int value) {
+        return getStreamFromIterable(bookRepository.getAll())
+                .filter(book -> book.getPrice() > value)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns the client who spent the most amount of money on books
+     *
+     * @return A client who has the sum of prices of books the highest of all
+     */
+    public Optional<Client> clientWhoSpentMost() {
+        return getStreamFromIterable(clientRepository.getAll())
+                .sorted((c1, c2) -> c1.moneySpent() - c2.moneySpent()).findFirst();
+    }
+
+    /**
+     * Returns the client with most books purchased
+     *
+     * @return A client who has the most books
+     */
+    public Optional<Client> clientWithMostBooks() {
+        return getStreamFromIterable(clientRepository.getAll())
+                .sorted((c1, c2) -> c1.getBooks().size() - c2.getBooks().size()).findFirst();
     }
 }
