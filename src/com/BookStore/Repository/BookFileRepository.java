@@ -97,7 +97,6 @@ public class BookFileRepository extends InMemoryRepository<Book> {
                 bufferedWriter.write(element.toString());
                 bufferedWriter.newLine();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

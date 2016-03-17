@@ -78,12 +78,18 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
 
     @Override
     public Optional<Client> update(Client elem) throws ValidatorException {
+        Optional<Client> client = super.update(elem);
+        if (!client.isPresent()) {
+            rewriteToFile();
+        }
         return super.update(elem);
     }
 
     @Override
     public Optional<Client> delete(int id) {
-        return super.delete(id);
+        Optional<Client> client = super.delete(id);
+        client.ifPresent(t -> rewriteToFile());
+        return client;
     }
 
     private void saveToFile(Client entity) {
@@ -96,15 +102,19 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
     }
 
     private void rewriteToFile() {
-//        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(bookFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
-//            for (Book element: super.getAll()) {
-//                bufferedWriter.write(element.toString());
-//                bufferedWriter.newLine();
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try (BufferedWriter clientBuffer = Files.newBufferedWriter(clientFilePath, StandardOpenOption.TRUNCATE_EXISTING);
+             BufferedWriter purchaseBuffer = Files.newBufferedWriter(purchaseFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
+            for (Client client: super.getAll()) {
+                 String clientStr = String.format("%d, %s, %s\n",client.getId(), client.getFirstName(), client.getLastName());
+                 clientBuffer.write(clientStr);
+                 for(Book book: client.getBooks()) {
+                     String purchaseStr = String.format("%d, %d\n",client.getId(), book.getId());
+                     purchaseBuffer.write(purchaseStr);
+                 }
+             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

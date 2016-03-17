@@ -19,6 +19,14 @@ public class Main {
 
         IRepository<Book> bookrepo = new BookFileRepository(new BookValidator(), bookPath);
         IRepository<Client> clientrepo = new ClientFileRepository(new ClientValidator(), clientPath, purchasePath, bookrepo);
-        System.out.print(clientrepo.getAll());
+
+        Client c = new Client(3, "John", "Doe");
+        clientrepo.add(c);
+        System.out.println(clientrepo.getAll());
+        bookrepo.get(1).ifPresent(c::buyBook);
+        clientrepo.update(c);
+        System.out.println(clientrepo.getAll());
+        clientrepo.delete(3);
+        System.out.println(clientrepo.getAll());
     }
 }
