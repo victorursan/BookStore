@@ -167,6 +167,7 @@ public class Controller {
 
     /**
      * Return a list of available books
+     *
      * @return elements that are available
      */
     public List<Book> availableBooks() {
@@ -174,6 +175,7 @@ public class Controller {
                 .filter(Book::isAvailable)
                 .collect(Collectors.toList());
     }
+
     /**
      * Returns a list of the books of the specified genre
      *
@@ -188,6 +190,7 @@ public class Controller {
 
     /**
      * Returns a list of the books from the specified author
+     *
      * @param s the author to search for
      * @return elements that have the specified author
      */
@@ -199,6 +202,7 @@ public class Controller {
 
     /**
      * Returns a list of books cheaper than a value given
+     *
      * @param value to compare with other prices
      * @return elements that have the price attribute less than value given
      */
@@ -210,6 +214,7 @@ public class Controller {
 
     /**
      * Returns a list of books more expensive than a value given
+     *
      * @param value to compare with other prices
      * @return elements that have the price attribute more than value given
      */
@@ -221,6 +226,7 @@ public class Controller {
 
     /**
      * Returns the client who spent the most amount of money on books
+     *
      * @return A client who has the sum of prices of books the highest of all
      */
     public Optional<Client> clientWhoSpentMost() {
@@ -230,10 +236,73 @@ public class Controller {
 
     /**
      * Returns the client with most books purchased
+     *
      * @return A client who has the most books
      */
     public Optional<Client> clientWithMostBooks() {
         return getStreamFromIterable(clientRepository.getAll())
                 .sorted((c1, c2) -> c1.getBooks().size() - c2.getBooks().size()).findFirst();
+    }
+
+
+    /**
+     * Adds a book to the client
+     *
+     * @param clientID the id of the client
+     * @param bookID   the id of the book
+     */
+    public void buyBook(int clientID, int bookID) {
+        Optional<Book> optBook = bookRepository.get(bookID);
+        Optional<Client> optClient = clientRepository.get(clientID);
+        optClient.ifPresent(client -> optBook.ifPresent(book -> {
+            book.setAvailable(false);
+            client.buyBook(book);
+            try {
+                bookRepository.update(book);
+                clientRepository.update(client);
+            } catch (ValidatorException e) {
+                e.printStackTrace();
+            }
+        }));
+
+    }
+
+    /**
+     * Removes a book from the client
+     *
+     * @param clientID the id of the client
+     * @param bookID   the id of the book
+     */
+    public void returnBook(int clientID, int bookID) {
+        Optional<Book> optBook = bookRepository.get(bookID);
+        Optional<Client> optClient = clientRepository.get(clientID);
+        optClient.ifPresent(client -> optBook.ifPresent(book -> {
+            book.setAvailable(true);
+            if (client.returnBook(book)) {
+                try {
+                    bookRepository.update(book);
+                    clientRepository.update(client);
+                } catch (ValidatorException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                book.setAvailable(false);
+            }
+        }));
+    }
+
+    /**
+     * Returns a list of books bought by the client
+     *
+     * @param clientID the id of the client
+     * @return {@code Optional} with a list of books
+     */
+    public Optional<List<Book>> clientBooks(int clientID) {
+        Optional<List<Book>> books = Optional.empty();
+        Optional<Client> optClient = clientRepository.get(clientID);
+        if (optClient.isPresent()) {
+            books = Optional.of(optClient.get().getBooks());
+        }
+        return books;
     }
 }
