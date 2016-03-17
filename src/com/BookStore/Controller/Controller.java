@@ -264,7 +264,7 @@ public class Controller {
         Optional<Book> optBook = bookRepository.get(bookID);
         Optional<Client> optClient = clientRepository.get(clientID);
         optClient.ifPresent(client -> optBook.ifPresent(book -> {
-            book.setAvailable(false);
+            book.setAvailable(true);
             if (client.returnBook(book)) {
                 try {
                     bookRepository.update(book);
@@ -273,7 +273,7 @@ public class Controller {
                     e.printStackTrace();
                 }
             } else {
-                book.setAvailable(true);
+                book.setAvailable(false);
             }
         }));
     }
