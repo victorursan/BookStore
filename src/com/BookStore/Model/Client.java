@@ -59,6 +59,10 @@ public class Client extends BaseEntity<Integer> {
         books.add(book);
     }
 
+    public int moneySpent() {
+        return this.getBooks().stream().map(Book::getPrice).reduce(0, Integer::sum);
+    }
+
     @Override
     public String toString() {
         return "{" + getId() + ", " + firstName + ", " + lastName + ", " + books.toString() + "}";
