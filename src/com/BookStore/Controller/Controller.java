@@ -231,7 +231,7 @@ public class Controller {
      */
     public Optional<Client> clientWhoSpentMost() {
         return getStreamFromIterable(clientRepository.getAll())
-                .sorted((c1, c2) -> c1.moneySpent() - c2.moneySpent()).findFirst();
+                .sorted((c1, c2) -> c2.moneySpent() - c1.moneySpent()).findFirst();
     }
 
     /**
@@ -241,7 +241,7 @@ public class Controller {
      */
     public Optional<Client> clientWithMostBooks() {
         return getStreamFromIterable(clientRepository.getAll())
-                .sorted((c1, c2) -> c1.getBooks().size() - c2.getBooks().size()).findFirst();
+                .sorted((c1, c2) -> c2.getBooks().size() - c1.getBooks().size()).findFirst();
     }
 
 
