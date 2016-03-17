@@ -1,5 +1,6 @@
 package com.BookStore.Repository;
 
+import com.BookStore.Model.Book;
 import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
@@ -10,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
+import java.util.Optional;
 
 public class ClientFileRepository extends InMemoryRepository<Client> {
     private Path clientFilePath;
@@ -55,10 +58,42 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
         saveToFile(entity);
     }
 
+    @Override
+    public Optional<Client> get(int id) {
+        return super.get(id);
+    }
+
+    @Override
+    public List<Client> getAll() {
+        return super.getAll();
+    }
+
+    @Override
+    public Optional<Client> update(Client elem) throws ValidatorException {
+        return super.update(elem);
+    }
+
+    @Override
+    public Optional<Client> delete(int id) {
+        return super.delete(id);
+    }
+
     private void saveToFile(Client entity) {
 //        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(clientFilePath, StandardOpenOption.APPEND)) {
 //            bufferedWriter.write(entity.toString());
 //            bufferedWriter.newLine();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    private void rewriteToFile() {
+//        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(bookFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
+//            for (Book element: super.getAll()) {
+//                bufferedWriter.write(element.toString());
+//                bufferedWriter.newLine();
+//            }
+//
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }

@@ -29,12 +29,11 @@ public interface IRepository<T> {
     Iterable<T> getAll();
 
     /**
-     * @param id   the id of the element in the repository
      * @param elem the new element in the updated repository repository
      * @return an {@code Optional} - the entity if it wasn't updated, otherwise null
      * @throws ValidatorException - if the element si not valid
      */
-    Optional<T> update(int id, T elem) throws ValidatorException;
+    Optional<T> update(T elem) throws ValidatorException;
 
     /**
      * Remove an element in the repository with an id

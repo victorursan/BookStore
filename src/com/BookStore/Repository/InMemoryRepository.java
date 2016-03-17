@@ -6,7 +6,9 @@ import com.BookStore.Model.Validators.ValidatorException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepository<T> {
     private List<T> entities;
@@ -43,10 +45,13 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
     }
 
     @Override
-    public Optional<T> update(int id, T elem) throws ValidatorException {
-        if (!entities.contains(elem)) return Optional.of(elem);
+    public Optional<T> update(T elem) throws ValidatorException {
+        if (!entities.stream().anyMatch(e -> e.getId().equals(elem.getId()))) {
+            return Optional.of(elem);
+        }
         validator.validate(elem);
-        entities.set(id, elem);
+        entities = entities.stream().filter(e -> !e.getId().equals(elem.getId())).collect(Collectors.toList());
+        entities.add(elem);
         return Optional.empty();
     }
 

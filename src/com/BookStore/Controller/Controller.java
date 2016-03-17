@@ -105,7 +105,7 @@ public class Controller {
     public void updateBook(int initId, String title, String author, Long ISBN, String genre, String publisher,
                            Integer price, Boolean available) throws ValidatorException {
         Book book = new Book(initId, title, author, ISBN, genre, publisher, price, available);
-        if (bookRepository.update(initId, book).isPresent())
+        if (bookRepository.update(book).isPresent())
             throw new IndexOutOfBoundsException();
     }
 
@@ -120,7 +120,7 @@ public class Controller {
      */
     public void updateClient(int initId, String firstName, String lastName) throws ValidatorException {
         Client client = new Client(initId, firstName, lastName);
-        if (clientRepository.update(initId, client).isPresent())
+        if (clientRepository.update(client).isPresent())
             throw new IndexOutOfBoundsException();
     }
 

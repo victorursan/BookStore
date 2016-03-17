@@ -61,6 +61,6 @@ public class Client extends BaseEntity<Integer> {
 
     @Override
     public String toString() {
-        return firstName + "," + lastName;
+        return getId() + ", " + firstName + ", " + lastName;
     }
 }

@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BookFileRepository extends InMemoryRepository<Book> {
@@ -55,10 +56,46 @@ public class BookFileRepository extends InMemoryRepository<Book> {
         saveToFile(entity);
     }
 
+    @Override
+    public Optional<Book> get(int id) {
+        return super.get(id);
+    }
+
+    @Override
+    public List<Book> getAll() {
+        return super.getAll();
+    }
+
+    @Override
+    public Optional<Book> update(Book elem) throws ValidatorException {
+        Optional<Book> book = super.update(elem);
+        if (!book.isPresent()) {
+            rewriteToFile();
+        }
+        return book;
+    }
+
+    @Override
+    public Optional<Book> delete(int id) {
+        return super.delete(id);
+    }
+
     private void saveToFile(Book entity) {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(bookFilePath, StandardOpenOption.APPEND)) {
             bufferedWriter.write(entity.toString());
             bufferedWriter.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void rewriteToFile() {
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(bookFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
+            for (Book element: super.getAll()) {
+                bufferedWriter.write(element.toString());
+                bufferedWriter.newLine();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
