@@ -57,7 +57,7 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
     @Override
     public Optional<T> delete(int id) {
         Optional<T> element = get(id);
-        element.ifPresent(t -> entities = entities.stream().filter(e -> !e.getId().equals(id)).collect(Collectors.toList()));
+        element.ifPresent(entities::remove);
         return element;
     }
 }
