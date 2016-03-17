@@ -9,6 +9,7 @@ import com.BookStore.Model.Validators.ValidatorException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Optional;
 
 public class Console {
@@ -124,13 +125,13 @@ public class Console {
 
 
     private void clientBooks() {
-//        int clientOpt = readInteger("Display books for client: ");
-//        List<Book> books;
-//        Optional<List<Book>> optBooks = ctrl.clientBooks(clientOpt);
-//        if (optBooks.isPresent()) {
-//            books = optBooks.get();
-//            books.forEach(System.out::println);
-//        }
+        int clientOpt = readInteger("Display books for client: ");
+        List<Book> books;
+        Optional<List<Book>> optBooks = ctrl.clientBooks(clientOpt);
+        if (optBooks.isPresent()) {
+            books = optBooks.get();
+            books.forEach(System.out::println);
+        }
     }
 
     private void clientReturnMode() {
@@ -141,8 +142,8 @@ public class Console {
         for (Book item : ctrl.getAllBooks()) {
             System.out.println(item);
         }
-        int bookOpt = readInteger("Which book is wanted?");
-        //ctrl.returnBook(clientOpt, bookOpt);
+        int bookOpt = readInteger("Which book is wanted for purchase?");
+        ctrl.returnBook(clientOpt, bookOpt);
         println("Book returned!");
     }
 
@@ -151,11 +152,14 @@ public class Console {
             System.out.println(item);
         }
         int clientOpt = readInteger("Which client wants to purchase? ");
-        for (Book item : ctrl.getAllBooks()) {
-            System.out.println(item);
+        List<Book> books;
+        Optional<List<Book>> optBooks = ctrl.clientBooks(clientOpt);
+        if (optBooks.isPresent()) {
+            books = optBooks.get();
+            books.forEach(System.out::println);
         }
-        int bookOpt = readInteger("Which book is wanted?");
-        //ctrl.buyBook(clientOpt, bookOpt);
+        int bookOpt = readInteger("Which book is wanted for returning? ");
+        ctrl.buyBook(clientOpt, bookOpt);
         println("Book bought!");
     }
 
