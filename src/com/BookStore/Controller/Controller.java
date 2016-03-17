@@ -244,6 +244,12 @@ public class Controller {
     }
 
 
+    /**
+     * Adds a book to the client
+     *
+     * @param clientID the id of the client
+     * @param bookID the id of the book
+     */
     public void buyBook(int clientID, int bookID) {
         Optional<Book> optBook = bookRepository.get(bookID);
         Optional<Client> optClient = clientRepository.get(clientID);
@@ -260,6 +266,12 @@ public class Controller {
 
     }
 
+    /**
+     * Removes a book from the client
+     *
+     * @param clientID the id of the client
+     * @param bookID the id of the book
+     */
     public void returnBook(int clientID, int bookID) {
         Optional<Book> optBook = bookRepository.get(bookID);
         Optional<Client> optClient = clientRepository.get(clientID);
@@ -278,6 +290,12 @@ public class Controller {
         }));
     }
 
+    /**
+     * Returns a list of books bought by the client
+     *
+     * @param clientID the id of the client
+     * @return {@code Optional} with a list of books
+     */
     public Optional<List<Book>> clientBooks(int clientID) {
         Optional<List<Book>> books = Optional.empty();
         Optional<Client> optClient = clientRepository.get(clientID);
