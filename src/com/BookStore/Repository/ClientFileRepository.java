@@ -1,6 +1,5 @@
 package com.BookStore.Repository;
 
-import com.BookStore.Model.Book;
 import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
@@ -45,6 +44,15 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
                     e.printStackTrace();
                 }
             });
+            Files.lines(purchaseFilePath).forEach(line -> {
+                List<String> items = Arrays.asList(line.split(",")).stream()
+                        .map(String::trim)
+                        .collect(Collectors.toList());
+                int clientId = Integer.parseInt(items.get(0));
+                int bookId = Integer.parseInt(items.get(1));
+
+                Client client = getAll().get(clientId);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,12 +85,12 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
     }
 
     private void saveToFile(Client entity) {
-//        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(clientFilePath, StandardOpenOption.APPEND)) {
-//            bufferedWriter.write(entity.toString());
-//            bufferedWriter.newLine();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(clientFilePath, StandardOpenOption.APPEND)) {
+            bufferedWriter.write(entity.toString());
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void rewriteToFile() {

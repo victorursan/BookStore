@@ -1,9 +1,5 @@
-6, 6, 3, 4, 5, 6, 7, true
-8, 8, 3, 4, 5, 6, 7, true
-7, 7, 3, 4, 5, 6, 7, true
-9, 7, 3, 4, 5, 6, 7, true
-10, 7, 3, 4, 5, 6, 7, true
-11, 7, 3, 4, 5, 6, 7, true
-12, 7, 3, 4, 5, 6, 7, true
-1, t, b, 123456789, g, p, 12, true
-5, a, b, 123, c, d, 12, true
+1, FirstBook, John, 123456789, SF, CoolPub, 17, true
+2, SecondBook, Jane, 234567890, Horror, NicePub, 27, true
+3, ThirdBook, Foo, 345678900, SF, AwesomePub, 7, true
+4, LastBook, Barry, 456789012, Fantasy, SomePub, 10, true
+
