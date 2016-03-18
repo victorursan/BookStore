@@ -1,5 +1,5 @@
 4, LastBook, Barry, 456789012, Fantasy, SomePub, 10, false
-2, SecondBook, Jane, 234567890, Horror, NicePub, 27, true
+2, SecondBook, Jane, 234567890, Horror, Manning, 27, true
 3, ThirdBook, Foo, 345678900, SF, AwesomePub, 7, false
-5, Paradigme Universale, Solomon Marcus, 9736975797, filosofie, Paralela 45, 100, false
+5, Paradigme Universale, Solomon Marcus, 9736975797, filosofie, Manning, 100, false
 1, FirstBook, John, 123456789, SF, CoolPub, 17, true

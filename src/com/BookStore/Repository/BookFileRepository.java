@@ -3,6 +3,7 @@ package com.BookStore.Repository;
 import com.BookStore.Model.Book;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
+import com.BookStore.Repository.Exceptions.RepositoryException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -38,15 +39,10 @@ public class BookFileRepository extends InMemoryRepository<Book> {
                 Boolean available = Boolean.parseBoolean(items.get(7));
 
                 Book book = new Book(id, title, author, ISBN, genre, publisher, price, available);
-
-                try {
-                    super.add(book);
-                } catch (ValidatorException e) {
-                    e.printStackTrace();
-                }
+                super.add(book);
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 
@@ -87,7 +83,7 @@ public class BookFileRepository extends InMemoryRepository<Book> {
             bufferedWriter.write(entity.toString());
             bufferedWriter.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 
@@ -98,7 +94,7 @@ public class BookFileRepository extends InMemoryRepository<Book> {
                 bufferedWriter.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 }

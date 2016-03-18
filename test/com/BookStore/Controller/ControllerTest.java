@@ -49,6 +49,7 @@ public class ControllerTest {
 
     @Test
     public void updateBook() throws Exception {
+        ctrl.updateBook(0, "L", "B", 456789012L, "F", "S", 10, false);
 
     }
 

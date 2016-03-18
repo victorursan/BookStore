@@ -1,6 +1,7 @@
 package com.BookStore.View;
 
 
+import com.BookStore.BaseException;
 import com.BookStore.Controller.Controller;
 import com.BookStore.Controller.Exceptions.ControllerException;
 import com.BookStore.Model.Book;
@@ -73,7 +74,7 @@ public class Console {
     private void addClient() {
         try {
             ctrl.addClient(readString("Enter first name: "), readString("Enter last name: "));
-        } catch (ValidatorException e) {
+        } catch (BaseException e) {
             println("Data not valid: " + e.getMessage());
         }
     }
@@ -86,7 +87,7 @@ public class Console {
                     readString("Enter genre: "),
                     readString("Enter publisher: "),
                     readInteger("Enter price: "));
-        } catch (ValidatorException e) {
+        } catch (BaseException e) {
             println("Data not valid: " + e.getMessage());
         }
     }
@@ -96,7 +97,7 @@ public class Console {
             ctrl.updateClient(readInteger("Id of client to update: "),
                     readString("Enter first name: "),
                     readString("Enter last name: "));
-        } catch (ValidatorException | ControllerException e) {
+        } catch (BaseException e) {
             println("Data not valid: " + e.getMessage());
         }
     }
@@ -111,7 +112,7 @@ public class Console {
                     readString("Enter publisher: "),
                     readInteger("Enter price: "),
                     readBool("Book availability: "));
-        } catch (ValidatorException | ControllerException e) {
+        } catch (BaseException e) {
             println("Data not valid. " + e.getMessage());
         }
     }
@@ -119,7 +120,7 @@ public class Console {
     private void deleteClient() {
         try {
             ctrl.deleteClient(readInteger("Id of client to delete: "));
-        } catch (ControllerException e) {
+        } catch (BaseException e) {
             println("Data not valid. " + e.getMessage());
         }
     }
@@ -127,7 +128,7 @@ public class Console {
     private void deleteBook() {
         try {
             ctrl.deleteBook(readInteger("Id of book to delete: "));
-        } catch (ControllerException e) {
+        } catch (BaseException e) {
             println("Data not valid. " + e.getMessage());
         }
     }
@@ -145,7 +146,7 @@ public class Console {
         try {
             ctrl.returnBook(clientOpt, bookOpt);
             println("Book returned!");
-        } catch (ValidatorException | ControllerException e) {
+        } catch (BaseException e) {
             println("Data not valid. " + e.getMessage());
         }
     }
@@ -158,7 +159,7 @@ public class Console {
         try {
             ctrl.buyBook(clientOpt, bookOpt);
             println("Book bought!");
-        } catch (ValidatorException | ControllerException e) {
+        } catch (BaseException e) {
             println("Data not valid. " + e.getMessage());
         }
     }
@@ -204,6 +205,7 @@ public class Console {
     }
 
     private void menu() {
+
         println("Options:" +
                         "\n1. Add client" +
                         "\n2. Add book" +
@@ -223,9 +225,8 @@ public class Console {
                         "\n16. Client purchase" +
                         "\n17. Client return" +
                         "\n18. Purchases by one client" +
+                        "\n0. Exit");
 
-                        "\n0. Exit"
-        );
         Integer option = readInteger("Option: ");
         switch (option) {
             case 1:  addClient(); break;

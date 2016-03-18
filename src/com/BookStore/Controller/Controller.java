@@ -8,10 +8,7 @@ import com.BookStore.Model.Validators.ValidatorException;
 import com.BookStore.Repository.IRepository;
 import com.BookStore.Repository.InMemoryRepository;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -320,5 +317,25 @@ public class Controller {
     public Map<Long, Integer> uniqueAvailableBooks() {
         return getStreamFromIterable(availableBooks()).collect(Collectors.groupingBy(Book::getISBN,Collectors.summingInt(e -> 1)));
     }
+
+    public List<Book> getp4() {
+        Stream<Book> stream = getStreamFromIterable(bookRepository.getAll());
+        Map<Boolean, List<Book>> map = stream.sorted((book1, book2) -> book1.getTitle().compareTo(book2.getTitle()))
+                .collect(Collectors.partitioningBy(book -> Objects.equals(book.getPublisher(), "Manning")));
+        List<Book> books = map.get(true);
+        books.addAll(map.get(false));
+        return books;
+    }
+
+//    public List<Book> getp412() {
+//        Stream<Book> stream = getStreamFromIterable(bookRepository.getAll());
+//        Map<Boolean, List<Book>> map = stream.sorted(Comparator.comparing(Book::getTitle))
+//                .collect(Collectors.partitioningBy(book -> book.getPublisher().equals("Manning")));
+//        return Stream.concat(map.get(Boolean.TRUE), map.get(Boolean.FALSE)).collect(Collectors.toList());
+//
+////        List<Book> books = map.get(true);
+////        books.addAll(map.get(false));
+////        return books;
+//    }
 
 }

@@ -4,6 +4,7 @@ import com.BookStore.Model.Book;
 import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
+import com.BookStore.Repository.Exceptions.RepositoryException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -40,12 +41,7 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
                 String lastName = items.get((2));
 
                 Client client = new Client(id, firstName, lastName);
-
-                try {
-                    super.add(client);
-                } catch (ValidatorException e) {
-                    e.printStackTrace();
-                }
+                super.add(client);
             });
             Files.lines(purchaseFilePath).forEach(line -> {
                 List<String> items = Arrays.asList(line.split(", ")).stream()
@@ -56,7 +52,7 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
                 super.get(clientId).ifPresent(client -> bookRepo.get(bookId).ifPresent(client::buyBook));
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 
@@ -97,7 +93,7 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
             bufferedWriter.write(entity.toString());
             bufferedWriter.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 
@@ -113,7 +109,7 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
                  }
              }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 
