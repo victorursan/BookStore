@@ -5,9 +5,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by victor on 3/18/16.
- */
 public class ControllerTest {
 
     @Before

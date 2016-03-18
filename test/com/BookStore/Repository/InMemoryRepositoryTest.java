@@ -7,9 +7,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by victor on 3/17/16.
- */
 public class InMemoryRepositoryTest {
     private InMemoryRepository<BaseEntity<Integer>> repo;
     @Before
