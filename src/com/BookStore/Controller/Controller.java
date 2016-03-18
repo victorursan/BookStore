@@ -1,5 +1,6 @@
 package com.BookStore.Controller;
 
+import com.BookStore.Controller.Exceptions.ControllerException;
 import com.BookStore.Model.BaseEntity;
 import com.BookStore.Model.Book;
 import com.BookStore.Model.Client;
@@ -101,14 +102,14 @@ public class Controller {
      * @param publisher the new Publisher
      * @param price     the new Price
      * @param available the new availability
-     * @throws ValidatorException        if the books is not valid
-     * @throws IndexOutOfBoundsException if the id is not in the repository
+     * @throws ValidatorException  if the books is not valid
+     * @throws ControllerException if the id is not in the repository
      */
     public void updateBook(int initId, String title, String author, Long ISBN, String genre, String publisher,
-                           Integer price, Boolean available) throws ValidatorException {
+                           Integer price, Boolean available) throws ValidatorException, ControllerException {
         Book book = new Book(initId, title, author, ISBN, genre, publisher, price, available);
         if (bookRepository.update(book).isPresent())
-            throw new IndexOutOfBoundsException();
+            throw new ControllerException("No such book id");
     }
 
     /**
@@ -117,35 +118,35 @@ public class Controller {
      * @param initId    the id of the Client
      * @param firstName the new first name
      * @param lastName  the new last name
-     * @throws ValidatorException        if the books is not valid
-     * @throws IndexOutOfBoundsException if the id is not in the repository
+     * @throws ValidatorException  if the books is not valid
+     * @throws ControllerException if the id is not in the repository
      */
-    public void updateClient(int initId, String firstName, String lastName) throws ValidatorException {
+    public void updateClient(int initId, String firstName, String lastName) throws ValidatorException, ControllerException {
         Client client = new Client(initId, firstName, lastName);
         if (clientRepository.update(client).isPresent())
-            throw new IndexOutOfBoundsException();
+            throw new ControllerException("No such client id");
     }
 
     /**
      * Deletes the Book from repository by id
      *
      * @param initId the id of the book
-     * @throws IndexOutOfBoundsException if the id is not in the repository
+     * @throws ControllerException if the id is not in the repository
      */
-    public void deleteBook(int initId) throws IndexOutOfBoundsException {
+    public void deleteBook(int initId) throws ControllerException {
         if (!bookRepository.delete(initId).isPresent())
-            throw new IndexOutOfBoundsException();
+            throw new ControllerException("No such book id");
     }
 
     /**
      * Deletes the Client from repository by id
      *
      * @param initId the id of the client
-     * @throws IndexOutOfBoundsException if the id is not in the repository
+     * @throws ControllerException if the id is not in the repository
      */
-    public void deleteClient(int initId) throws IndexOutOfBoundsException {
+    public void deleteClient(int initId) throws ControllerException {
         if (!clientRepository.delete(initId).isPresent())
-            throw new IndexOutOfBoundsException();
+            throw new ControllerException("No such client id");
     }
 
     /**
@@ -232,7 +233,8 @@ public class Controller {
      */
     public Optional<Client> clientWhoSpentMost() {
         return getStreamFromIterable(clientRepository.getAll())
-                .sorted((c1, c2) -> c2.moneySpent() - c1.moneySpent()).findFirst();
+                .sorted((c1, c2) -> c2.moneySpent() - c1.moneySpent())
+                .findFirst();
     }
 
     /**
@@ -242,7 +244,8 @@ public class Controller {
      */
     public Optional<Client> clientWithMostBooks() {
         return getStreamFromIterable(clientRepository.getAll())
-                .sorted((c1, c2) -> c2.getBooks().size() - c1.getBooks().size()).findFirst();
+                .sorted((c1, c2) -> c2.getBooks().size() - c1.getBooks().size())
+                .findFirst();
     }
 
 
@@ -251,21 +254,20 @@ public class Controller {
      *
      * @param clientID the id of the client
      * @param bookID   the id of the book
+     * @throws ControllerException if the book's or client's id are invalid
+     * @throws ValidatorException if the book changed and became invalid
      */
-    public void buyBook(int clientID, int bookID) {
+    public void buyBook(int clientID, int bookID) throws ValidatorException, ControllerException {
         Optional<Book> optBook = bookRepository.get(bookID);
         Optional<Client> optClient = clientRepository.get(clientID);
         optClient.ifPresent(client -> optBook.ifPresent(book -> {
             book.setAvailable(false);
             client.buyBook(book);
-            try {
-                bookRepository.update(book);
-                clientRepository.update(client);
-            } catch (ValidatorException e) {
-                e.printStackTrace();
-            }
+            bookRepository.update(book);
+            clientRepository.update(client);
         }));
-
+        if (!optClient.isPresent()) throw new ControllerException("Invalid client id");
+        if (!optBook.isPresent()) throw new ControllerException("Invalid book id");
     }
 
     /**
@@ -273,23 +275,24 @@ public class Controller {
      *
      * @param clientID the id of the client
      * @param bookID   the id of the book
+     * @throws ControllerException if the book's or client's id are invalid
+     * @throws ValidatorException if the book changed and became invalid
      */
-    public void returnBook(int clientID, int bookID) {
+    public void returnBook(int clientID, int bookID) throws ValidatorException, ControllerException{
         Optional<Book> optBook = bookRepository.get(bookID);
         Optional<Client> optClient = clientRepository.get(clientID);
         optClient.ifPresent(client -> optBook.ifPresent(book -> {
             book.setAvailable(true);
             if (client.returnBook(book)) {
-                try {
-                    bookRepository.update(book);
-                    clientRepository.update(client);
-                } catch (ValidatorException e) {
-                    e.printStackTrace();
-                }
+                bookRepository.update(book);
+                clientRepository.update(client);
             } else {
                 book.setAvailable(false);
+                throw new ControllerException("Client doesn't have this book");
             }
         }));
+        if (!optClient.isPresent()) throw new ControllerException("Invalid client id");
+        if (!optBook.isPresent()) throw new ControllerException("Invalid book id");
     }
 
     /**

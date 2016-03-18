@@ -2,6 +2,7 @@ package com.BookStore.View;
 
 
 import com.BookStore.Controller.Controller;
+import com.BookStore.Controller.Exceptions.ControllerException;
 import com.BookStore.Model.Book;
 import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.ValidatorException;
@@ -37,7 +38,7 @@ public class Console {
             BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
             return bufferRead.readLine();
         } catch (IOException e) {
-            print(e.getMessage());
+            println(e.getMessage());
             return readString(message);
         }
     }
@@ -73,8 +74,7 @@ public class Console {
         try {
             ctrl.addClient(readString("Enter first name: "), readString("Enter last name: "));
         } catch (ValidatorException e) {
-            print("Data not valid. " + e.getMessage());
-
+            println("Data not valid: " + e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class Console {
                     readString("Enter publisher: "),
                     readInteger("Enter price: "));
         } catch (ValidatorException e) {
-            print("Data not valid. " + e.getMessage());
+            println("Data not valid: " + e.getMessage());
         }
     }
 
@@ -96,8 +96,8 @@ public class Console {
             ctrl.updateClient(readInteger("Id of client to update: "),
                     readString("Enter first name: "),
                     readString("Enter last name: "));
-        } catch (ValidatorException e) {
-            print("Data not valid. " + e.getMessage());
+        } catch (ValidatorException | ControllerException e) {
+            println("Data not valid: " + e.getMessage());
         }
     }
 
@@ -111,17 +111,25 @@ public class Console {
                     readString("Enter publisher: "),
                     readInteger("Enter price: "),
                     readBool("Book availability: "));
-        } catch (ValidatorException e) {
-            print("Data not valid. " + e.getMessage());
+        } catch (ValidatorException | ControllerException e) {
+            println("Data not valid. " + e.getMessage());
         }
     }
 
     private void deleteClient() {
-        ctrl.deleteClient(readInteger("Id of client to delete: "));
+        try {
+            ctrl.deleteClient(readInteger("Id of client to delete: "));
+        } catch (ControllerException e) {
+            println("Data not valid. " + e.getMessage());
+        }
     }
 
     private void deleteBook() {
-        ctrl.deleteClient(readInteger("Id of book to delete: "));
+        try {
+            ctrl.deleteBook(readInteger("Id of book to delete: "));
+        } catch (ControllerException e) {
+            println("Data not valid. " + e.getMessage());
+        }
     }
 
     private void clientBooks() {
@@ -134,8 +142,12 @@ public class Console {
         int clientOpt = readInteger("Which client wants to return?");
         ctrl.clientBooks(clientOpt).ifPresent(books -> books.forEach(this::println));
         int bookOpt = readInteger("Which book is wanted for return?");
-        ctrl.returnBook(clientOpt, bookOpt);
-        println("Book returned!");
+        try {
+            ctrl.returnBook(clientOpt, bookOpt);
+            println("Book returned!");
+        } catch (ValidatorException | ControllerException e) {
+            println("Data not valid. " + e.getMessage());
+        }
     }
 
     private void clientBuyMode() {
@@ -143,8 +155,12 @@ public class Console {
         int clientOpt = readInteger("Which client wants to purchase? ");
         ctrl.availableBooks().forEach(this::println);
         int bookOpt = readInteger("Which book is wanted for buying? ");
-        ctrl.buyBook(clientOpt, bookOpt);
-        println("Book bought!");
+        try {
+            ctrl.buyBook(clientOpt, bookOpt);
+            println("Book bought!");
+        } catch (ValidatorException | ControllerException e) {
+            println("Data not valid. " + e.getMessage());
+        }
     }
 
     private void mostMoneyClient() {
