@@ -123,6 +123,7 @@ public class Controller {
      */
     public void updateClient(int initId, String firstName, String lastName) throws ValidatorException, ControllerException {
         Client client = new Client(initId, firstName, lastName);
+        clientRepository.get(initId).ifPresent(oldClient -> client.setBooks(oldClient.getBooks()));
         if (clientRepository.update(client).isPresent())
             throw new ControllerException("No such client id");
     }
