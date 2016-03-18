@@ -59,6 +59,7 @@ public class Console {
             return readLong(message);
         }
     }
+
     private Boolean readBool(String message) {
         String input = readString(message);
         try {
@@ -123,94 +124,67 @@ public class Console {
         ctrl.deleteClient(readInteger("Id of book to delete: "));
     }
 
-
     private void clientBooks() {
         int clientOpt = readInteger("Display books for client: ");
-        List<Book> books;
-        Optional<List<Book>> optBooks = ctrl.clientBooks(clientOpt);
-        if (optBooks.isPresent()) {
-            books = optBooks.get();
-            books.forEach(System.out::println);
-        }
+        ctrl.clientBooks(clientOpt).ifPresent(books -> books.forEach(this::println));
     }
 
     private void clientReturnMode() {
-        for (Client item : ctrl.getAllClients()) {
-            System.out.println(item);
-        }
-        int clientOpt = readInteger("Which client wants to return? ");
-        for (Book item : ctrl.getAllBooks()) {
-            System.out.println(item);
-        }
-        int bookOpt = readInteger("Which book is wanted for purchase?");
+        ctrl.getAllClients().forEach(this::println);
+        int clientOpt = readInteger("Which client wants to return?");
+        ctrl.clientBooks(clientOpt).ifPresent(books -> books.forEach(this::println));
+        int bookOpt = readInteger("Which book is wanted for return?");
         ctrl.returnBook(clientOpt, bookOpt);
         println("Book returned!");
     }
 
     private void clientBuyMode() {
-        for (Client item : ctrl.getAllClients()) {
-            System.out.println(item);
-        }
+        ctrl.getAllClients().forEach(this::println);
         int clientOpt = readInteger("Which client wants to purchase? ");
-        List<Book> books;
-        Optional<List<Book>> optBooks = ctrl.clientBooks(clientOpt);
-        if (optBooks.isPresent()) {
-            books = optBooks.get();
-            books.forEach(System.out::println);
-        }
-        int bookOpt = readInteger("Which book is wanted for returning? ");
+        ctrl.availableBooks().forEach(this::println);
+        int bookOpt = readInteger("Which book is wanted for buying? ");
         ctrl.buyBook(clientOpt, bookOpt);
         println("Book bought!");
     }
 
     private void mostMoneyClient() {
-        Optional<Client> client = ctrl.clientWhoSpentMost();
-        if (client.isPresent()) {
-            println(client);
-        }
+        ctrl.clientWhoSpentMost().ifPresent(this::println);
     }
 
     private void mostBooksClient() {
-        Optional<Client> client = ctrl.clientWithMostBooks();
-        if (client.isPresent()) {
-            println(client);
-        }
+        ctrl.clientWithMostBooks().ifPresent(this::println);
     }
 
     private void expensiveBooks() {
         int value = readInteger("Display all books with a price higher than: ");
-        ctrl.filterBooksMoreExpensiveThan(value).forEach(System.out::println);
+        ctrl.filterBooksMoreExpensiveThan(value).forEach(this::println);
     }
 
     private void cheaperBooks() {
         int value = readInteger("Display all books with a price lower than: ");
-        ctrl.filterBooksCheaperThan(value).forEach(System.out::println);
+        ctrl.filterBooksCheaperThan(value).forEach(this::println);
     }
 
     private void authorBooks() {
         String author = readString("Give an author to search for: ");
-        ctrl.filterBooksByAuthor(author).forEach(System.out::println);
+        ctrl.filterBooksByAuthor(author).forEach(this::println);
     }
 
     private void genreBooks() {
         String genre = readString("Give an genre to search for: ");
-        ctrl.filterBooksByGenre(genre).forEach(System.out::println);
+        ctrl.filterBooksByGenre(genre).forEach(this::println);
     }
 
     private void showAvailableBooks() {
-        ctrl.availableBooks().forEach(System.out::println);
+        ctrl.availableBooks().forEach(this::println);
     }
 
     private void showAllBooks() {
-        for (Book item : ctrl.getAllBooks()) {
-            System.out.println(item);
-        }
+        ctrl.getAllBooks().forEach(this::println);
     }
 
     private void showAllClients() {
-        for (Client item : ctrl.getAllClients()) {
-            System.out.println(item);
-        }
+        ctrl.getAllClients().forEach(this::println);
     }
 
     private void menu() {
@@ -238,57 +212,25 @@ public class Console {
         );
         Integer option = readInteger("Option: ");
         switch (option) {
-            case 1: addClient();
-                break;
-            case 2: addBook();
-                break;
-            case 3: deleteClient();
-                break;
-            case 4: deleteBook();
-                break;
-            case 5:
-                updateClient();
-                break;
-            case 6:
-                updateBook();
-                break;
-            case 7:
-                showAllClients();
-                break;
-            case 8:
-                showAllBooks();
-                break;
-            case 9:
-                showAvailableBooks();
-                break;
-            case 10:
-                genreBooks();
-                break;
-            case 11:
-                authorBooks();
-                break;
-            case 12:
-                cheaperBooks();
-                break;
-            case 13:
-                expensiveBooks();
-                break;
-            case 14:
-                mostBooksClient();
-                break;
-            case 15:
-                mostMoneyClient();
-                break;
-            case 16:
-                clientBuyMode();
-                break;
-            case 17:
-                clientReturnMode();
-                break;
-            case 18:
-                clientBooks();
-                break;
-            case 0: return;
+            case 1:  addClient(); break;
+            case 2:  addBook(); break;
+            case 3:  deleteClient(); break;
+            case 4:  deleteBook(); break;
+            case 5:  updateClient(); break;
+            case 6:  updateBook(); break;
+            case 7:  showAllClients(); break;
+            case 8:  showAllBooks(); break;
+            case 9:  showAvailableBooks(); break;
+            case 10: genreBooks(); break;
+            case 11: authorBooks(); break;
+            case 12: cheaperBooks(); break;
+            case 13: expensiveBooks(); break;
+            case 14: mostBooksClient(); break;
+            case 15: mostMoneyClient(); break;
+            case 16: clientBuyMode(); break;
+            case 17: clientReturnMode(); break;
+            case 18: clientBooks(); break;
+            case 0:  return;
             default: println("Invalid option, try again.");
         }
         menu();
