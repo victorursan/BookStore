@@ -318,24 +318,4 @@ public class Controller {
         return getStreamFromIterable(availableBooks()).collect(Collectors.groupingBy(Book::getISBN,Collectors.summingInt(e -> 1)));
     }
 
-    public List<Book> getp4() {
-        Stream<Book> stream = getStreamFromIterable(bookRepository.getAll());
-        Map<Boolean, List<Book>> map = stream.sorted((book1, book2) -> book1.getTitle().compareTo(book2.getTitle()))
-                .collect(Collectors.partitioningBy(book -> Objects.equals(book.getPublisher(), "Manning")));
-        List<Book> books = map.get(true);
-        books.addAll(map.get(false));
-        return books;
-    }
-
-//    public List<Book> getp412() {
-//        Stream<Book> stream = getStreamFromIterable(bookRepository.getAll());
-//        Map<Boolean, List<Book>> map = stream.sorted(Comparator.comparing(Book::getTitle))
-//                .collect(Collectors.partitioningBy(book -> book.getPublisher().equals("Manning")));
-//        return Stream.concat(map.get(Boolean.TRUE), map.get(Boolean.FALSE)).collect(Collectors.toList());
-//
-////        List<Book> books = map.get(true);
-////        books.addAll(map.get(false));
-////        return books;
-//    }
-
 }
