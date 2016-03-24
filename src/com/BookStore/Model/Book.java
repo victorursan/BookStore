@@ -3,6 +3,11 @@ package com.BookStore.Model;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+@XmlRootElement(name = "Book")
 public class Book extends BaseEntity<Integer> {
     private String title;
     private String author;
@@ -40,6 +45,7 @@ public class Book extends BaseEntity<Integer> {
         return ISBN;
     }
 
+    @XmlAttribute
     @Setter
     public void setISBN(Long ISBN) {
         this.ISBN = ISBN;
@@ -50,6 +56,7 @@ public class Book extends BaseEntity<Integer> {
         return genre;
     }
 
+    @XmlAttribute
     @Setter
     public void setGenre(String genre) {
         this.genre = genre;
@@ -59,7 +66,7 @@ public class Book extends BaseEntity<Integer> {
     public String getPublisher() {
         return publisher;
     }
-
+    @XmlAttribute
     @Setter
     public void setPublisher(String publisher) {
         this.publisher = publisher;
@@ -69,7 +76,7 @@ public class Book extends BaseEntity<Integer> {
     public Integer getPrice() {
         return price;
     }
-
+    @XmlAttribute
     @Setter
     public void setPrice(Integer price) {
         this.price = price;
@@ -79,7 +86,7 @@ public class Book extends BaseEntity<Integer> {
     public String getAuthor() {
         return author;
     }
-
+    @XmlAttribute
     @Setter
     public void setAuthor(String author) {
         this.author = author;
@@ -89,7 +96,7 @@ public class Book extends BaseEntity<Integer> {
     public String getTitle() {
         return title;
     }
-
+    @XmlAttribute
     @Setter
     public void setTitle(String title) {
         this.title = title;
@@ -99,7 +106,7 @@ public class Book extends BaseEntity<Integer> {
     public Boolean isAvailable() {
         return available;
     }
-
+    @XmlAttribute
     @Setter
     public void setAvailable(Boolean available) {
         this.available = available;
