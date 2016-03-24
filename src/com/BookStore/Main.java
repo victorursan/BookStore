@@ -9,23 +9,24 @@ import com.BookStore.Model.Validators.ValidatorException;
 import com.BookStore.Repository.FileRepository.BookFileRepository;
 import com.BookStore.Repository.FileRepository.ClientFileRepository;
 import com.BookStore.Repository.IRepository;
+import com.BookStore.Repository.XMLRepository.BookXMLRepository;
 import com.BookStore.View.Console;
 
 public class Main {
     public static void main(String[] args) throws ValidatorException {
 
-        String bookPath = "./data/FileData/Books.txt";
-        String clientPath = "./data/FileData/Clients.txt";
-        String purchasePath = "./data/FileData/Purchase.txt";
-        try {
-            IRepository<Book> bookrepo = new BookFileRepository(new BookValidator(), bookPath);
-            IRepository<Client> clientrepo = new ClientFileRepository(new ClientValidator(), clientPath, purchasePath, bookrepo);
-            Console console = new Console(new Controller(bookrepo, clientrepo));
-            console.run();
-        } catch (BaseException e) {
-            System.out.println(e.getMessage());
-        }
-
-
+//        String bookPath = "./data/FileData/Books.txt";
+//        String clientPath = "./data/FileData/Clients.txt";
+//        String purchasePath = "./data/FileData/Purchase.txt";
+//        try {
+//            IRepository<Book> bookrepo = new BookFileRepository(new BookValidator(), bookPath);
+//            IRepository<Client> clientrepo = new ClientFileRepository(new ClientValidator(), clientPath, purchasePath, bookrepo);
+//            Console console = new Console(new Controller(bookrepo, clientrepo));
+//            console.run();
+//        } catch (BaseException e) {
+//            System.out.println(e.getMessage());
+//        }
+        BookXMLRepository bookrepo = new BookXMLRepository(new BookValidator(), "./data/XMLData/Book.xml");
+        bookrepo.add(new Book(1, "", "Barry", 456789012L, "Fantasy", "SomePub", 10, true));
     }
 }

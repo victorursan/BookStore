@@ -4,6 +4,7 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -17,6 +18,10 @@ public class Book extends BaseEntity<Integer> {
     private Integer price;
     private Boolean available;
 
+
+    public Book() {
+        super(1);
+    }
     public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher,
                 Integer price, Boolean available) {
         super(id);
@@ -45,7 +50,7 @@ public class Book extends BaseEntity<Integer> {
         return ISBN;
     }
 
-    @XmlAttribute
+    @XmlElement
     @Setter
     public void setISBN(Long ISBN) {
         this.ISBN = ISBN;
@@ -56,7 +61,7 @@ public class Book extends BaseEntity<Integer> {
         return genre;
     }
 
-    @XmlAttribute
+    @XmlElement
     @Setter
     public void setGenre(String genre) {
         this.genre = genre;
@@ -66,7 +71,7 @@ public class Book extends BaseEntity<Integer> {
     public String getPublisher() {
         return publisher;
     }
-    @XmlAttribute
+    @XmlElement
     @Setter
     public void setPublisher(String publisher) {
         this.publisher = publisher;
@@ -76,7 +81,7 @@ public class Book extends BaseEntity<Integer> {
     public Integer getPrice() {
         return price;
     }
-    @XmlAttribute
+    @XmlElement
     @Setter
     public void setPrice(Integer price) {
         this.price = price;
@@ -86,7 +91,7 @@ public class Book extends BaseEntity<Integer> {
     public String getAuthor() {
         return author;
     }
-    @XmlAttribute
+    @XmlElement
     @Setter
     public void setAuthor(String author) {
         this.author = author;
@@ -96,7 +101,7 @@ public class Book extends BaseEntity<Integer> {
     public String getTitle() {
         return title;
     }
-    @XmlAttribute
+    @XmlElement
     @Setter
     public void setTitle(String title) {
         this.title = title;
@@ -106,7 +111,7 @@ public class Book extends BaseEntity<Integer> {
     public Boolean isAvailable() {
         return available;
     }
-    @XmlAttribute
+    @XmlElement
     @Setter
     public void setAvailable(Boolean available) {
         this.available = available;
