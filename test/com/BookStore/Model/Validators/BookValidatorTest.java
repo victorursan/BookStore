@@ -7,15 +7,10 @@ import static org.junit.Assert.*;
 
 public class BookValidatorTest {
 
-    @Test
+    @Test(expected = ValidatorException.class)
     public void validate() throws Exception {
         BookValidator validator = new BookValidator();
         Book b = new Book(1, "", "Barry", 456789012L, "Fantasy", "SomePub", 10, true);
-        try {
-            validator.validate(b);
-            assertTrue(false);
-        } catch (ValidatorException e) {
-            assertFalse(false);
-        }
+        validator.validate(b);
     }
 }

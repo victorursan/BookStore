@@ -89,7 +89,7 @@ public class BookFileRepository extends InMemoryRepository<Book> {
 
     private void rewriteToFile() {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(bookFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
-            for (Book element: super.getAll()) {
+            for (Book element : super.getAll()) {
                 bufferedWriter.write(element.toString());
                 bufferedWriter.newLine();
             }

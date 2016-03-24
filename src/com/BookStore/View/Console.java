@@ -3,16 +3,10 @@ package com.BookStore.View;
 
 import com.BookStore.BaseException;
 import com.BookStore.Controller.Controller;
-import com.BookStore.Controller.Exceptions.ControllerException;
-import com.BookStore.Model.Book;
-import com.BookStore.Model.Client;
-import com.BookStore.Model.Validators.ValidatorException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Optional;
 
 public class Console {
     private Controller ctrl;
@@ -207,48 +201,86 @@ public class Console {
     private void menu() {
 
         println("Options:" +
-                        "\n1. Add client" +
-                        "\n2. Add book" +
-                        "\n3. Delete client" +
-                        "\n4. Delete book" +
-                        "\n5. Update client" +
-                        "\n6. Update book" +
-                        "\n7. Show all clients" +
-                        "\n8. Show all books" +
-                        "\n9. Show available books" +
-                        "\n10. Books of a genre" +
-                        "\n11. Books by an author" +
-                        "\n12. Books cheaper than" +
-                        "\n13. Books more expensive than" +
-                        "\n14. Client with most books" +
-                        "\n15. Client who spent most" +
-                        "\n16. Client purchase" +
-                        "\n17. Client return" +
-                        "\n18. Purchases by one client" +
-                        "\n0. Exit");
+                "\n1. Add client" +
+                "\n2. Add book" +
+                "\n3. Delete client" +
+                "\n4. Delete book" +
+                "\n5. Update client" +
+                "\n6. Update book" +
+                "\n7. Show all clients" +
+                "\n8. Show all books" +
+                "\n9. Show available books" +
+                "\n10. Books of a genre" +
+                "\n11. Books by an author" +
+                "\n12. Books cheaper than" +
+                "\n13. Books more expensive than" +
+                "\n14. Client with most books" +
+                "\n15. Client who spent most" +
+                "\n16. Client purchase" +
+                "\n17. Client return" +
+                "\n18. Purchases by one client" +
+                "\n0. Exit");
 
         Integer option = readInteger("Option: ");
         switch (option) {
-            case 1:  addClient(); break;
-            case 2:  addBook(); break;
-            case 3:  deleteClient(); break;
-            case 4:  deleteBook(); break;
-            case 5:  updateClient(); break;
-            case 6:  updateBook(); break;
-            case 7:  showAllClients(); break;
-            case 8:  showAllBooks(); break;
-            case 9:  showAvailableBooks(); break;
-            case 10: genreBooks(); break;
-            case 11: authorBooks(); break;
-            case 12: cheaperBooks(); break;
-            case 13: expensiveBooks(); break;
-            case 14: mostBooksClient(); break;
-            case 15: mostMoneyClient(); break;
-            case 16: clientBuyMode(); break;
-            case 17: clientReturnMode(); break;
-            case 18: clientBooks(); break;
-            case 0:  return;
-            default: println("Invalid option, try again.");
+            case 1:
+                addClient();
+                break;
+            case 2:
+                addBook();
+                break;
+            case 3:
+                deleteClient();
+                break;
+            case 4:
+                deleteBook();
+                break;
+            case 5:
+                updateClient();
+                break;
+            case 6:
+                updateBook();
+                break;
+            case 7:
+                showAllClients();
+                break;
+            case 8:
+                showAllBooks();
+                break;
+            case 9:
+                showAvailableBooks();
+                break;
+            case 10:
+                genreBooks();
+                break;
+            case 11:
+                authorBooks();
+                break;
+            case 12:
+                cheaperBooks();
+                break;
+            case 13:
+                expensiveBooks();
+                break;
+            case 14:
+                mostBooksClient();
+                break;
+            case 15:
+                mostMoneyClient();
+                break;
+            case 16:
+                clientBuyMode();
+                break;
+            case 17:
+                clientReturnMode();
+                break;
+            case 18:
+                clientBooks();
+                break;
+            case 0:
+                return;
+            default:
+                println("Invalid option, try again.");
         }
         menu();
     }

@@ -34,8 +34,8 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
         try {
             Files.lines(clientFilePath).forEach(line -> {
                 List<String> items = Arrays.asList(line.split(", ")).stream()
-                                    .map(String::trim)
-                                    .collect(Collectors.toList());
+                        .map(String::trim)
+                        .collect(Collectors.toList());
                 int id = Integer.parseInt(items.get(0));
                 String firstName = items.get(1);
                 String lastName = items.get((2));
@@ -100,14 +100,14 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
     private void rewriteToFile() {
         try (BufferedWriter clientBuffer = Files.newBufferedWriter(clientFilePath, StandardOpenOption.TRUNCATE_EXISTING);
              BufferedWriter purchaseBuffer = Files.newBufferedWriter(purchaseFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
-            for (Client client: super.getAll()) {
-                 String clientStr = String.format("%d, %s, %s\n",client.getId(), client.getFirstName(), client.getLastName());
-                 clientBuffer.write(clientStr);
-                 for(Book book: client.getBooks()) {
-                     String purchaseStr = String.format("%d, %d\n",client.getId(), book.getId());
-                     purchaseBuffer.write(purchaseStr);
-                 }
-             }
+            for (Client client : super.getAll()) {
+                String clientStr = String.format("%d, %s, %s\n", client.getId(), client.getFirstName(), client.getLastName());
+                clientBuffer.write(clientStr);
+                for (Book book : client.getBooks()) {
+                    String purchaseStr = String.format("%d, %d\n", client.getId(), book.getId());
+                    purchaseBuffer.write(purchaseStr);
+                }
+            }
         } catch (IOException e) {
             throw new RepositoryException(e.getMessage());
         }

@@ -253,7 +253,7 @@ public class Controller {
      * @param clientID the id of the client
      * @param bookID   the id of the book
      * @throws ControllerException if the book's or client's id are invalid
-     * @throws ValidatorException if the book changed and became invalid
+     * @throws ValidatorException  if the book changed and became invalid
      */
     public void buyBook(int clientID, int bookID) throws ValidatorException, ControllerException {
         Optional<Book> optBook = bookRepository.get(bookID);
@@ -274,9 +274,9 @@ public class Controller {
      * @param clientID the id of the client
      * @param bookID   the id of the book
      * @throws ControllerException if the book's or client's id are invalid
-     * @throws ValidatorException if the book changed and became invalid
+     * @throws ValidatorException  if the book changed and became invalid
      */
-    public void returnBook(int clientID, int bookID) throws ValidatorException, ControllerException{
+    public void returnBook(int clientID, int bookID) throws ValidatorException, ControllerException {
         Optional<Book> optBook = bookRepository.get(bookID);
         Optional<Client> optClient = clientRepository.get(clientID);
         optClient.ifPresent(client -> optBook.ifPresent(book -> {
@@ -315,7 +315,17 @@ public class Controller {
     }
 
     public Map<Long, Integer> uniqueAvailableBooks() {
-        return getStreamFromIterable(availableBooks()).collect(Collectors.groupingBy(Book::getISBN,Collectors.summingInt(e -> 1)));
+        return getStreamFromIterable(availableBooks()).collect(Collectors.groupingBy(Book::getISBN, Collectors.summingInt(e -> 1)));
+    }
+
+    public List<Book> getp412() {
+        Stream<Book> stream = getStreamFromIterable(bookRepository.getAll());
+        Map<Boolean, List<Book>> map = stream.sorted(Comparator.comparing(Book::getTitle))
+                .collect(Collectors.partitioningBy(book -> book.getPublisher().equals("Manning")));
+
+        List<Book> books = map.get(true);
+        books.addAll(map.get(false));
+        return books;
     }
 
 }

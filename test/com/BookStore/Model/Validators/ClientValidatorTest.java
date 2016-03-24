@@ -7,15 +7,10 @@ import static org.junit.Assert.*;
 
 public class ClientValidatorTest {
 
-    @Test
+    @Test(expected = ValidatorException.class)
     public void validate() throws Exception {
         ClientValidator validator = new ClientValidator();
         Client c = new Client(1, "", "");
-        try {
-            validator.validate(c);
-            assertTrue(false);
-        } catch (ValidatorException e) {
-            assertFalse(false);
-        }
+        validator.validate(c);
     }
 }
