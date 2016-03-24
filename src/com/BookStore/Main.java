@@ -6,8 +6,8 @@ import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.BookValidator;
 import com.BookStore.Model.Validators.ClientValidator;
 import com.BookStore.Model.Validators.ValidatorException;
-import com.BookStore.Repository.BookFileRepository;
-import com.BookStore.Repository.ClientFileRepository;
+import com.BookStore.Repository.FileRepository.BookFileRepository;
+import com.BookStore.Repository.FileRepository.ClientFileRepository;
 import com.BookStore.Repository.IRepository;
 import com.BookStore.View.Console;
 

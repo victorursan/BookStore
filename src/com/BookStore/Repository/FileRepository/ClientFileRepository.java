@@ -1,10 +1,12 @@
-package com.BookStore.Repository;
+package com.BookStore.Repository.FileRepository;
 
 import com.BookStore.Model.Book;
 import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
 import com.BookStore.Repository.Exceptions.RepositoryException;
+import com.BookStore.Repository.IRepository;
+import com.BookStore.Repository.InMemoryRepository;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
