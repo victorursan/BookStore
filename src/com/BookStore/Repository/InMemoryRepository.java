@@ -3,12 +3,17 @@ package com.BookStore.Repository;
 import com.BookStore.Model.BaseEntity;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
+import jdk.nashorn.internal.objects.annotations.Setter;
 
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@XmlRootElement(name = "Repository")
 public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepository<T> {
     private List<T> entities;
     private IValidator<T> validator;
@@ -42,9 +47,16 @@ public class InMemoryRepository<T extends BaseEntity<Integer>> implements IRepos
         });
     }
 
+    @XmlElementWrapper(name = "entities")
+    @XmlElementRef()
     @Override
     public List<T> getAll() {
         return entities;
+    }
+
+    @Setter
+    protected void setEntities(List<T> entities) {
+        this.entities = entities;
     }
 
     @Override

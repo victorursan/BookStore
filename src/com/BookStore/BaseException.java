@@ -1,18 +1,18 @@
 package com.BookStore;
 
 public class BaseException extends RuntimeException {
-    private Exception parentException;
+    private Throwable parentException;
 
     public BaseException(String message) {
         super(message);
     }
 
-    public BaseException(Exception e) {
+    public BaseException(Throwable e) {
         super(e.getMessage());
         this.parentException = e;
     }
 
-    public Exception getParentException() {
+    public Throwable getParentException() {
         return parentException;
     }
 }
