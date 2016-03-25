@@ -6,9 +6,11 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement(name = "client")
 public class Client extends BaseEntity<Integer> {
     private String firstName;
     private String lastName;
@@ -54,13 +56,15 @@ public class Client extends BaseEntity<Integer> {
         this.lastName = lastName;
     }
 
-    @XmlElementWrapper(name = "books")
-    @XmlElementRef()
+
+
     @Getter
     public List<Book> getBooks() {
         return books;
     }
 
+    @XmlElementWrapper(name = "books")
+    @XmlElementRef()
     @Setter
     public void setBooks(List<Book> books) {
         this.books = books;

@@ -1,3 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Repository>
+    <entities>
+        <client>
+            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">1</id>
+            <books/>
+            <firstName>Maria</firstName>
+            <lastName>Ion</lastName>
+        </client>
+        <client>
+            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2</id>
+            <books/>
+            <firstName>Laura</firstName>
+            <lastName>Pop</lastName>
+        </client>
+        <client>
+            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">0</id>
+            <books>
+                <book>
+                    <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2</id>
+                    <author>Barry</author>
+                    <available>false</available>
+                    <genre>Fantasy</genre>
+                    <ISBN>456789012</ISBN>
+                    <price>10</price>
+                    <publisher>SomePub</publisher>
+                    <title>asd</title>
+                </book>
+            </books>
+            <firstName>Victor</firstName>
+            <lastName>Ursan</lastName>
+        </client>
+    </entities>
 </Repository>

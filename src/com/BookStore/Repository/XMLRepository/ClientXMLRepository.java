@@ -71,12 +71,14 @@ public class ClientXMLRepository extends InMemoryRepository<Client> {
         return client;
     }
 
-
     private void rewriteToFile() {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(clientFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
             JAXBContext jaxbContext = JAXBContext.newInstance(InMemoryRepository.class);
+            //
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            //
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            //
             jaxbMarshaller.marshal(this, bufferedWriter);
         } catch (JAXBException | IOException e) {
             throw new RepositoryException(e);
