@@ -32,16 +32,6 @@
             <title>New Title</title>
         </book>
         <book>
-            <id>6</id>
-            <author>title</author>
-            <available>true</available>
-            <genre>horror</genre>
-            <ISBN>12</ISBN>
-            <price>12</price>
-            <publisher>abc</publisher>
-            <title>auth</title>
-        </book>
-        <book>
             <id>2</id>
             <author>Barry</author>
             <available>false</available>
@@ -70,6 +60,16 @@
             <price>10</price>
             <publisher>SomePub</publisher>
             <title>asd</title>
+        </book>
+        <book>
+            <id>6</id>
+            <author>title</author>
+            <available>false</available>
+            <genre>horror</genre>
+            <ISBN>12</ISBN>
+            <price>12</price>
+            <publisher>abc</publisher>
+            <title>auth</title>
         </book>
     </entities>
 </Repository>
