@@ -26,7 +26,7 @@ public class BaseEntity<ID> {
         return id;
     }
 
-    @XmlElement(name = "id", type = String.class)
+    @XmlElement(name = "id", type = int.class)
     @Setter
     public void setId(ID id) {
         this.id = id;
