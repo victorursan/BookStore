@@ -2,10 +2,10 @@
 <Repository>
     <entities>
         <client>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">0</id>
+            <id>0</id>
             <books>
                 <book>
-                    <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2</id>
+                    <id>2</id>
                     <author>Barry</author>
                     <available>false</available>
                     <genre>Fantasy</genre>
@@ -19,10 +19,10 @@
             <lastName>Ursan</lastName>
         </client>
         <client>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">3</id>
+            <id>3</id>
             <books>
                 <book>
-                    <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">7</id>
+                    <id>7</id>
                     <author>Foo Bar</author>
                     <available>false</available>
                     <genre>Programming</genre>
@@ -36,10 +36,10 @@
             <lastName>Ion</lastName>
         </client>
         <client>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2</id>
+            <id>2</id>
             <books>
                 <book>
-                    <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">3</id>
+                    <id>3</id>
                     <author>Barry</author>
                     <available>false</available>
                     <genre>Fantasy</genre>
