@@ -57,7 +57,6 @@ public class Client extends BaseEntity<Integer> {
     }
 
 
-
     @Getter
     public List<Book> getBooks() {
         return books;

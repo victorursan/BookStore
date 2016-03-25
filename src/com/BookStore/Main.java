@@ -15,7 +15,7 @@ public class Main {
 
         String bookPath = "./data/XMLData/Book.xml";
         String clientPath = "./data/XMLData/Client.xml";
-        String purchasePath = "./data/FileData/Purchase.txt";
+//        String purchasePath = "./data/FileData/Purchase.txt";
         try {
             IRepository<Book> bookrepo = new XMLRepository<>(new BookValidator(), bookPath);
             IRepository<Client> clientrepo = new XMLRepository<>(new ClientValidator(), clientPath);

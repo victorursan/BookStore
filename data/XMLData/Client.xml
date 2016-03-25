@@ -2,22 +2,10 @@
 <Repository>
     <entities>
         <client>
-            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:type="xs:int">2
-            </id>
-            <books/>
-            <firstName>Laura</firstName>
-            <lastName>Pop</lastName>
-        </client>
-        <client>
-            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:type="xs:int">0
-            </id>
+            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">0</id>
             <books>
                 <book>
-                    <id xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:int">2
-                    </id>
+                    <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2</id>
                     <author>Barry</author>
                     <available>false</available>
                     <genre>Fantasy</genre>
@@ -31,14 +19,10 @@
             <lastName>Ursan</lastName>
         </client>
         <client>
-            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:type="xs:int">3
-            </id>
+            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">3</id>
             <books>
                 <book>
-                    <id xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:int">7
-                    </id>
+                    <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">7</id>
                     <author>Foo Bar</author>
                     <available>false</available>
                     <genre>Programming</genre>
@@ -50,6 +34,23 @@
             </books>
             <firstName>Maria</firstName>
             <lastName>Ion</lastName>
+        </client>
+        <client>
+            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2</id>
+            <books>
+                <book>
+                    <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">3</id>
+                    <author>Barry</author>
+                    <available>false</available>
+                    <genre>Fantasy</genre>
+                    <ISBN>456789012</ISBN>
+                    <price>10</price>
+                    <publisher>SomePub</publisher>
+                    <title>asd</title>
+                </book>
+            </books>
+            <firstName>Laura</firstName>
+            <lastName>Pop</lastName>
         </client>
     </entities>
 </Repository>

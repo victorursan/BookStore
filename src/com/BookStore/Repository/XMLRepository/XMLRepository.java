@@ -71,7 +71,6 @@ public class XMLRepository<T extends BaseEntity<Integer>> extends InMemoryReposi
         return book;
     }
 
-
     private void rewriteToFile() {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath, StandardOpenOption.TRUNCATE_EXISTING)) {
             JAXBContext jaxbContext = JAXBContext.newInstance(InMemoryRepository.class);
