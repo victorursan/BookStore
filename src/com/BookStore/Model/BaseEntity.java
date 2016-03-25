@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @XmlRootElement(name = "entity")
 @XmlSeeAlso({Book.class, Client.class})
 public class BaseEntity<ID> {
+
     private ID id;
 
     public BaseEntity() {
@@ -25,7 +26,7 @@ public class BaseEntity<ID> {
         return id;
     }
 
-    @XmlElement
+    @XmlElement(name = "id", type = String.class)
     @Setter
     public void setId(ID id) {
         this.id = id;

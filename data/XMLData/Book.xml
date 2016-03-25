@@ -2,7 +2,7 @@
 <Repository>
     <entities>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">4</id>
+            <id>4</id>
             <author>Barry</author>
             <available>true</available>
             <genre>Fantasy</genre>
@@ -12,7 +12,7 @@
             <title>asd</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">5</id>
+            <id>5</id>
             <author>Barry</author>
             <available>true</available>
             <genre>Fantasy</genre>
@@ -22,7 +22,7 @@
             <title>asd</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">1</id>
+            <id>1</id>
             <author>ne author</author>
             <available>true</available>
             <genre>new genre</genre>
@@ -32,7 +32,7 @@
             <title>New Title</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">6</id>
+            <id>6</id>
             <author>title</author>
             <available>true</available>
             <genre>horror</genre>
@@ -42,7 +42,7 @@
             <title>auth</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2</id>
+            <id>2</id>
             <author>Barry</author>
             <available>false</available>
             <genre>Fantasy</genre>
@@ -52,7 +52,7 @@
             <title>asd</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">7</id>
+            <id>7</id>
             <author>Foo Bar</author>
             <available>false</available>
             <genre>Programming</genre>
@@ -62,7 +62,7 @@
             <title>NewBook</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">3</id>
+            <id>3</id>
             <author>Barry</author>
             <available>false</available>
             <genre>Fantasy</genre>

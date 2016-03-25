@@ -32,6 +32,7 @@ public class XMLRepository<T extends BaseEntity<Integer>> extends InMemoryReposi
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(InMemoryRepository.class);
             Unmarshaller jaxbUnMarshaller = jaxbContext.createUnmarshaller();
+
             InMemoryRepository<T> newRepo = (InMemoryRepository<T>) jaxbUnMarshaller.unmarshal(Files.newInputStream(filePath));
             super.setEntities(newRepo.getAll());
         } catch (JAXBException | IOException e) {
