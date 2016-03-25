@@ -19,6 +19,23 @@
             <lastName>Ursan</lastName>
         </client>
         <client>
+            <id>3</id>
+            <books>
+                <book>
+                    <id>7</id>
+                    <author>Foo Bar</author>
+                    <available>false</available>
+                    <genre>Programming</genre>
+                    <ISBN>1234567</ISBN>
+                    <price>12</price>
+                    <publisher>Hamsters</publisher>
+                    <title>NewBook</title>
+                </book>
+            </books>
+            <firstName>Maria</firstName>
+            <lastName>Ion</lastName>
+        </client>
+        <client>
             <id>2</id>
             <books>
                 <book>
@@ -34,33 +51,6 @@
             </books>
             <firstName>Laura</firstName>
             <lastName>Pop</lastName>
-        </client>
-        <client>
-            <id>3</id>
-            <books>
-                <book>
-                    <id>7</id>
-                    <author>Foo Bar</author>
-                    <available>false</available>
-                    <genre>Programming</genre>
-                    <ISBN>1234567</ISBN>
-                    <price>12</price>
-                    <publisher>Hamsters</publisher>
-                    <title>NewBook</title>
-                </book>
-                <book>
-                    <id>6</id>
-                    <author>title</author>
-                    <available>false</available>
-                    <genre>horror</genre>
-                    <ISBN>12</ISBN>
-                    <price>12</price>
-                    <publisher>abc</publisher>
-                    <title>auth</title>
-                </book>
-            </books>
-            <firstName>Maria</firstName>
-            <lastName>Ion</lastName>
         </client>
     </entities>
 </Repository>
