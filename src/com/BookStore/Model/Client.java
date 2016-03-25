@@ -3,6 +3,9 @@ package com.BookStore.Model;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +13,10 @@ public class Client extends BaseEntity<Integer> {
     private String firstName;
     private String lastName;
     private List<Book> books;
+
+    public Client() {
+        super(1);
+    }
 
     public Client(Integer id, String firstName, String lastName) {
         super(id);
@@ -30,6 +37,7 @@ public class Client extends BaseEntity<Integer> {
         return firstName;
     }
 
+    @XmlElement
     @Setter
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -40,11 +48,14 @@ public class Client extends BaseEntity<Integer> {
         return lastName;
     }
 
+    @XmlElement
     @Setter
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @XmlElementWrapper(name = "books")
+    @XmlElementRef()
     @Getter
     public List<Book> getBooks() {
         return books;

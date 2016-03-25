@@ -2,7 +2,9 @@
 <Repository>
     <entities>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">4</id>
+            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:type="xs:int">4
+            </id>
             <author>Barry</author>
             <available>true</available>
             <genre>Fantasy</genre>
@@ -12,7 +14,9 @@
             <title>asd</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">3</id>
+            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:type="xs:int">3
+            </id>
             <author>Barry</author>
             <available>true</available>
             <genre>Fantasy</genre>
@@ -22,7 +26,9 @@
             <title>asd</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2</id>
+            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:type="xs:int">2
+            </id>
             <author>Barry</author>
             <available>true</available>
             <genre>Fantasy</genre>
@@ -32,7 +38,9 @@
             <title>asd</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">5</id>
+            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:type="xs:int">5
+            </id>
             <author>Barry</author>
             <available>true</available>
             <genre>Fantasy</genre>
@@ -42,7 +50,9 @@
             <title>asd</title>
         </book>
         <book>
-            <id xsi:type="xs:int" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">1</id>
+            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:type="xs:int">1
+            </id>
             <author>ne author</author>
             <available>true</available>
             <genre>new genre</genre>
@@ -50,6 +60,18 @@
             <price>12</price>
             <publisher>new publisher</publisher>
             <title>New Title</title>
+        </book>
+        <book>
+            <id xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:type="xs:int">6
+            </id>
+            <author>title</author>
+            <available>true</available>
+            <genre>horror</genre>
+            <ISBN>12</ISBN>
+            <price>12</price>
+            <publisher>abc</publisher>
+            <title>auth</title>
         </book>
     </entities>
 </Repository>
