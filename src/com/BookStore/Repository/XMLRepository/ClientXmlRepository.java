@@ -3,18 +3,21 @@ package com.BookStore.Repository.XMLRepository;
 import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
+import com.BookStore.Repository.Exceptions.RepositoryException;
 import com.BookStore.Repository.InMemoryRepository;
 import com.BookStore.util.XmlReader;
 import com.BookStore.util.XmlWriter;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author radu.
- */
+
 public class ClientXmlRepository extends InMemoryRepository<Client> {
     private Path clientFilePath;
 
@@ -23,6 +26,14 @@ public class ClientXmlRepository extends InMemoryRepository<Client> {
         clientFilePath = Paths.get(fileName);
 
         loadData();
+    }
+
+    private void rewriteToFile() {
+        try {
+            new XmlWriter<Client>(clientFilePath).save(super.getAll());
+        } catch (Throwable e) {
+            throw new RepositoryException(e.getMessage());
+        }
     }
 
     private void loadData() {
@@ -39,6 +50,24 @@ public class ClientXmlRepository extends InMemoryRepository<Client> {
     @Override
     public void add(Client entity) throws ValidatorException {
         super.add(entity);
-        new XmlWriter<Client>(clientFilePath).save(entity);
+        rewriteToFile();
+
+    }
+
+    @Override
+    public Optional<Client> update(Client elem) throws ValidatorException {
+        Optional<Client> client = super.update(elem);
+        if (!client.isPresent()) {
+            rewriteToFile();
+        }
+        return super.update(elem);
+
+    }
+
+    @Override
+    public Optional<Client> delete(int id) {
+        Optional<Client> client = super.delete(id);
+        client.ifPresent(t -> rewriteToFile());
+        return client;
     }
 }
