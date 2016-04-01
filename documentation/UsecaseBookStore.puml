@@ -1,0 +1,7 @@
+@startuml
+
+title Buy a book
+actor customer
+customer -> (buy book)
+
+@enduml

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<list>
+  <com.BookStore.Model.Book>
+    <id>7</id>
+    <title>Victor</title>
+    <author>Barry</author>
+    <ISBN>456789012</ISBN>
+    <genre>Fantasy</genre>
+    <publisher>SomePub</publisher>
+    <price>10</price>
+    <available>false</available>
+  </com.BookStore.Model.Book>
+</list>
