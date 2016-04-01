@@ -98,7 +98,7 @@ public class Console {
 
     private void updateBook() {
         try {
-            ctrl.updateBook(readInteger("Id of client to update: "),
+            ctrl.updateBook(readInteger("Id of book to update: "),
                     readString("Enter title: "),
                     readString("Enter author:"),
                     readLong("Enter ISBN: "),

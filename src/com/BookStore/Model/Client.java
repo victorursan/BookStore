@@ -5,6 +5,7 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Client extends BaseEntity<Integer> {
     private String firstName;
@@ -64,7 +65,12 @@ public class Client extends BaseEntity<Integer> {
     }
 
     public boolean returnBook(Book book) {
-        return books.remove(book);
+        for (Book b : books) {
+            if (Objects.equals(b.getId(), book.getId())) {
+                return books.remove(b);
+            }
+        }
+        return false;
     }
 
     public int moneySpent() {
@@ -73,7 +79,6 @@ public class Client extends BaseEntity<Integer> {
 
     @Override
     public String toString() {
-        return "{" + getId() + ". First Name: " + firstName + ", Last Name: " + lastName +
-                ", Books: " + books.toString() + "}";
+        return "{ " + getId() + ". First Name: " + firstName + ", Last Name: " + lastName + " Books: [" + books + "] }";
     }
 }
