@@ -48,6 +48,16 @@ public class ClientXmlRepository extends InMemoryRepository<Client> {
     }
 
     @Override
+    public Optional<Client> get(int id) {
+        return super.get(id);
+    }
+
+    @Override
+    public List<Client> getAll() {
+        return super.getAll();
+    }
+
+    @Override
     public void add(Client entity) throws ValidatorException {
         super.add(entity);
         rewriteToFile();

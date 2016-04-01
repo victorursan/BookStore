@@ -49,10 +49,19 @@ public class BookXmlRepository extends InMemoryRepository<Book> {
     }
 
     @Override
+    public Optional<Book> get(int id) {
+        return super.get(id);
+    }
+
+    @Override
+    public List<Book> getAll() {
+        return super.getAll();
+    }
+
+    @Override
     public void add(Book entity) throws ValidatorException {
         super.add(entity);
         rewriteToFile();
-
     }
 
     @Override
@@ -70,6 +79,4 @@ public class BookXmlRepository extends InMemoryRepository<Book> {
         client.ifPresent(t -> rewriteToFile());
         return client;
     }
-
-
 }

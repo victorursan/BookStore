@@ -2,10 +2,8 @@ package com.BookStore.util;
 
 import com.BookStore.Model.BaseEntity;
 import com.BookStore.Repository.Exceptions.RepositoryException;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,11 +15,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
-import java.io.BufferedReader;
 import java.util.List;
 
 public class XmlWriter<T extends BaseEntity<Integer>> {
@@ -31,7 +25,7 @@ public class XmlWriter<T extends BaseEntity<Integer>> {
         this.filePath = filePath;
     }
 
-    private DOMSource getDOMFromEntity(List<T> entity) throws ParserConfigurationException, IllegalAccessException {
+    private Document getDocFromEntity(List<T> entity) throws ParserConfigurationException, IllegalAccessException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -80,20 +74,14 @@ public class XmlWriter<T extends BaseEntity<Integer>> {
             }
             rootElement.appendChild(element);
         }
-        return new DOMSource(doc);
+        return doc;
     }
 
     public void save(List<T> entity) {
         try {
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            DOMSource source = getDOMFromEntity(entity);
-            StreamResult result = new StreamResult(new File(String.valueOf(filePath)));
-            transformer.transform(source, result);
-        } catch (Throwable e) {
-            throw new RepositoryException("Something went wrong whe writing to XML");
+            XmlHelper.saveDocument(String.valueOf(filePath), getDocFromEntity(entity));
+        } catch (ParserConfigurationException | IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }

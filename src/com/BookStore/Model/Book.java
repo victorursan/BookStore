@@ -35,6 +35,10 @@ public class Book extends BaseEntity<Integer> {
         this.available = true;
     }
 
+    public Book() {
+        super(1);
+    }
+
     @Getter
     public Long getISBN() {
         return ISBN;

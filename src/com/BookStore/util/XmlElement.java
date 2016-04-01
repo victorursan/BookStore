@@ -1,8 +1,5 @@
 package com.BookStore.util;
 
-/**
- * @author radu.
- */
 enum XmlElement {
     FIELD("field"), NAME("name"), TYPE("type"), VALUE("value"), ENTITY("entity"), CLASS("class");
 
