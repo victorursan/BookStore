@@ -64,7 +64,6 @@ public class XmlReader {
                             }
                         }
                     }
-
                     Object instance = cls.newInstance();
                     for (Field f : fields) {
                         f.setAccessible(true);
@@ -81,13 +80,9 @@ public class XmlReader {
 
     public Optional<List> loadEntities() {
         try {
-            File inputFile = new File(String.valueOf(filePath));
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-            Node n = doc.getFirstChild();
-            return Optional.ofNullable(loadEntitiesFromNode(n));
+            Document doc = XmlHelper.loadDocument(String.valueOf(filePath));
+            Node node = doc.getFirstChild();
+            return Optional.ofNullable(loadEntitiesFromNode(node));
         }
         catch (Throwable e) {
             e.printStackTrace();

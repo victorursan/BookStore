@@ -59,7 +59,6 @@ public class ClientXmlRepository extends InMemoryRepository<Client> {
             rewriteToFile();
         }
         return super.update(elem);
-
     }
 
     @Override

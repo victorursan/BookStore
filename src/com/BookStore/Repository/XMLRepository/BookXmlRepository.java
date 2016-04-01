@@ -37,7 +37,6 @@ public class BookXmlRepository extends InMemoryRepository<Book> {
         new XmlReader(bookFilePath).loadEntities().ifPresent(obj -> ((List<Book>) obj).forEach(super::add));
     }
 
-
     @Override
     public Optional<Book> get(int id) {
         return super.get(id);

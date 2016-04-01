@@ -44,4 +44,10 @@
       </com.BookStore.Model.Book>
     </books>
   </com.BookStore.Model.Client>
+  <com.BookStore.Model.Client>
+    <id>3</id>
+    <firstName>X</firstName>
+    <lastName>Y</lastName>
+    <books/>
+  </com.BookStore.Model.Client>
 </list>

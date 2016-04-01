@@ -37,31 +37,24 @@ public class XmlWriter<T extends BaseEntity<Integer>> {
         for (Object mainObject : (java.util.List) entity) {
             Element element = doc.createElement(mainObject.getClass().getTypeName());
 
-            for (Field field : mainObject.getClass().getSuperclass().getDeclaredFields()) {
-                field.setAccessible(true);
-                Element newElem = doc.createElement(field.getName());
-                newElem.appendChild(doc.createTextNode(String.valueOf(field.get(mainObject))));
-                System.out.print("");
-                element.appendChild(newElem);
-            }
+            Field[] fields = new Field[mainObject.getClass().getSuperclass().getDeclaredFields().length + mainObject.getClass().getDeclaredFields().length];
+            System.arraycopy(mainObject.getClass().getSuperclass().getDeclaredFields(), 0, fields, 0, mainObject.getClass().getSuperclass().getDeclaredFields().length);
+            System.arraycopy(mainObject.getClass().getDeclaredFields(), 0, fields, mainObject.getClass().getSuperclass().getDeclaredFields().length, mainObject.getClass().getDeclaredFields().length);
 
-            for (Field field : mainObject.getClass().getDeclaredFields()) {
+            for (Field field : fields) {
                 field.setAccessible(true);
                 Element newElem = doc.createElement(field.getName());
                 if (field.getType() == java.util.List.class) {
                     Object value = field.get(mainObject);
-                    for (Object obj: (java.util.List) value) {
+                    for (Object obj : (java.util.List) value) {
                         Element grandchild = doc.createElement(String.valueOf(obj.getClass().getTypeName()));
-                        for (Field childField : obj.getClass().getSuperclass().getDeclaredFields()) {
-                            childField.setAccessible(true);
-                            Element newChildElem = doc.createElement(childField.getName());
-                            newChildElem.appendChild(doc.createTextNode(String.valueOf(childField.get(obj))));
-                            grandchild.appendChild(newChildElem);
-                        }
-                        for (Field childField : obj.getClass().getDeclaredFields()) {
-                            childField.setAccessible(true);
-                            Element newChildElem = doc.createElement(childField.getName());
-                            newChildElem.appendChild(doc.createTextNode(String.valueOf(childField.get(obj))));
+                        Field[] cfields = new Field[obj.getClass().getSuperclass().getDeclaredFields().length + obj.getClass().getDeclaredFields().length];
+                        System.arraycopy(obj.getClass().getSuperclass().getDeclaredFields(), 0, cfields, 0, obj.getClass().getSuperclass().getDeclaredFields().length);
+                        System.arraycopy(obj.getClass().getDeclaredFields(), 0, cfields, obj.getClass().getSuperclass().getDeclaredFields().length, obj.getClass().getDeclaredFields().length);
+                        for (Field cfield : cfields) {
+                            cfield.setAccessible(true);
+                            Element newChildElem = doc.createElement(cfield.getName());
+                            newChildElem.appendChild(doc.createTextNode(String.valueOf(cfield.get(obj))));
                             grandchild.appendChild(newChildElem);
                         }
                         newElem.appendChild(grandchild);
@@ -71,8 +64,9 @@ public class XmlWriter<T extends BaseEntity<Integer>> {
                     newElem.appendChild(doc.createTextNode(String.valueOf(field.get(mainObject))));
                     element.appendChild(newElem);
                 }
+                rootElement.appendChild(element);
             }
-            rootElement.appendChild(element);
+
         }
         return doc;
     }
