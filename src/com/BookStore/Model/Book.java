@@ -107,6 +107,7 @@ public class Book extends BaseEntity<Integer> {
 
     @Override
     public String toString() {
-        return getId() + ", " + title + ", " + author + ", " + ISBN + ", " + genre + ", " + publisher + ", " + price + ", " + available;
+        return "{ " + getId() + ", " + title + ", " + author + ", " + ISBN + ", " + genre + ", " + publisher +
+                ", " + price + ", " + available + " }";
     }
 }

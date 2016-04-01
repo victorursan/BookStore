@@ -130,7 +130,7 @@ public class BookDbRepository implements IRepository<Book> {
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement statement = connection.prepareStatement("DELETE FROM books where bookid=?")) {
-            statement.setLong(1, id);
+            statement.setInt(1, id);
             statement.executeUpdate();
             return Optional.empty();
         } catch (SQLException e) {
@@ -138,4 +138,6 @@ public class BookDbRepository implements IRepository<Book> {
         }
         return book;
     }
+
+
 }
