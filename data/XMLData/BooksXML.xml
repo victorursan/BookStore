@@ -8,6 +8,6 @@
     <genre>Fantasy</genre>
     <publisher>SomePub</publisher>
     <price>10</price>
-    <available>true</available>
+    <available>false</available>
   </com.BookStore.Model.Book>
 </list>

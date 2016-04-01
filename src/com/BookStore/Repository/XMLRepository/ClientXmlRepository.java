@@ -8,12 +8,8 @@ import com.BookStore.Repository.InMemoryRepository;
 import com.BookStore.util.XmlReader;
 import com.BookStore.util.XmlWriter;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,14 +33,7 @@ public class ClientXmlRepository extends InMemoryRepository<Client> {
     }
 
     private void loadData() {
-        List<Client> clients = new XmlReader<Client>(clientFilePath).loadEntities();
-        for (Client Client : clients) {
-            try {
-                super.add(Client);
-            } catch (ValidatorException e) {
-                e.printStackTrace();
-            }
-        }
+        new XmlReader(clientFilePath).loadEntities().ifPresent(obj -> ((List<Client>) obj).forEach(super::add));
     }
 
     @Override
@@ -61,7 +50,6 @@ public class ClientXmlRepository extends InMemoryRepository<Client> {
     public void add(Client entity) throws ValidatorException {
         super.add(entity);
         rewriteToFile();
-
     }
 
     @Override

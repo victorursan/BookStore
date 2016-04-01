@@ -1,132 +1,98 @@
 package com.BookStore.util;
 
+import com.BookStore.Model.BaseEntity;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.BookStore.Model.BaseEntity;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-import sun.rmi.rmic.iiop.ClassType;
-import sun.rmi.rmic.iiop.InterfaceType;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.Optional;
 
 
-public class XmlReader<T extends BaseEntity<Integer>> {
+public class XmlReader {
     private Path filePath;
 
     public XmlReader(Path filePath) {
         this.filePath = filePath;
     }
 
-    public List<T> loadEntities() {
-        List<T> entities = new ArrayList<>();
-//        Document document = XmlHelper.loadDocument(String.valueOf(filePath));
+    private List loadEntitiesFromNode(Node node) {
+        List entities = new ArrayList();
+        try {
+            NodeList nl = node.getChildNodes();
 
+            for (int i = 0; i < nl.getLength(); i++) {
+                Node parentNode = nl.item(i);
+                if (parentNode.getNodeType() == Node.ELEMENT_NODE) {
+                    NodeList nl2 = parentNode.getChildNodes();
+
+                    Class cls = Class.forName(parentNode.getNodeName());
+
+                    HashMap<String, Object> valueMap = new HashMap<>();
+                    HashMap<String, Class> typeMap = new HashMap<>();
+
+                    Field[] fields = new Field[cls.getSuperclass().getDeclaredFields().length + cls.getDeclaredFields().length];
+                    System.arraycopy(cls.getSuperclass().getDeclaredFields(), 0, fields, 0, cls.getSuperclass().getDeclaredFields().length);
+                    System.arraycopy(cls.getDeclaredFields(), 0, fields, cls.getSuperclass().getDeclaredFields().length, cls.getDeclaredFields().length);
+                    for (Field f : fields) {
+                        valueMap.put(f.getName(), null);
+                        typeMap.put(f.getName(), f.getType());
+                    }
+
+                    for (int i2 = 0; i2 < nl2.getLength(); i2++) {
+                        Node childNode = nl2.item(i2);
+                        if (valueMap.containsKey(childNode.getNodeName())) {
+                            if (typeMap.get(childNode.getNodeName()) == Integer.class) {
+                                valueMap.put(childNode.getNodeName(), Integer.valueOf(childNode.getTextContent()));
+                            } else if (typeMap.get(childNode.getNodeName()) == Long.class) {
+                                valueMap.put(childNode.getNodeName(), Long.valueOf(childNode.getTextContent()));
+                            } else if (typeMap.get(childNode.getNodeName()) == String.class) {
+                                valueMap.put(childNode.getNodeName(), childNode.getTextContent());
+                            } else if (typeMap.get(childNode.getNodeName()) == Boolean.class) {
+                                valueMap.put(childNode.getNodeName(), Boolean.parseBoolean(childNode.getTextContent()));
+                            } else if (typeMap.get(childNode.getNodeName()) == List.class) {
+                                valueMap.put(childNode.getNodeName(), loadEntitiesFromNode(childNode));
+                            } else {
+                                valueMap.put(childNode.getNodeName(), Integer.valueOf(childNode.getTextContent()));
+                            }
+                        }
+                    }
+
+                    Object instance = cls.newInstance();
+                    for (Field f : fields) {
+                        f.setAccessible(true);
+                        f.set(instance, valueMap.get(f.getName()));
+                    }
+                    entities.add(instance);
+                }
+            }
+        } catch(Throwable e) {
+            e.printStackTrace();
+        }
+        return entities;
+    }
+
+    public Optional<List> loadEntities() {
         try {
             File inputFile = new File(String.valueOf(filePath));
-            DocumentBuilderFactory dbFactory  = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
             Node n = doc.getFirstChild();
-            NodeList nl = n.getChildNodes();
-            Node an,an2;
-
-            for (int i=0; i < nl.getLength(); i++) {
-                an = nl.item(i);
-                if(an.getNodeType()==Node.ELEMENT_NODE) {
-                    NodeList nl2 = an.getChildNodes();
-
-                    Class cls = Class.forName(an.getNodeName());
-                    HashMap<String, String> valueMap = new HashMap<>();
-
-                    for (Field f : cls.getDeclaredFields()) {
-                        valueMap.put(f.getName(), "null");
-                    }
-
-                    for (Field f : cls.getSuperclass().getDeclaredFields()) {
-                        valueMap.put(f.getName(), "null");
-                    }
-
-                    for(int i2=0; i2<nl2.getLength(); i2++) {
-                        an2 = nl2.item(i2);
-                        if(valueMap.containsKey(an2.getNodeName())) {
-                            valueMap.put(an2.getNodeName(), an2.getTextContent());
-                        }
-
-                    }
-
-                    Object instance = cls.newInstance();
-                    for (Field f : cls.getDeclaredFields() ) {
-                        f.setAccessible(true);
-                        String value = valueMap.get(f.getName());
-                        Object newValue = (Object) value;
-                        System.out.print("");
-                        if (f.getType() == Integer.class) {
-                            newValue = Integer.valueOf(value);
-                        } else
-                        if (f.getType() == Long.class) {
-                            newValue = Long.valueOf(value);
-                        } else
-                        if (f.getType() == String.class) {
-                            newValue = value;
-                        } else
-                        if (f.getType() == Boolean.class) {
-                            newValue = Boolean.parseBoolean(value);
-                        }
-                        f.set(instance, newValue);
-                    }
-
-                    for (Field f : cls.getSuperclass().getDeclaredFields()) {
-                        f.setAccessible(true);
-                        String value = valueMap.get(f.getName());
-                        Object newValue = (Object) value;
-                        if (f.getType() == Integer.class) {
-                            newValue = Integer.valueOf(value);
-                        } else
-                        if (f.getType() == Long.class) {
-                            newValue = Long.valueOf(value);
-                        } else
-                        if (f.getType() == String.class) {
-                            System.out.print("");
-                            newValue = value;
-                        } else
-                        if (f.getType() == Boolean.class) {
-                            newValue = Boolean.parseBoolean(value);
-                        }
-                        f.set(instance, newValue);
-                    }
-                    entities.add((T) instance);
-                }
-            }
-
-        } catch (Throwable e) {
+            return Optional.ofNullable(loadEntitiesFromNode(n));
+        }
+        catch (Throwable e) {
             e.printStackTrace();
         }
-
-//        NodeList nodelist = parentNode.getChildNodes();
-////        NodeList nList = list.getChildNodes();
-//        for (int temp = 0; temp < nList.getLength(); temp++) {
-//            Node nNode = nList.item(temp);
-//            for (int i = 0; temp < nNode.getAttributes().getLength(); temp++) {
-//                Node cNode = nList.item(temp);
-//                System.out.println("\nCurrent Element :" + cNode.getNodeName());
-//            }
-////            System.out.println("\nCurrent Element :" + nNode.getNodeName());
-//
-//        }
-//        DocumentBuilder builder = factory.newDocumentBuilder();
-        return entities;
+        return Optional.empty();
     }
 
 

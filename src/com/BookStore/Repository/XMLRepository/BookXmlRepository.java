@@ -8,12 +8,8 @@ import com.BookStore.Repository.InMemoryRepository;
 import com.BookStore.util.XmlReader;
 import com.BookStore.util.XmlWriter;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,15 +34,9 @@ public class BookXmlRepository extends InMemoryRepository<Book> {
     }
 
     private void loadData() {
-        List<Book> books = new XmlReader<Book>(bookFilePath).loadEntities();
-        for (Book book : books) {
-            try {
-                super.add(book);
-            } catch (ValidatorException e) {
-                e.printStackTrace();
-            }
-        }
+        new XmlReader(bookFilePath).loadEntities().ifPresent(obj -> ((List<Book>) obj).forEach(super::add));
     }
+
 
     @Override
     public Optional<Book> get(int id) {

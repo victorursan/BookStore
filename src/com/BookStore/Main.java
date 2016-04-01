@@ -26,21 +26,14 @@ public class Main {
         String bookXMLPath = "./data/XMLData/BooksXML.xml";
         String clientXMLPath = "./data/XMLData/ClientsXML.xml";
 
-        IRepository<Book> bookrepo = new BookXmlRepository(new BookValidator(), bookXMLPath);
-//        IRepository<Client> clientrepo = new ClientXmlRepository(new ClientValidator(), clientXMLPath);
-
-//        bookrepo.add(new Book(1, "Victor", "Barry", 456789012L, "Fantasy", "SomePub", 10, true));
-//        System.out.println("\n");
-//        clientrepo.add(new Client(1, "Victor", "Uran", Arrays.asList(new Book(1, "Victor", "Barry", 456789012L, "Fantasy", "SomePub", 10, true), new Book(2, "Victr", "Barry", 456789012L, "Fantasy", "SomePub", 10, true))));
-
-//        try {
-//            IRepository<Book> bookrepo = new BookFileRepository(new BookValidator(), bookPath);
-//            IRepository<Client> clientrepo = new ClientFileRepository(new ClientValidator(), clientPath, purchasePath, bookrepo);
-//            Console console = new Console(new Controller(bookrepo, clientrepo));
-//            console.run();
-//        } catch (BaseException e) {
-//            System.out.println(e.getMessage());
-//        }
+        try {
+            IRepository<Book> bookrepo = new BookXmlRepository(new BookValidator(), bookXMLPath);
+            IRepository<Client> clientrepo = new ClientXmlRepository(new ClientValidator(), clientXMLPath);
+            Console console = new Console(new Controller(bookrepo, clientrepo));
+            console.run();
+        } catch (BaseException e) {
+            System.out.println(e.getMessage());
+        }
 
 
     }
