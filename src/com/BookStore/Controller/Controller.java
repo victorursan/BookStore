@@ -258,12 +258,14 @@ public class Controller {
     public void buyBook(int clientID, int bookID) throws ValidatorException, ControllerException {
         Optional<Book> optBook = bookRepository.get(bookID);
         Optional<Client> optClient = clientRepository.get(clientID);
-        optClient.ifPresent(client -> optBook.ifPresent(book -> {
+        if (optClient.isPresent() && optBook.isPresent()) {
+            Book book = optBook.get();
+            Client client = optClient.get();
             book.setAvailable(false);
             client.buyBook(book);
             bookRepository.update(book);
             clientRepository.update(client);
-        }));
+        }
         if (!optClient.isPresent()) throw new ControllerException("Invalid client id");
         if (!optBook.isPresent()) throw new ControllerException("Invalid book id");
     }
@@ -280,8 +282,8 @@ public class Controller {
         Optional<Book> optBook = bookRepository.get(bookID);
         Optional<Client> optClient = clientRepository.get(clientID);
         optClient.ifPresent(client -> optBook.ifPresent(book -> {
-            book.setAvailable(true);
             if (client.returnBook(book)) {
+                book.setAvailable(true);
                 bookRepository.update(book);
                 clientRepository.update(client);
             } else {

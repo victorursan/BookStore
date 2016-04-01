@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ClientDbRepository implements IRepository<Client> {
     private String url;
@@ -25,47 +26,6 @@ public class ClientDbRepository implements IRepository<Client> {
         this.password = password;
         this.validator = validator;
         this.bookRepo = bookRepo;
-    }
-
-    public void addBookTo(int idClient, int idBook) {
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection
-                     .prepareStatement("INSERT INTO purchases (clientid, bookid) VALUES (?, ?)")) {
-            statement.setInt(1, idClient);
-            statement.setInt(1, idBook);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RepositoryException(e.getMessage());
-        }
-    }
-
-    public void deleteBookOf(int idClient, int idBook) {
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM purchases WHERE clientid=? AND bookid=?")) {
-            statement.setInt(1, idClient);
-            statement.setInt(1, idBook);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Set<Optional<Book>> getAllBooksOf(int id) {
-        Set<Optional<Book>> books = new HashSet<>();
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM purchases WHERE clientid=?")) {
-            statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int bookId = resultSet.getInt("clientid");
-                    Optional<Book> book = bookRepo.get(bookId);
-                    books.add(book);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RepositoryException(e.getMessage());
-        }
-        return books;
     }
 
     @Override
@@ -85,10 +45,18 @@ public class ClientDbRepository implements IRepository<Client> {
         } catch (SQLException e) {
             throw new RepositoryException(e.getMessage());
         }
+
+
+        if (entity.getBooks().size() > 0) {
+            for (Book item : entity.getBooks()) {
+                addPurchase(entity.getId(), item.getId());
+            }
+        }
     }
 
     @Override
     public Optional<Client> get(int id) {
+        Client client = null;
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM clients WHERE clientid=?")) {
             statement.setInt(1, id);
@@ -97,9 +65,25 @@ public class ClientDbRepository implements IRepository<Client> {
                     int clientId = resultSet.getInt("clientid");
                     String firstName = resultSet.getString("firstname");
                     String lastName = resultSet.getString("lastname");
-                    Client client = new Client(clientId, firstName, lastName);
-                    return Optional.of(client);
+                    client = new Client(clientId, firstName, lastName);
                 }
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM purchases WHERE clientid=?")) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int bookId = resultSet.getInt("bookid");
+                    if (client != null) {
+                        bookRepo.get(bookId).ifPresent(client::buyBook);
+                    }
+                }
+            }
+            if (client != null) {
+                return Optional.of(client);
             }
         } catch (SQLException e) {
             throw new RepositoryException(e.getMessage());
@@ -111,14 +95,11 @@ public class ClientDbRepository implements IRepository<Client> {
     public Iterable<Client> getAll() {
         Set<Client> clients = new HashSet<>();
         try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM clients");
+             PreparedStatement statement = connection.prepareStatement("SELECT clientid FROM clients");
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int clientId = resultSet.getInt("clientid");
-                String firstName = resultSet.getString("firstname");
-                String lastName = resultSet.getString("lastname");
-                Client client = new Client(clientId, firstName, lastName);
-                clients.add(client);
+                this.get(clientId).ifPresent(clients::add);
             }
             return clients;
         } catch (SQLException e) {
@@ -140,11 +121,60 @@ public class ClientDbRepository implements IRepository<Client> {
             statement.setString(2, entity.getLastName());
             statement.setInt(3, entity.getId());
             statement.executeUpdate();
-            return Optional.empty();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return Optional.of(entity);
+        Set<Integer> addBooks = entity.getBooks().stream().map(Book::getId).collect(Collectors.toSet());
+        Set<Integer> deleteBooks = new HashSet<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement statement = connection.prepareStatement("SELECT bookid FROM purchases WHERE clientid=?")) {
+            statement.setInt(1, entity.getId());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int bookId = resultSet.getInt("bookid");
+                    if (addBooks.contains(bookId)) {
+                        addBooks.remove(bookId);
+                    } else {
+                        deleteBooks.add(bookId);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+
+        for (Integer item : addBooks) {
+            this.addPurchase(entity.getId(), item);
+        }
+
+        for (Integer item : deleteBooks) {
+            this.removePurchase(entity.getId(), item);
+        }
+        return Optional.empty();
+    }
+
+    private void removePurchase(Integer cid, Integer bid) {
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM purchases WHERE clientid=? and bookid=?")) {
+            statement.setInt(1, cid);
+            statement.setInt(2, bid);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addPurchase(Integer cid, Integer bid) {
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement statement = connection
+                     .prepareStatement("INSERT INTO purchases (clientid, bookid) VALUES (?, ?)")) {
+            statement.setInt(1, cid);
+            statement.setInt(2, bid);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryException(e.getMessage());
+        }
     }
 
     @Override
