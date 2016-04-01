@@ -11,6 +11,10 @@ public class Client extends BaseEntity<Integer> {
     private String lastName;
     private List<Book> books;
 
+    public Client() {
+        super(1);
+    }
+
     public Client(Integer id, String firstName, String lastName) {
         super(id);
         this.firstName = firstName;
