@@ -64,5 +64,10 @@ public class ControllerServiceClient implements ControllerService {
         return getResponseFromMessage(Message.builder(ControllerService.DELETE_BOOK, id.toString()));
     }
 
+    @Override
+    public CompletableFuture<String> clientBooks(Integer id) {
+        return getResponseFromMessage(Message.builder(ControllerService.CLIENT_BOOKS, id.toString()));
+    }
+
 
 }

@@ -96,5 +96,10 @@ public class ControllerServiceServer implements ControllerService {
         });
     }
 
+    @Override
+    public CompletableFuture<String> clientBooks(Integer id) {
+        return sendRequestWithMessage(() -> ctrl.clientBooks(id).toString());
+    }
+
 
 }

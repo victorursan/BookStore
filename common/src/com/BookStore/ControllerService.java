@@ -17,6 +17,7 @@ public interface ControllerService {
     String ADD_BOOK = "addBook";
     String UPDATE_BOOK = "updateBook";
     String DELETE_BOOK = "deleteBook";
+    String CLIENT_BOOKS = "clientBooks";
 
     CompletableFuture<String> getAllOptions();
 
@@ -31,4 +32,6 @@ public interface ControllerService {
     CompletableFuture updateBook(Integer id, String title, String auth, Long isbn, String genre, String publisher, Integer price);
 
     CompletableFuture deleteBook(Integer id);
+
+    CompletableFuture<String> clientBooks(Integer id);
 }

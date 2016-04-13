@@ -135,6 +135,19 @@ public class Main {
             return Message.builder(Message.ERROR, "Failure");
         });
 
+        tcpServer.addHandler(ControllerService.CLIENT_BOOKS, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                Integer id = Integer.parseInt(elements[0]);
+                CompletableFuture result = controllerService.clientBooks(id);
+                result.get();
+                return Message.builder(Message.OK, "Success");
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
         tcpServer.startServer();
     }
 }

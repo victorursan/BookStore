@@ -114,8 +114,16 @@ public class Console {
     }
 
     private void clientBooks() {
-//        int clientOpt = readInteger("Display books for client: ");
-//        ctrl.clientBooks(clientOpt).ifPresent(books -> books.forEach(this::println));
+        Integer id = readInteger("Display books for client: ");
+        CompletableFuture<String> result = controller.clientBooks(id);
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
     }
 
     private void clientReturnMode() {
