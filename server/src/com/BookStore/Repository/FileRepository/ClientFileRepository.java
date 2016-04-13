@@ -92,7 +92,7 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
 
     private void saveToFile(Client client) {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(clientFilePath, StandardOpenOption.APPEND)) {
-            bufferedWriter.write(String.format("%d, %s, %s\n", client.getId(), client.getFirstName(), client.getLastName()));
+            bufferedWriter.write(String.format("%d, %s, %s", client.getId(), client.getFirstName(), client.getLastName()));
             bufferedWriter.newLine();
         } catch (IOException e) {
             throw new RepositoryException(e.getMessage());
@@ -103,11 +103,13 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
         try (BufferedWriter clientBuffer = Files.newBufferedWriter(clientFilePath, StandardOpenOption.TRUNCATE_EXISTING);
              BufferedWriter purchaseBuffer = Files.newBufferedWriter(purchaseFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
             for (Client client : super.getAll()) {
-                String clientStr = String.format("%d, %s, %s\n", client.getId(), client.getFirstName(), client.getLastName());
+                String clientStr = String.format("%d, %s, %s", client.getId(), client.getFirstName(), client.getLastName());
                 clientBuffer.write(clientStr);
+                clientBuffer.newLine();
                 for (Book book : client.getBooks()) {
-                    String purchaseStr = String.format("%d, %d\n", client.getId(), book.getId());
+                    String purchaseStr = String.format("%d, %d", client.getId(), book.getId());
                     purchaseBuffer.write(purchaseStr);
+                    clientBuffer.newLine();
                 }
             }
         } catch (IOException e) {

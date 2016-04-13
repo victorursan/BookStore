@@ -81,8 +81,9 @@ public class BookFileRepository extends InMemoryRepository<Book> {
 
     private void saveToFile(Book entity) {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(bookFilePath, StandardOpenOption.APPEND)) {
-            bufferedWriter.write(String.format("%d, %s, %s, %s, %s, %s, %s\n", entity.getId(), entity.getTitle(), entity.getAuthor(),
-                    entity.getISBN().toString(), entity.getGenre(), entity.getPublisher(), entity.getPrice().toString()));
+            bufferedWriter.write(String.format("%d, %s, %s, %s, %s, %s, %s, %b", entity.getId(), entity.getTitle(), entity.getAuthor(),
+                    entity.getISBN().toString(), entity.getGenre(), entity.getPublisher(), entity.getPrice().toString(),
+                    entity.isAvailable()));
             bufferedWriter.newLine();
         } catch (IOException e) {
             throw new RepositoryException(e.getMessage());

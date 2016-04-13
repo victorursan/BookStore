@@ -3,5 +3,5 @@
 3, ThirdBook, Foo, 345678900, SF, AwesomePub, 7, false
 5, Paradigme Universale, Solomon Marcus, 9736975797, filosofie, Manning, 100, false
 1, FirstBook, John, 123456789, SF, CoolPub, 17, true
-6, q, w, 1295, er, ty, 8
-
+6, q, w, 1295, er, ty, 8, true
+7, qwe, ewq, 123, e, ewq, 2, true
