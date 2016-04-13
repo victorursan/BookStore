@@ -19,19 +19,27 @@ public class ControllerServiceClient implements ControllerService {
         this.tcpClient = tcpClient;
     }
 
-    @Override
-    public CompletableFuture<String> sayHi(String name) {
-        return CompletableFuture.supplyAsync(() -> {
-            Message request = new Message(ControllerService.SAY_HI, name);
-            Message response = tcpClient.sendAndReceive(request);
-            return response.body();} ,executorService);
-    }
+//    @Override
+//    public CompletableFuture<String> sayHi(String name) {
+//        return CompletableFuture.supplyAsync(() -> {
+//            Message request = new Message(ControllerService.SAY_HI, name);
+//            Message response = tcpClient.sendAndReceive(request);
+//            return response.body();} ,executorService);
+//    }
+//
+//    @Override
+//    public CompletableFuture<String> sayBye(String name) {
+//        return CompletableFuture.supplyAsync(() -> {
+//            Message request = new Message(ControllerService.SAY_BYE, name);
+//            Message response = tcpClient.sendAndReceive(request);
+//            return response.body();} ,executorService);
+//    }
 
     @Override
-    public CompletableFuture<String> sayBye(String name) {
+    public CompletableFuture<String> getAllOptions() {
         return CompletableFuture.supplyAsync(() -> {
-            Message request = new Message(ControllerService.SAY_BYE, name);
+            Message request = new Message(ControllerService.GET_ALL_OPTIONS, "get all options");
             Message response = tcpClient.sendAndReceive(request);
-            return response.body();} ,executorService);
+            return response.body();}, executorService);
     }
 }

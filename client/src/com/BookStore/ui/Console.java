@@ -16,27 +16,35 @@ public class Console {
     }
 
     public void run() {
-        // TODO show menu
-
-        sayHi();
-        sayBye();
+        getAllOptions();
     }
 
-    private void sayHi() {
-        CompletableFuture<String> result = controller.sayHi("John");
+//    private void sayHi() {
+//        CompletableFuture<String> result = controller.sayHi("John");
+//        result.handle((String message, Throwable error) -> {
+//           if (error != null) {
+//               error.printStackTrace();
+//           } else {
+//               System.out.println(message);
+//           }
+//            return this;
+//        });
+//    }
 
-        result.handle((String message, Throwable error) -> {
-           if (error != null) {
-               error.printStackTrace();
-           } else {
-               System.out.println(message);
-           }
-            return this;
-        });
-    }
+//    private void sayBye() {
+//        CompletableFuture<String> result = controller.sayBye("Mary");
+//        result.handle((String message, Throwable error) -> {
+//            if (error != null) {
+//                error.printStackTrace();
+//            } else {
+//                System.out.println(message);
+//            }
+//            return this;
+//        });
+//    }
 
-    private void sayBye() {
-        CompletableFuture<String> result = controller.sayBye("Mary");
+    private void getAllOptions() {
+        CompletableFuture<String> result = controller.getAllOptions();
         result.handle((String message, Throwable error) -> {
             if (error != null) {
                 error.printStackTrace();
@@ -45,6 +53,7 @@ public class Console {
             }
             return this;
         });
+        //TODO add things here
     }
 
 }

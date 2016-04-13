@@ -9,9 +9,11 @@ public interface ControllerService {
     String SERVICE_HOST = "localhost";
     int SERVICE_PORT = 5000;
 
-    String SAY_HI = "sayHi";
-    String SAY_BYE = "sayBye";
+//    String SAY_HI = "sayHi";
+//    String SAY_BYE = "sayBye";
+    String GET_ALL_OPTIONS = "getAllOptions";
 
-    CompletableFuture<String> sayHi(String name);
-    CompletableFuture<String> sayBye(String name);
+//    CompletableFuture<String> sayHi(String name);
+//    CompletableFuture<String> sayBye(String name);
+    CompletableFuture<String> getAllOptions();
 }

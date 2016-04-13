@@ -4,10 +4,7 @@ package com.BookStore.tcp;
 import com.BookStore.ControllerServiceException;
 import com.BookStore.Message;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -61,6 +58,8 @@ public class TcpServer {
             try (InputStream inputStream = socket.getInputStream();
                     OutputStream outputStream = socket.getOutputStream()) {
                 Message request = new Message();
+//                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(inputStream));
+//                return bufferRead.readLine();
                 byte[] bytes = new byte[1024];
                 int len = inputStream.read(bytes);
                 request.readFrom(new ByteArrayInputStream(bytes, 0, len));
