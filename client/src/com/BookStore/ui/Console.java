@@ -153,43 +153,99 @@ public class Console {
     }
 
     private void mostMoneyClient() {
-//        ctrl.clientWhoSpentMost().ifPresent(this::println);
+        controller.clientWhoSpentMost();
     }
 
     private void mostBooksClient() {
-//        ctrl.clientWithMostBooks().ifPresent(this::println);
+        controller.clientWithMostBooks();
     }
 
     private void expensiveBooks() {
-//        int value = readInteger("Display all books with a price higher than: ");
-//        ctrl.filterBooksMoreExpensiveThan(value).forEach(this::println);
+        Integer price = readInteger("Books more expensive than: ");
+        CompletableFuture<String> result = controller.filterBooksMoreExpensiveThan(price);
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
     }
 
     private void cheaperBooks() {
-//        int value = readInteger("Display all books with a price lower than: ");
-//        ctrl.filterBooksCheaperThan(value).forEach(this::println);
+        Integer price = readInteger("Books cheaper than: ");
+        CompletableFuture<String> result = controller.filterBooksCheaperThan(price);
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
     }
 
     private void authorBooks() {
-//        String author = readString("Give an author to search for: ");
-//        ctrl.filterBooksByAuthor(author).forEach(this::println);
+        String auth = readString("Enter author:");
+        CompletableFuture<String> result = controller.filterBooksByAuthor(auth);
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
     }
 
     private void genreBooks() {
-//        String genre = readString("Give an genre to search for: ");
-//        ctrl.filterBooksByGenre(genre).forEach(this::println);
+        String genre = readString("Enter genre:");
+        CompletableFuture<String> result = controller.filterBooksByGenre(genre);
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
     }
 
     private void showAvailableBooks() {
-//        ctrl.availableBooks().forEach(this::println);
+        CompletableFuture<String> result = controller.availableBooks();
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
     }
 
     private void showAllBooks() {
-//        ctrl.getAllBooks().forEach(this::println);
+        CompletableFuture<String> result = controller.getAllBooks();
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
     }
 
     private void showAllClients() {
-//        ctrl.getAllClients().forEach(this::println);
+        CompletableFuture<String> result = controller.getAllClients();
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
     }
 
     private void getAllOptions() {

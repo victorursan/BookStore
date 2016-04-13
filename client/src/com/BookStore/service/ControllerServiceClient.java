@@ -69,5 +69,50 @@ public class ControllerServiceClient implements ControllerService {
         return getResponseFromMessage(Message.builder(ControllerService.CLIENT_BOOKS, id.toString()));
     }
 
+    @Override
+    public CompletableFuture<String> clientWhoSpentMost() {
+        return getResponseFromMessage(Message.builder(ControllerService.MOST_SPENT, "client with most spent"));
+    }
+
+    @Override
+    public CompletableFuture<String> clientWithMostBooks() {
+        return getResponseFromMessage(Message.builder(ControllerService.MOST_BOOKS, "client with most books"));
+    }
+
+    @Override
+    public CompletableFuture<String> getAllClients() {
+        return getResponseFromMessage(Message.builder(ControllerService.ALL_CLIENTS, "all clients"));
+    }
+
+    @Override
+    public CompletableFuture<String> getAllBooks() {
+        return getResponseFromMessage(Message.builder(ControllerService.ALL_BOOKS, "all books"));
+    }
+
+    @Override
+    public CompletableFuture<String> availableBooks() {
+        return getResponseFromMessage(Message.builder(ControllerService.AVAILABLE_BOOKS, "all available books"));
+    }
+
+    @Override
+    public CompletableFuture<String> filterBooksByGenre(String genre) {
+        return getResponseFromMessage(Message.builder(ControllerService.GENRE_BOOKS, genre));
+    }
+
+    @Override
+    public CompletableFuture<String> filterBooksByAuthor(String auth) {
+        return getResponseFromMessage(Message.builder(ControllerService.AUTHOR_BOOKS, auth));
+    }
+
+    @Override
+    public CompletableFuture<String> filterBooksCheaperThan(Integer price) {
+        return getResponseFromMessage(Message.builder(ControllerService.CHEAP_BOOKS, price.toString()));
+    }
+
+    @Override
+    public CompletableFuture<String> filterBooksMoreExpensiveThan(Integer price) {
+        return getResponseFromMessage(Message.builder(ControllerService.EXPENSIVE_BOOKS, price.toString()));
+    }
+
 
 }

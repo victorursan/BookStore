@@ -3,6 +3,7 @@ package com.BookStore.service;
 import com.BookStore.Controller.Controller;
 import com.BookStore.ControllerService;
 import com.BookStore.Model.Book;
+import com.BookStore.Model.Client;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,25 +31,25 @@ public class ControllerServiceServer implements ControllerService {
     @Override
     public CompletableFuture<String> getAllOptions() {
         return sendRequestWithMessage(() -> "Options:" +
-                        "\n1. Add client" +
-                        "\n2. Add book" +
-                        "\n3. Delete client" +
-                        "\n4. Delete book" +
-                        "\n5. Update client" +
-                        "\n6. Update book" +
-                        "\n7. Show all clients" +
-                        "\n8. Show all books" +
-                        "\n9. Show available books" +
-                        "\n10. Books of a genre" +
-                        "\n11. Books by an author" +
-                        "\n12. Books cheaper than" +
-                        "\n13. Books more expensive than" +
-                        "\n14. Client with most books" +
-                        "\n15. Client who spent most" +
-                        "\n16. Client purchase" +
-                        "\n17. Client return" +
-                        "\n18. Purchases by one client" +
-                        "\n0. Exit");
+                "\n1. Add client" +
+                "\n2. Add book" +
+                "\n3. Delete client" +
+                "\n4. Delete book" +
+                "\n5. Update client" +
+                "\n6. Update book" +
+                "\n7. Show all clients" +
+                "\n8. Show all books" +
+                "\n9. Show available books" +
+                "\n10. Books of a genre" +
+                "\n11. Books by an author" +
+                "\n12. Books cheaper than" +
+                "\n13. Books more expensive than" +
+                "\n14. Client with most books" +
+                "\n15. Client who spent most" +
+                "\n16. Client purchase" +
+                "\n17. Client return" +
+                "\n18. Purchases by one client" +
+                "\n0. Exit");
     }
 
     @Override
@@ -109,6 +110,125 @@ public class ControllerServiceServer implements ControllerService {
                     toRet += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
                             book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
                 }
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> clientWhoSpentMost() {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Optional<Client> clientOpt = ctrl.clientWhoSpentMost();
+            if (clientOpt.isPresent()) {
+                Client client = clientOpt.get();
+                toRet = String.format("%d, %s, %s" + LINE_SEPARATOR, client.getId(), client.getFirstName(),
+                        client.getLastName());
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> clientWithMostBooks() {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Optional<Client> clientOpt = ctrl.clientWithMostBooks();
+            if (clientOpt.isPresent()) {
+                Client client = clientOpt.get();
+                toRet = String.format("%d, %s, %s" + LINE_SEPARATOR, client.getId(), client.getFirstName(),
+                        client.getLastName());
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> getAllClients() {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Iterable<Client> optClient = ctrl.getAllClients();
+            for (Client client : optClient) {
+                toRet += String.format("%d, %s, %s" + LINE_SEPARATOR, client.getId(), client.getFirstName(),
+                        client.getLastName());
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> getAllBooks() {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Iterable<Book> optBooks = ctrl.getAllBooks();
+            for (Book book : optBooks) {
+                toRet += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
+                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> availableBooks() {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Iterable<Book> optBooks = ctrl.availableBooks();
+            for (Book book : optBooks) {
+                toRet += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
+                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> filterBooksByGenre(String genre) {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Iterable<Book> optBooks = ctrl.filterBooksByGenre(genre);
+            for (Book book : optBooks) {
+                toRet += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
+                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> filterBooksByAuthor(String auth) {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Iterable<Book> optBooks = ctrl.filterBooksByAuthor(auth);
+            for (Book book : optBooks) {
+                toRet += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
+                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> filterBooksCheaperThan(Integer price) {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Iterable<Book> optBooks = ctrl.filterBooksCheaperThan(price);
+            for (Book book : optBooks) {
+                toRet += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
+                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
+            }
+            return toRet;
+        });
+    }
+
+    @Override
+    public CompletableFuture<String> filterBooksMoreExpensiveThan(Integer price) {
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Iterable<Book> optBooks = ctrl.filterBooksMoreExpensiveThan(price);
+            for (Book book : optBooks) {
+                toRet += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
+                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
             }
             return toRet;
         });

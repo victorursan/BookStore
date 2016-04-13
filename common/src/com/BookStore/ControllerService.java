@@ -18,6 +18,15 @@ public interface ControllerService {
     String UPDATE_BOOK = "updateBook";
     String DELETE_BOOK = "deleteBook";
     String CLIENT_BOOKS = "clientBooks";
+    String MOST_SPENT = "clientWhoSpentMost";
+    String MOST_BOOKS = "clientWithMostBooks";
+    String ALL_CLIENTS = "getAllClients";
+    String ALL_BOOKS = "getAllBooks";
+    String AVAILABLE_BOOKS = "availableBooks";
+    String GENRE_BOOKS = "filterBooksByGenre";
+    String AUTHOR_BOOKS = "filterBooksByAuthor";
+    String CHEAP_BOOKS = "filterBooksCheaperThan";
+    String EXPENSIVE_BOOKS = "filterBooksMoreExpensiveThan";
 
     CompletableFuture<String> getAllOptions();
 
@@ -34,4 +43,22 @@ public interface ControllerService {
     CompletableFuture deleteBook(Integer id);
 
     CompletableFuture<String> clientBooks(Integer id);
+
+    CompletableFuture<String> clientWhoSpentMost();
+
+    CompletableFuture<String> clientWithMostBooks();
+
+    CompletableFuture<String> getAllClients();
+
+    CompletableFuture<String> getAllBooks();
+
+    CompletableFuture<String> availableBooks();
+
+    CompletableFuture<String> filterBooksByGenre(String genre);
+
+    CompletableFuture<String> filterBooksByAuthor(String auth);
+
+    CompletableFuture<String> filterBooksCheaperThan(Integer price);
+
+    CompletableFuture<String> filterBooksMoreExpensiveThan(Integer price);
 }

@@ -147,6 +147,48 @@ public class Main {
             return Message.builder(Message.ERROR, "Failure");
         });
 
+        tcpServer.addHandler(ControllerService.MOST_SPENT, (request) -> {
+            try {
+                CompletableFuture<String> result = controllerService.clientWhoSpentMost();
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
+        tcpServer.addHandler(ControllerService.MOST_BOOKS, (request) -> {
+            try {
+                CompletableFuture<String> result = controllerService.clientWithMostBooks();
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
+        tcpServer.addHandler(ControllerService.ALL_CLIENTS, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                CompletableFuture<String> result = controllerService.getAllClients();
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
+        tcpServer.addHandler(ControllerService.ALL_BOOKS, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                CompletableFuture<String> result = controllerService.getAllBooks();
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
         tcpServer.startServer();
     }
 }
