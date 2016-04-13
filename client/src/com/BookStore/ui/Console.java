@@ -86,44 +86,31 @@ public class Console {
     }
 
     private void updateClient() {
-//        try {
-//            ctrl.updateClient(readInteger("Id of client to update: "),
-//                    readString("Enter first name: "),
-//                    readString("Enter last name: "));
-//        } catch (BaseException e) {
-//            println("Data not valid: " + e.getMessage());
-//        }
+        Integer id = readInteger("Id of client to update: ");
+        String firstName = readString("Enter first name: ");
+        String lastName = readString("Enter last name:");
+        controller.updateClient(id, firstName, lastName);
     }
 
     private void updateBook() {
-//        try {
-//            ctrl.updateBook(readInteger("Id of book to update: "),
-//                    readString("Enter title: "),
-//                    readString("Enter author:"),
-//                    readLong("Enter ISBN: "),
-//                    readString("Enter genre: "),
-//                    readString("Enter publisher: "),
-//                    readInteger("Enter price: "),
-//                    readBool("Book availability: "));
-//        } catch (BaseException e) {
-//            println("Data not valid. " + e.getMessage());
-//        }
+        Integer id = readInteger("Id of book to update: ");
+        String title = readString("Enter title: ");
+        String auth = readString("Enter author:");
+        Long isbn = readLong("Enter ISBN: ");
+        String genre = readString("Enter genre: ");
+        String publisher = readString("Enter publisher: ");
+        Integer price = readInteger("Enter price: ");
+        controller.updateBook(id, title, auth, isbn, genre, publisher, price);
     }
 
     private void deleteClient() {
-//        try {
-//            ctrl.deleteClient(readInteger("Id of client to delete: "));
-//        } catch (BaseException e) {
-//            println("Data not valid. " + e.getMessage());
-//        }
+        Integer id = readInteger("Id of client to remove: ");
+        controller.deleteClient(id);
     }
 
     private void deleteBook() {
-//        try {
-//            ctrl.deleteBook(readInteger("Id of book to delete: "));
-//        } catch (BaseException e) {
-//            println("Data not valid. " + e.getMessage());
-//        }
+        Integer id = readInteger("Id of book to remove: ");
+        controller.deleteBook(id);
     }
 
     private void clientBooks() {

@@ -92,8 +92,10 @@ public class BookFileRepository extends InMemoryRepository<Book> {
 
     private void rewriteToFile() {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(bookFilePath, StandardOpenOption.TRUNCATE_EXISTING)) {
-            for (Book element : super.getAll()) {
-                bufferedWriter.write(element.toString());
+            for (Book entity : super.getAll()) {
+                bufferedWriter.write(String.format("%d, %s, %s, %s, %s, %s, %s, %b", entity.getId(), entity.getTitle(), entity.getAuthor(),
+                        entity.getISBN().toString(), entity.getGenre(), entity.getPublisher(), entity.getPrice().toString(),
+                        entity.isAvailable()));
                 bufferedWriter.newLine();
             }
         } catch (IOException e) {

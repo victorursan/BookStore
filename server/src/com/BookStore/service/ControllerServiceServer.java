@@ -64,5 +64,37 @@ public class ControllerServiceServer implements ControllerService {
         });
     }
 
+    @Override
+    public CompletableFuture updateClient(Integer id, String firstName, String lastName) {
+        return sendRequestWithMessage(() -> {
+            ctrl.updateClient(id, firstName, lastName);
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture deleteClient(Integer id) {
+        return sendRequestWithMessage(() -> {
+            ctrl.deleteClient(id);
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture updateBook(Integer id, String title, String auth, Long isbn, String genre, String publisher, Integer price) {
+        return sendRequestWithMessage(() -> {
+            ctrl.updateBook(id, title, auth, isbn, genre, publisher, price, true);
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture deleteBook(Integer id) {
+        return sendRequestWithMessage(() -> {
+            ctrl.deleteBook(id);
+            return null;
+        });
+    }
+
 
 }

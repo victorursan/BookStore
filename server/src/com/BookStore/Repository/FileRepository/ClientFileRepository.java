@@ -109,7 +109,7 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
                 for (Book book : client.getBooks()) {
                     String purchaseStr = String.format("%d, %d", client.getId(), book.getId());
                     purchaseBuffer.write(purchaseStr);
-                    clientBuffer.newLine();
+                    purchaseBuffer.newLine();
                 }
             }
         } catch (IOException e) {

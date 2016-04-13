@@ -75,6 +75,66 @@ public class Main {
             return Message.builder(Message.ERROR, "Failure");
         });
 
+        tcpServer.addHandler(ControllerService.UPDATE_CLIENT, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                Integer id = Integer.parseInt(elements[0]);
+                String firstName = elements[1];
+                String lastName = elements[2];
+                CompletableFuture result = controllerService.updateClient(id, firstName, lastName);
+                result.get();
+                return Message.builder(Message.OK, "Success");
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
+        tcpServer.addHandler(ControllerService.DELETE_CLIENT, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                Integer id = Integer.parseInt(elements[0]);
+                CompletableFuture result = controllerService.deleteClient(id);
+                result.get();
+                return Message.builder(Message.OK, "Success");
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
+        tcpServer.addHandler(ControllerService.UPDATE_BOOK, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                Integer id = Integer.parseInt(elements[0]);
+                String title = elements[1];
+                String auth = elements[2];
+                Long isbn = Long.parseLong(elements[3]);
+                String genre = elements[4];
+                String publisher = elements[5];
+                Integer price = Integer.parseInt(elements[6]);
+                CompletableFuture result = controllerService.updateBook(id, title, auth, isbn, genre, publisher, price);
+                result.get();
+                return Message.builder(Message.OK, "Success");
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
+        tcpServer.addHandler(ControllerService.DELETE_BOOK, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                Integer id = Integer.parseInt(elements[0]);
+                CompletableFuture result = controllerService.deleteBook(id);
+                result.get();
+                return Message.builder(Message.OK, "Success");
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
         tcpServer.startServer();
     }
 }
