@@ -14,9 +14,9 @@ import com.BookStore.View.Console;
 public class Main {
     public static void main(String[] args) throws ValidatorException {
 
-        String bookPath = "./data/FileData/Books.txt";
-        String clientPath = "./data/FileData/Clients.txt";
-        String purchasePath = "./data/FileData/Purchase.txt";
+        String bookPath = "./server/data/FileData/Books.txt";
+        String clientPath = "./server/data/FileData/Clients.txt";
+        String purchasePath = "./server/data/FileData/Purchase.txt";
         try {
             IRepository<Book> bookrepo = new BookFileRepository(new BookValidator(), bookPath);
             IRepository<Client> clientrepo = new ClientFileRepository(new ClientValidator(), clientPath, purchasePath, bookrepo);

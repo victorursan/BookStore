@@ -3,7 +3,7 @@ package com.BookStore.Model.Validators;
 import com.BookStore.Model.Client;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
 public class ClientValidatorTest {
 
