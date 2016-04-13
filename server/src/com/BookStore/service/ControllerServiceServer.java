@@ -55,4 +55,14 @@ public class ControllerServiceServer implements ControllerService {
             return null;
         });
     }
+
+    @Override
+    public CompletableFuture addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price) {
+        return sendRequestWithMessage(() -> {
+            ctrl.addBook(title, auth, isbn, genre, publisher, price);
+            return null;
+        });
+    }
+
+
 }

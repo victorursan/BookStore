@@ -56,6 +56,25 @@ public class Main {
             }
             return Message.builder(Message.ERROR, "Failure");
         });
+
+        tcpServer.addHandler(ControllerService.ADD_BOOK, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                String title = elements[0];
+                String auth = elements[1];
+                Long isbn = Long.parseLong(elements[2]);
+                String genre = elements[3];
+                String publisher = elements[4];
+                Integer price = Integer.parseInt(elements[5]);
+                CompletableFuture result = controllerService.addBook(title, auth, isbn, genre, publisher, price);
+                result.get();
+                return Message.builder(Message.OK, "Success");
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
+        });
+
         tcpServer.startServer();
     }
 }

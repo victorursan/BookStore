@@ -34,5 +34,12 @@ public class ControllerServiceClient implements ControllerService {
         return getResponseFromMessage(Message.builder(ControllerService.ADD_CLIENT, firstName + LINE_SEPARATOR + lastName));
     }
 
+    @Override
+    public CompletableFuture addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price) {
+        return getResponseFromMessage(Message.builder(ControllerService.ADD_BOOK,
+                title + LINE_SEPARATOR + auth + LINE_SEPARATOR + isbn + LINE_SEPARATOR +
+                        genre + LINE_SEPARATOR + publisher + LINE_SEPARATOR + price));
+    }
+
 
 }

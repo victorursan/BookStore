@@ -73,24 +73,16 @@ public class Console {
         String firstName = readString("Enter first name: ");
         String lastName = readString("Enter last name:");
         controller.addClient(firstName, lastName);
-//        try {
-//            ctrl.addClient(readString("Enter first name: "), readString("Enter last name: "));
-//        } catch (BaseException e) {
-//            println("Data not valid: " + e.getMessage());
-//        }
     }
 
     private void addBook() {
-//        try {
-//            ctrl.addBook(readString("Enter title: "),
-//                    readString("Enter author:"),
-//                    readLong("Enter ISBN: "),
-//                    readString("Enter genre: "),
-//                    readString("Enter publisher: "),
-//                    readInteger("Enter price: "));
-//        } catch (BaseException e) {
-//            println("Data not valid: " + e.getMessage());
-//        }
+        String title = readString("Enter title: ");
+        String auth = readString("Enter author:");
+        Long isbn = readLong("Enter ISBN: ");
+        String genre = readString("Enter genre: ");
+        String publisher = readString("Enter publisher: ");
+        Integer price = readInteger("Enter price: ");
+        controller.addBook(title, auth, isbn, genre, publisher, price);
     }
 
     private void updateClient() {
