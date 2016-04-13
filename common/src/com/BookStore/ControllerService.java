@@ -1,6 +1,6 @@
 package com.BookStore;
 
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by victor on 4/13/16.
@@ -12,7 +12,6 @@ public interface ControllerService {
     String SAY_HI = "sayHi";
     String SAY_BYE = "sayBye";
 
-    Future<String> sayHi(String name);
-
-    Future<String> sayBye(String name);
+    CompletableFuture<String> sayHi(String name);
+    CompletableFuture<String> sayBye(String name);
 }

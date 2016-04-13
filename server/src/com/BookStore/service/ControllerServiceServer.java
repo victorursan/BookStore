@@ -2,8 +2,8 @@ package com.BookStore.service;
 
 import com.BookStore.ControllerService;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 /**
  * Created by victor on 4/13/16.
@@ -16,14 +16,12 @@ public class ControllerServiceServer implements ControllerService {
     }
 
     @Override
-    public Future<String> sayHi(String name) {
-        Future<String> result = executorService.submit(() -> "Hi " + name);
-        return result;
+    public CompletableFuture<String> sayHi(String name) {
+        return CompletableFuture.supplyAsync(() -> "Hi" + name, executorService);
     }
 
     @Override
-    public Future<String> sayBye(String name) {
-        Future<String> result = executorService.submit(() -> "Bye " + name);
-        return result;
+    public CompletableFuture<String> sayBye(String name) {
+        return CompletableFuture.supplyAsync(() -> "Bye " + name, executorService);
     }
 }

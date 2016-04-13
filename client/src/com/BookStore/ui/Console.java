@@ -2,8 +2,7 @@ package com.BookStore.ui;
 
 import com.BookStore.ControllerService;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by victor on 4/13/16.
@@ -24,27 +23,28 @@ public class Console {
     }
 
     private void sayHi() {
-        Future<String> result = controller.sayHi("John"); // non-blocking
+        CompletableFuture<String> result = controller.sayHi("John");
 
-        // do stuff...
-
-        try {
-            System.out.println(result.get()); // blocking
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        result.handle((String message, Throwable error) -> {
+           if (error != null) {
+               error.printStackTrace();
+           } else {
+               System.out.println(message);
+           }
+            return this;
+        });
     }
 
     private void sayBye() {
-        Future<String> result = controller.sayBye("Mary"); // non-blocking
-
-        // do stuff...
-
-        try {
-            System.out.println(result.get()); // blocking
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        CompletableFuture<String> result = controller.sayBye("Mary");
+        result.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                System.out.println(message);
+            }
+            return this;
+        });
     }
 
 }

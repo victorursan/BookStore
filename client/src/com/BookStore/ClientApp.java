@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
  */
 public class ClientApp {
     public static void main(String[] args) {
-
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         TcpClient tcpClient = new TcpClient(ControllerService.SERVICE_HOST, ControllerService.SERVICE_PORT);
         ControllerService helloService = new ControllerServiceClient(executorService, tcpClient);
