@@ -1,13 +1,9 @@
 package com.BookStore.util;
 
-import com.BookStore.Model.BaseEntity;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -72,7 +68,7 @@ public class XmlReader {
                     entities.add(instance);
                 }
             }
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
         return entities;
@@ -83,8 +79,7 @@ public class XmlReader {
             Document doc = XmlHelper.loadDocument(String.valueOf(filePath));
             Node node = doc.getFirstChild();
             return Optional.ofNullable(loadEntitiesFromNode(node));
-        }
-        catch (Throwable e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
         return Optional.empty();

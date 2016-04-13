@@ -17,10 +17,14 @@ public class Message implements Serializable {
     public Message() {
     }
 
-    public Message(String header, String body) {
+    private Message(String header, String body) {
         this.header = header;
         this.size = body.length();
         this.body = body;
+    }
+
+    public static Message builder(String header, String body) {
+        return new Message(header, body);
     }
 
     public String body() {
@@ -46,9 +50,8 @@ public class Message implements Serializable {
             header = br.readLine();
             size = Integer.valueOf(br.readLine());
             char[] someString = new char[size];
-            br.read(someString,0,size);
+            br.read(someString, 0, size);
             body = String.valueOf(someString);
-            System.out.println(body);
         }
     }
 

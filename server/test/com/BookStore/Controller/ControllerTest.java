@@ -8,14 +8,14 @@ import com.BookStore.Repository.InMemoryRepository;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.OptionalInt;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 
 public class ControllerTest {
     private Controller ctrl;
+
     @Before
     public void setUp() throws Exception {
         IRepository<Book> bookrepo = new InMemoryRepository<>();
@@ -27,10 +27,11 @@ public class ControllerTest {
         ctrl.addBook("Paradigme Universale", "Solomon Marcus", 9736975797L, "filosofie", "Paralela 45", 100);
         ctrl.addClient("Laura", "Pop");
         ctrl.addClient("Victor", "Ursan");
-        ctrl.buyBook(1,1);
-        ctrl.buyBook(0,0);
-        ctrl.buyBook(1,2);
+        ctrl.buyBook(1, 1);
+        ctrl.buyBook(0, 0);
+        ctrl.buyBook(1, 2);
     }
+
     private <T extends BaseEntity<Integer>> Stream<T> getStreamFromIterable(Iterable<T> iterable) {
         return StreamSupport.stream(iterable.spliterator(), false);
     }

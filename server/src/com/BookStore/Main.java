@@ -26,35 +26,35 @@ public class Main {
         Controller ctrl = new Controller(bookrepo, clientrepo);
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        ControllerService helloService = new ControllerServiceServer(executorService, ctrl);
+        ControllerService controllerService = new ControllerServiceServer(executorService, ctrl);
         TcpServer tcpServer = new TcpServer(executorService, ControllerService.SERVICE_HOST, ControllerService.SERVICE_PORT);
 
-//        tcpServer.addHandler(ControllerService.SAY_HI, (request) -> {
-//            CompletableFuture<String> result = helloService.sayHi(request.body());
-//            try {
-//                return new Message(Message.OK, result.get());
-//            } catch (Throwable e) {
-//                e.printStackTrace();
-//            }
-//            return new Message(Message.ERROR, "");
-//        });
-//        tcpServer.addHandler(ControllerService.SAY_BYE, (request) -> {
-//            CompletableFuture<String> result = helloService.sayBye(request.body());
-//            try {
-//                return new Message(Message.OK, result.get());
-//            } catch (Throwable e) {
-//                e.printStackTrace();
-//            }
-//            return new Message(Message.ERROR, "");
-//        });
+
+        String LINE_SEPARATOR = System.getProperty("line.separator");
+
+
         tcpServer.addHandler(ControllerService.GET_ALL_OPTIONS, (request) -> {
-            CompletableFuture<String> result = helloService.getAllOptions();
+            CompletableFuture<String> result = controllerService.getAllOptions();
             try {
-                return new Message(Message.OK, result.get());
+                return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
                 e.printStackTrace();
             }
-            return new Message(Message.ERROR, "");
+            return Message.builder(Message.ERROR, "");
+        });
+
+        tcpServer.addHandler(ControllerService.ADD_CLIENT, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                String firstName = elements[0];
+                String lastName = elements[1];
+                CompletableFuture result = controllerService.addClient(firstName, lastName);
+                result.get();
+                return Message.builder(Message.OK, "Success");
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return Message.builder(Message.ERROR, "Failure");
         });
         tcpServer.startServer();
     }

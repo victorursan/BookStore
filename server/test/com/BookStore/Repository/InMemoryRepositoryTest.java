@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 public class InMemoryRepositoryTest {
     private InMemoryRepository<BaseEntity<Integer>> repo;
+
     @Before
     public void setUp() throws Exception {
         repo = new InMemoryRepository<>();

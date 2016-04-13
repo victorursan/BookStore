@@ -51,7 +51,7 @@ public class BookDbRepository implements IRepository<Book> {
     @Override
     public Optional<Book> get(int id) {
         try (Connection connection = DriverManager.getConnection(url, username, password);
-            PreparedStatement statement = connection.prepareStatement("SELECT * from books where bookid=?")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * from books where bookid=?")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

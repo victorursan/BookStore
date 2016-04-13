@@ -90,9 +90,9 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
         return client;
     }
 
-    private void saveToFile(Client entity) {
+    private void saveToFile(Client client) {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(clientFilePath, StandardOpenOption.APPEND)) {
-            bufferedWriter.write(entity.toString());
+            bufferedWriter.write(String.format("%d, %s, %s\n", client.getId(), client.getFirstName(), client.getLastName()));
             bufferedWriter.newLine();
         } catch (IOException e) {
             throw new RepositoryException(e.getMessage());

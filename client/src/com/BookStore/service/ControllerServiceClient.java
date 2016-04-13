@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
  * Created by victor on 4/13/16.
  */
 public class ControllerServiceClient implements ControllerService {
+    private static String LINE_SEPARATOR = System.getProperty("line.separator");
     private ExecutorService executorService;
     private TcpClient tcpClient;
 
@@ -19,27 +20,19 @@ public class ControllerServiceClient implements ControllerService {
         this.tcpClient = tcpClient;
     }
 
-//    @Override
-//    public CompletableFuture<String> sayHi(String name) {
-//        return CompletableFuture.supplyAsync(() -> {
-//            Message request = new Message(ControllerService.SAY_HI, name);
-//            Message response = tcpClient.sendAndReceive(request);
-//            return response.body();} ,executorService);
-//    }
-//
-//    @Override
-//    public CompletableFuture<String> sayBye(String name) {
-//        return CompletableFuture.supplyAsync(() -> {
-//            Message request = new Message(ControllerService.SAY_BYE, name);
-//            Message response = tcpClient.sendAndReceive(request);
-//            return response.body();} ,executorService);
-//    }
+    private CompletableFuture<String> getResponseFromMessage(Message request) {
+        return CompletableFuture.supplyAsync(tcpClient.sendAndReceive(request)::body, executorService);
+    }
 
     @Override
     public CompletableFuture<String> getAllOptions() {
-        return CompletableFuture.supplyAsync(() -> {
-            Message request = new Message(ControllerService.GET_ALL_OPTIONS, "get all options");
-            Message response = tcpClient.sendAndReceive(request);
-            return response.body();}, executorService);
+        return getResponseFromMessage(Message.builder(ControllerService.GET_ALL_OPTIONS, "get all options"));
     }
+
+    @Override
+    public CompletableFuture addClient(String firstName, String lastName) {
+        return getResponseFromMessage(Message.builder(ControllerService.ADD_CLIENT, firstName + LINE_SEPARATOR + lastName));
+    }
+
+
 }

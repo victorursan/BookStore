@@ -156,7 +156,7 @@ public class ClientDbRepository implements IRepository<Client> {
 
     private void removePurchase(Integer cid, Integer bid) {
         try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM purchases WHERE clientid=? and bookid=?")) {
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM purchases WHERE clientid=? AND bookid=?")) {
             statement.setInt(1, cid);
             statement.setInt(2, bid);
             statement.executeUpdate();

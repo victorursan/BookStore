@@ -3,8 +3,6 @@ package com.BookStore.Model.Validators;
 import com.BookStore.Model.Book;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class BookValidatorTest {
 
     @Test(expected = ValidatorException.class)
