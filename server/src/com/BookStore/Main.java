@@ -139,9 +139,8 @@ public class Main {
             String[] elements = request.body().split(LINE_SEPARATOR);
             try {
                 Integer id = Integer.parseInt(elements[0]);
-                CompletableFuture result = controllerService.clientBooks(id);
-                result.get();
-                return Message.builder(Message.OK, "Success");
+                CompletableFuture<String> result = controllerService.clientBooks(id);
+                return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
                 e.printStackTrace();
             }

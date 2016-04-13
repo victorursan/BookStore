@@ -2,7 +2,10 @@ package com.BookStore.service;
 
 import com.BookStore.Controller.Controller;
 import com.BookStore.ControllerService;
+import com.BookStore.Model.Book;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Supplier;
@@ -13,6 +16,7 @@ import java.util.function.Supplier;
 public class ControllerServiceServer implements ControllerService {
     private ExecutorService executorService;
     private Controller ctrl;
+    private String LINE_SEPARATOR = System.getProperty("line.separator");
 
     public ControllerServiceServer(ExecutorService executorService, Controller ctrl) {
         this.executorService = executorService;
@@ -25,7 +29,7 @@ public class ControllerServiceServer implements ControllerService {
 
     @Override
     public CompletableFuture<String> getAllOptions() {
-        return CompletableFuture.supplyAsync(() -> "Options:" +
+        return sendRequestWithMessage(() -> "Options:" +
                         "\n1. Add client" +
                         "\n2. Add book" +
                         "\n3. Delete client" +
@@ -44,8 +48,7 @@ public class ControllerServiceServer implements ControllerService {
                         "\n16. Client purchase" +
                         "\n17. Client return" +
                         "\n18. Purchases by one client" +
-                        "\n0. Exit"
-                , executorService);
+                        "\n0. Exit");
     }
 
     @Override
@@ -98,7 +101,17 @@ public class ControllerServiceServer implements ControllerService {
 
     @Override
     public CompletableFuture<String> clientBooks(Integer id) {
-        return sendRequestWithMessage(() -> ctrl.clientBooks(id).toString());
+        return sendRequestWithMessage(() -> {
+            String toRet = "";
+            Optional<List<Book>> optBooks = ctrl.clientBooks(id);
+            if (optBooks.isPresent()) {
+                for (Book book : optBooks.get()) {
+                    toRet += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
+                            book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
+                }
+            }
+            return toRet;
+        });
     }
 
 
