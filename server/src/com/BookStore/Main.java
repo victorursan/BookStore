@@ -151,7 +151,6 @@ public class Main {
         });
 
         tcpServer.addHandler(ControllerService.ALL_CLIENTS, (request) -> {
-            String[] elements = request.body().split(LINE_SEPARATOR);
             try {
                 CompletableFuture<String> result = controllerService.getAllClients();
                 return Message.builder(Message.OK, result.get());
@@ -161,7 +160,6 @@ public class Main {
         });
 
         tcpServer.addHandler(ControllerService.ALL_BOOKS, (request) -> {
-            String[] elements = request.body().split(LINE_SEPARATOR);
             try {
                 CompletableFuture<String> result = controllerService.getAllBooks();
                 return Message.builder(Message.OK, result.get());
@@ -177,6 +175,18 @@ public class Main {
                 Integer clientId = Integer.parseInt(elements[0]);
                 Integer bookId = Integer.parseInt(elements[1]);
                 CompletableFuture<String> result = controllerService.buyBook(clientId, bookId);
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
+            }
+        });
+
+        tcpServer.addHandler(ControllerService.RETURN_BOOK, (request) -> {
+            try {
+                String[] elements = request.body().split(LINE_SEPARATOR);
+                Integer clientId = Integer.parseInt(elements[0]);
+                Integer bookId = Integer.parseInt(elements[1]);
+                CompletableFuture<String> result = controllerService.returnBook(clientId, bookId);
                 return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
                 return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
