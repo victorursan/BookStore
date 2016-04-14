@@ -1,6 +1,0 @@
-2, Laura, Pop
-5, George, Smith
-6, A, B
-9, Victor, Ursan
-7, Ema, Pop
-1, Maria, Ion
