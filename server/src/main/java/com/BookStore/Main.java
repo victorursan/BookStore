@@ -169,6 +169,60 @@ public class Main {
 
         });
 
+        tcpServer.addHandler(ControllerService.AVAILABLE_BOOKS, (request) -> {
+            try {
+                CompletableFuture<String> result = controllerService.availableBooks();
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
+            }
+
+        });
+
+        tcpServer.addHandler(ControllerService.GENRE_BOOKS, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                String genre = elements[0];
+                CompletableFuture<String> result = controllerService.filterBooksByGenre(genre);
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
+            }
+        });
+
+        tcpServer.addHandler(ControllerService.AUTHOR_BOOKS, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                String author = elements[0];
+                CompletableFuture<String> result = controllerService.filterBooksByAuthor(author);
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
+            }
+        });
+
+        tcpServer.addHandler(ControllerService.CHEAP_BOOKS, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                Integer price = Integer.parseInt(elements[0]);
+                CompletableFuture<String> result = controllerService.filterBooksCheaperThan(price);
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
+            }
+        });
+
+        tcpServer.addHandler(ControllerService.EXPENSIVE_BOOKS, (request) -> {
+            String[] elements = request.body().split(LINE_SEPARATOR);
+            try {
+                Integer price = Integer.parseInt(elements[0]);
+                CompletableFuture<String> result = controllerService.filterBooksMoreExpensiveThan(price);
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
+            }
+        });
+
         tcpServer.addHandler(ControllerService.BUY_BOOK, (request) -> {
             try {
                 String[] elements = request.body().split(LINE_SEPARATOR);
