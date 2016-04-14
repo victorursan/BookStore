@@ -26,41 +26,41 @@ public class ControllerServiceClient implements ControllerService {
 
     @Override
     public CompletableFuture<String> getAllOptions() {
-        return getResponseFromMessage(Message.builder(ControllerService.GET_ALL_OPTIONS, "get all options"));
+        return getResponseFromMessage(Message.builder(ControllerService.GET_ALL_OPTIONS, "Get all options"));
     }
 
     @Override
-    public CompletableFuture addClient(String firstName, String lastName) {
+    public CompletableFuture<String> addClient(String firstName, String lastName) {
         return getResponseFromMessage(Message.builder(ControllerService.ADD_CLIENT, firstName + LINE_SEPARATOR + lastName));
     }
 
     @Override
-    public CompletableFuture addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price) {
+    public CompletableFuture<String> addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price) {
         return getResponseFromMessage(Message.builder(ControllerService.ADD_BOOK,
                 title + LINE_SEPARATOR + auth + LINE_SEPARATOR + isbn + LINE_SEPARATOR +
                         genre + LINE_SEPARATOR + publisher + LINE_SEPARATOR + price));
     }
 
     @Override
-    public CompletableFuture updateClient(Integer id, String firstName, String lastName) {
+    public CompletableFuture<String> updateClient(Integer id, String firstName, String lastName) {
         return getResponseFromMessage(Message.builder(ControllerService.UPDATE_CLIENT, id + LINE_SEPARATOR +
                 firstName + LINE_SEPARATOR + lastName));
     }
 
     @Override
-    public CompletableFuture deleteClient(Integer id) {
+    public CompletableFuture<String> deleteClient(Integer id) {
         return getResponseFromMessage(Message.builder(ControllerService.DELETE_CLIENT, id.toString()));
     }
 
     @Override
-    public CompletableFuture updateBook(Integer id, String title, String auth, Long isbn, String genre, String publisher, Integer price) {
+    public CompletableFuture<String> updateBook(Integer id, String title, String auth, Long isbn, String genre, String publisher, Integer price, Boolean available) {
         return getResponseFromMessage(Message.builder(ControllerService.UPDATE_BOOK, id + LINE_SEPARATOR +
                 title + LINE_SEPARATOR + auth + LINE_SEPARATOR + isbn + LINE_SEPARATOR +
-                genre + LINE_SEPARATOR + publisher + LINE_SEPARATOR + price));
+                genre + LINE_SEPARATOR + publisher + LINE_SEPARATOR + price + LINE_SEPARATOR + available));
     }
 
     @Override
-    public CompletableFuture deleteBook(Integer id) {
+    public CompletableFuture<String> deleteBook(Integer id) {
         return getResponseFromMessage(Message.builder(ControllerService.DELETE_BOOK, id.toString()));
     }
 
@@ -112,6 +112,16 @@ public class ControllerServiceClient implements ControllerService {
     @Override
     public CompletableFuture<String> filterBooksMoreExpensiveThan(Integer price) {
         return getResponseFromMessage(Message.builder(ControllerService.EXPENSIVE_BOOKS, price.toString()));
+    }
+
+    @Override
+    public CompletableFuture<String> returnBook(Integer clientId, Integer bookId) {
+        return getResponseFromMessage(Message.builder(ControllerService.RETURN_BOOK, clientId + LINE_SEPARATOR + bookId));
+    }
+
+    @Override
+    public CompletableFuture<String> buyBook(Integer clientId, Integer bookId) {
+        return getResponseFromMessage(Message.builder(ControllerService.BUY_BOOK, clientId + LINE_SEPARATOR + bookId));
     }
 
 

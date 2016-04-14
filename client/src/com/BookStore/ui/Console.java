@@ -68,6 +68,16 @@ public class Console {
         }
     }
 
+    private void printMessage(CompletableFuture<String> completableFuture) {
+        completableFuture.handle((String message, Throwable error) -> {
+            if (error != null) {
+                error.printStackTrace();
+            } else {
+                println(message);
+            }
+            return this;
+        });
+    }
 
     private void addClient() {
         String firstName = readString("Enter first name: ");
@@ -100,7 +110,8 @@ public class Console {
         String genre = readString("Enter genre: ");
         String publisher = readString("Enter publisher: ");
         Integer price = readInteger("Enter price: ");
-        controller.updateBook(id, title, auth, isbn, genre, publisher, price);
+        Boolean available = readBool("Is Available (true/ false):");
+        controller.updateBook(id, title, auth, isbn, genre, publisher, price, available);
     }
 
     private void deleteClient() {
@@ -115,150 +126,67 @@ public class Console {
 
     private void clientBooks() {
         Integer id = readInteger("Display books for client: ");
-        CompletableFuture<String> result = controller.clientBooks(id);
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
+        printMessage(controller.clientBooks(id));
     }
 
     private void clientReturnMode() {
-//        ctrl.getAllClients().forEach(this::println);
-//        int clientOpt = readInteger("Which client wants to return?");
-//        ctrl.clientBooks(clientOpt).ifPresent(books -> books.forEach(this::println));
-//        int bookOpt = readInteger("Which book is wanted for return?");
-//        try {
-//            ctrl.returnBook(clientOpt, bookOpt);
-//            println("Book returned!");
-//        } catch (BaseException e) {
-//            println("Data not valid. " + e.getMessage());
-//        }
+        printMessage(controller.getAllClients());
+        Integer client = readInteger("Which client wants to return?");
+        printMessage(controller.clientBooks(client));
+        Integer book = readInteger("Which book is wanted for return?");
+        printMessage(controller.returnBook(client, book));
     }
 
     private void clientBuyMode() {
-//        ctrl.getAllClients().forEach(this::println);
-//        int clientOpt = readInteger("Which client wants to purchase? ");
-//        ctrl.availableBooks().forEach(this::println);
-//        int bookOpt = readInteger("Which book is wanted for buying? ");
-//        try {
-//            ctrl.buyBook(clientOpt, bookOpt);
-//            println("Book bought!");
-//        } catch (BaseException e) {
-//            println("Data not valid. " + e.getMessage());
-//        }
+        printMessage(controller.getAllClients());
+        Integer client = readInteger("Which client wants to purchase? ");
+        printMessage(controller.availableBooks());
+        Integer book = readInteger("Which book is wanted for buying? ");
+        printMessage(controller.buyBook(client, book));
     }
 
     private void mostMoneyClient() {
-        controller.clientWhoSpentMost();
+        printMessage(controller.clientWhoSpentMost());
     }
 
     private void mostBooksClient() {
-        controller.clientWithMostBooks();
+        printMessage(controller.clientWithMostBooks());
     }
 
     private void expensiveBooks() {
         Integer price = readInteger("Books more expensive than: ");
-        CompletableFuture<String> result = controller.filterBooksMoreExpensiveThan(price);
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
+        printMessage(controller.filterBooksMoreExpensiveThan(price));
     }
 
     private void cheaperBooks() {
         Integer price = readInteger("Books cheaper than: ");
-        CompletableFuture<String> result = controller.filterBooksCheaperThan(price);
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
+        printMessage(controller.filterBooksCheaperThan(price));
     }
 
     private void authorBooks() {
         String auth = readString("Enter author:");
-        CompletableFuture<String> result = controller.filterBooksByAuthor(auth);
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
+        printMessage(controller.filterBooksByAuthor(auth));
     }
 
     private void genreBooks() {
         String genre = readString("Enter genre:");
-        CompletableFuture<String> result = controller.filterBooksByGenre(genre);
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
+        printMessage(controller.filterBooksByGenre(genre));
     }
 
     private void showAvailableBooks() {
-        CompletableFuture<String> result = controller.availableBooks();
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
+        printMessage(controller.availableBooks());
     }
 
     private void showAllBooks() {
-        CompletableFuture<String> result = controller.getAllBooks();
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
+        printMessage(controller.getAllBooks());
     }
 
     private void showAllClients() {
-        CompletableFuture<String> result = controller.getAllClients();
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
+        printMessage(controller.getAllClients());
     }
 
     private void getAllOptions() {
-        CompletableFuture<String> result = controller.getAllOptions();
-        result.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
-
+        printMessage(controller.getAllOptions());
         Integer option = readInteger("Option: ");
         switch (option) {
             case 1:

@@ -27,20 +27,22 @@ public interface ControllerService {
     String AUTHOR_BOOKS = "filterBooksByAuthor";
     String CHEAP_BOOKS = "filterBooksCheaperThan";
     String EXPENSIVE_BOOKS = "filterBooksMoreExpensiveThan";
+    String RETURN_BOOK = "returnBook";
+    String BUY_BOOK = "buyBook";
 
     CompletableFuture<String> getAllOptions();
 
-    CompletableFuture addClient(String firstName, String lastName);
+    CompletableFuture<String> addClient(String firstName, String lastName);
 
-    CompletableFuture addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price);
+    CompletableFuture<String> addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price);
 
-    CompletableFuture updateClient(Integer id, String firstName, String lastName);
+    CompletableFuture<String> updateClient(Integer id, String firstName, String lastName);
 
-    CompletableFuture deleteClient(Integer id);
+    CompletableFuture<String> deleteClient(Integer id);
 
-    CompletableFuture updateBook(Integer id, String title, String auth, Long isbn, String genre, String publisher, Integer price);
+    CompletableFuture<String> updateBook(Integer id, String title, String auth, Long isbn, String genre, String publisher, Integer price, Boolean available);
 
-    CompletableFuture deleteBook(Integer id);
+    CompletableFuture<String> deleteBook(Integer id);
 
     CompletableFuture<String> clientBooks(Integer id);
 
@@ -61,4 +63,8 @@ public interface ControllerService {
     CompletableFuture<String> filterBooksCheaperThan(Integer price);
 
     CompletableFuture<String> filterBooksMoreExpensiveThan(Integer price);
+
+    CompletableFuture<String> returnBook(Integer clientId, Integer bookId);
+
+    CompletableFuture<String> buyBook(Integer clientId, Integer bookId);
 }

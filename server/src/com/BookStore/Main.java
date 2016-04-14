@@ -29,18 +29,15 @@ public class Main {
         ControllerService controllerService = new ControllerServiceServer(executorService, ctrl);
         TcpServer tcpServer = new TcpServer(executorService, ControllerService.SERVICE_HOST, ControllerService.SERVICE_PORT);
 
-
         String LINE_SEPARATOR = System.getProperty("line.separator");
-
 
         tcpServer.addHandler(ControllerService.GET_ALL_OPTIONS, (request) -> {
             CompletableFuture<String> result = controllerService.getAllOptions();
             try {
                 return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "");
         });
 
         tcpServer.addHandler(ControllerService.ADD_CLIENT, (request) -> {
@@ -48,13 +45,11 @@ public class Main {
             try {
                 String firstName = elements[0];
                 String lastName = elements[1];
-                CompletableFuture result = controllerService.addClient(firstName, lastName);
-                result.get();
-                return Message.builder(Message.OK, "Success");
+                CompletableFuture<String> result = controllerService.addClient(firstName, lastName);
+                return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.ADD_BOOK, (request) -> {
@@ -66,13 +61,11 @@ public class Main {
                 String genre = elements[3];
                 String publisher = elements[4];
                 Integer price = Integer.parseInt(elements[5]);
-                CompletableFuture result = controllerService.addBook(title, auth, isbn, genre, publisher, price);
-                result.get();
-                return Message.builder(Message.OK, "Success");
+                CompletableFuture<String> result = controllerService.addBook(title, auth, isbn, genre, publisher, price);
+                return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.UPDATE_CLIENT, (request) -> {
@@ -81,26 +74,22 @@ public class Main {
                 Integer id = Integer.parseInt(elements[0]);
                 String firstName = elements[1];
                 String lastName = elements[2];
-                CompletableFuture result = controllerService.updateClient(id, firstName, lastName);
-                result.get();
-                return Message.builder(Message.OK, "Success");
+                CompletableFuture<String> result = controllerService.updateClient(id, firstName, lastName);
+                return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.DELETE_CLIENT, (request) -> {
             String[] elements = request.body().split(LINE_SEPARATOR);
             try {
                 Integer id = Integer.parseInt(elements[0]);
-                CompletableFuture result = controllerService.deleteClient(id);
-                result.get();
-                return Message.builder(Message.OK, "Success");
+                CompletableFuture<String> result = controllerService.deleteClient(id);
+                return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.UPDATE_BOOK, (request) -> {
@@ -113,26 +102,23 @@ public class Main {
                 String genre = elements[4];
                 String publisher = elements[5];
                 Integer price = Integer.parseInt(elements[6]);
-                CompletableFuture result = controllerService.updateBook(id, title, auth, isbn, genre, publisher, price);
-                result.get();
-                return Message.builder(Message.OK, "Success");
+                Boolean available = Boolean.parseBoolean(elements[7]);
+                CompletableFuture<String> result = controllerService.updateBook(id, title, auth, isbn, genre, publisher, price, available);
+                return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.DELETE_BOOK, (request) -> {
             String[] elements = request.body().split(LINE_SEPARATOR);
             try {
                 Integer id = Integer.parseInt(elements[0]);
-                CompletableFuture result = controllerService.deleteBook(id);
-                result.get();
-                return Message.builder(Message.OK, "Success");
+                CompletableFuture<String> result = controllerService.deleteBook(id);
+                return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.CLIENT_BOOKS, (request) -> {
@@ -142,9 +128,8 @@ public class Main {
                 CompletableFuture<String> result = controllerService.clientBooks(id);
                 return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.MOST_SPENT, (request) -> {
@@ -152,9 +137,8 @@ public class Main {
                 CompletableFuture<String> result = controllerService.clientWhoSpentMost();
                 return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.MOST_BOOKS, (request) -> {
@@ -162,9 +146,8 @@ public class Main {
                 CompletableFuture<String> result = controllerService.clientWithMostBooks();
                 return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.ALL_CLIENTS, (request) -> {
@@ -173,9 +156,8 @@ public class Main {
                 CompletableFuture<String> result = controllerService.getAllClients();
                 return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
         });
 
         tcpServer.addHandler(ControllerService.ALL_BOOKS, (request) -> {
@@ -184,9 +166,21 @@ public class Main {
                 CompletableFuture<String> result = controllerService.getAllBooks();
                 return Message.builder(Message.OK, result.get());
             } catch (Throwable e) {
-                e.printStackTrace();
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
             }
-            return Message.builder(Message.ERROR, "Failure");
+
+        });
+
+        tcpServer.addHandler(ControllerService.BUY_BOOK, (request) -> {
+            try {
+                String[] elements = request.body().split(LINE_SEPARATOR);
+                Integer clientId = Integer.parseInt(elements[0]);
+                Integer bookId = Integer.parseInt(elements[1]);
+                CompletableFuture<String> result = controllerService.buyBook(clientId, bookId);
+                return Message.builder(Message.OK, result.get());
+            } catch (Throwable e) {
+                return Message.builder(Message.ERROR, "Failure:" + e.getMessage());
+            }
         });
 
         tcpServer.startServer();
