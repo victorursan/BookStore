@@ -5,8 +5,8 @@ import com.BookStore.Model.Book;
 import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.BookValidator;
 import com.BookStore.Model.Validators.ClientValidator;
-import com.BookStore.Repository.FileRepository.BookFileRepository;
-import com.BookStore.Repository.FileRepository.ClientFileRepository;
+import com.BookStore.Repository.DbRepository.BookDbRepository;
+import com.BookStore.Repository.DbRepository.ClientDbRepository;
 import com.BookStore.Repository.IRepository;
 import com.BookStore.service.ControllerServiceServer;
 import com.BookStore.tcp.TcpServer;
@@ -17,12 +17,15 @@ import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "victor";
+        String pass = "papple";
 
-        String bookPath = "./server/data/FileData/Books.txt";
-        String clientPath = "./server/data/FileData/Clients.txt";
-        String purchasePath = "./server/data/FileData/Purchase.txt";
-        IRepository<Book> bookrepo = new BookFileRepository(new BookValidator(), bookPath);
-        IRepository<Client> clientrepo = new ClientFileRepository(new ClientValidator(), clientPath, purchasePath, bookrepo);
+//        String bookPath = "./server/data/FileData/Books.txt";
+//        String clientPath = "./server/data/FileData/Clients.txt";
+//        String purchasePath = "./server/data/FileData/Purchase.txt";
+        IRepository<Book> bookrepo = new BookDbRepository(url, user, pass, new BookValidator());
+        IRepository<Client> clientrepo = new ClientDbRepository(url, user, pass, new ClientValidator(), bookrepo);
         Controller ctrl = new Controller(bookrepo, clientrepo);
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
