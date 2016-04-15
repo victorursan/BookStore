@@ -14,23 +14,5 @@ public class ClientApp {
         ControllerServiceClient controllerServiceClient = context.getBean(ControllerServiceClient.class);
         Console console = new Console(controllerServiceClient);
         console.run();
-//        controllerServiceClient.getAllOptions()
-//        controllerServiceClient.getAllOptions().handle((message, error) -> {
-//            if (error != null) {
-//                System.out.println(error.getMessage());
-//            }
-//            System.out.println(message);
-//            return null;
-//        });
-        //TODO implement ClientUI
-//        List<Student> students = studentServiceClient.getStudents();
-//        students.stream().forEach(System.out::println);
-
-//        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-//        TcpClient tcpClient = new TcpClient(ControllerService.SERVICE_HOST, ControllerService.SERVICE_PORT);
-//        ControllerService helloService = new ControllerServiceClient(executorService, tcpClient);
-//        Console console = new Console(helloService);
-//        console.run();
-//        executorService.shutdownNow();
     }
 }

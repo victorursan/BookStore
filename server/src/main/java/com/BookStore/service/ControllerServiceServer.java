@@ -22,9 +22,9 @@ public class ControllerServiceServer implements ControllerService {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private IRepository<Book> bookrepo = new BookDbRepository(jdbcTemplate, new BookValidator());
-    private IRepository<Client> clientrepo = new ClientDbRepository(jdbcTemplate, new ClientValidator());
-    private Controller ctrl = new Controller(bookrepo, clientrepo);
+    private IRepository<Book> bookrepo;
+    private IRepository<Client> clientrepo;
+    private Controller ctrl;
 
     public ControllerServiceServer() {
     }
@@ -32,6 +32,10 @@ public class ControllerServiceServer implements ControllerService {
 
     @Override
     public String getAllOptions() {
+        bookrepo = new BookDbRepository(jdbcTemplate, new BookValidator());
+        clientrepo = new ClientDbRepository(jdbcTemplate, new ClientValidator());
+        ctrl = new Controller(bookrepo, clientrepo);
+        System.out.println(jdbcTemplate.toString());
         return "Options:" +
                 "\n1. Add client" +
                 "\n2. Add book" +
@@ -84,18 +88,30 @@ public class ControllerServiceServer implements ControllerService {
     }
 
     @Override
-    public Optional<List<Book>> clientBooks(Integer id) {
-        return ctrl.clientBooks(id);
+    public List<Book> clientBooks(Integer id) {
+        Optional<List<Book>> books = ctrl.clientBooks(id);
+        if (books.isPresent()) {
+            return books.get();
+        }
+        return null;
     }
 
     @Override
-    public Optional<Client> clientWhoSpentMost() {
-        return ctrl.clientWithMostBooks();
+    public Client clientWhoSpentMost() {
+        Optional<Client> client = ctrl.clientWhoSpentMost();
+        if (client.isPresent()) {
+            return client.get();
+        }
+        return null;
     }
 
     @Override
-    public Optional<Client> clientWithMostBooks() {
-        return ctrl.clientWithMostBooks();
+    public Client clientWithMostBooks() {
+        Optional<Client> client = ctrl.clientWithMostBooks();
+        if (client.isPresent()) {
+            return client.get();
+        }
+        return null;
     }
 
     @Override

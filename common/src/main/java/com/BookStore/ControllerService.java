@@ -4,13 +4,12 @@ import com.BookStore.Models.Book;
 import com.BookStore.Models.Client;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by victor on 4/13/16.
  */
 
-public interface ControllerService {
+public interface ControllerService  {
 
     String getAllOptions();
 
@@ -26,11 +25,11 @@ public interface ControllerService {
 
     void deleteBook(Integer id);
 
-    Optional<List<Book>> clientBooks(Integer id);
+    List<Book> clientBooks(Integer id);
 
-    Optional<Client> clientWhoSpentMost();
+    Client clientWhoSpentMost();
 
-    Optional<Client> clientWithMostBooks();
+    Client clientWithMostBooks();
 
     Iterable<Client> getAllClients();
 

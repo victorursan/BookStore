@@ -70,8 +70,8 @@ public class Controller {
      */
     public void addBook(String title, String author, Long ISBN, String genre, String publisher, Integer price)
             throws ValidatorException {
-        Integer validID = 121;
-                //getValidIDForIterable(bookRepository.getAll());
+
+        Integer validID = getValidIDForIterable(bookRepository.getAll());
         Book book = new Book(validID, title, author, ISBN, genre, publisher, price, true);
         bookRepository.add(book);
     }
@@ -84,8 +84,7 @@ public class Controller {
      * @throws ValidatorException if the client is not valid
      */
     public void addClient(String firstName, String lastName) throws ValidatorException {
-        Integer validID = 199;
-                //getValidIDForIterable(clientRepository.getAll());
+        Integer validID = getValidIDForIterable(clientRepository.getAll());
         Client client = new Client(validID, firstName, lastName);
         clientRepository.add(client);
     }

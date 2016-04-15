@@ -7,7 +7,6 @@ import com.BookStore.Models.Client;
 import com.BookStore.Repository.Exceptions.RepositoryException;
 import com.BookStore.Repository.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.HashSet;
@@ -48,20 +47,25 @@ public class ClientDbRepository implements IRepository<Client> {
     public Optional<Client> get(int id) {
         //language=PostgreSQL
         String sqlSelect = "SELECT * FROM clients WHERE clientid=?";
-        Client client = jdbcTemplate.queryForObject(sqlSelect, BeanPropertyRowMapper.newInstance(Client.class), id);
+        Client client = jdbcTemplate.queryForObject(sqlSelect, new ClientRowMapper(), id);
         if (client == null) return Optional.empty();
-        //language=PostgreSQL
-        String sqlBooks = "SELECT * FROM books INNER JOIN purchases ON books.bookid = purchases.bookid WHERE clientid = ?";
-        List<Book> books = jdbcTemplate.query(sqlBooks, BeanPropertyRowMapper.newInstance(Book.class), id);
-        client.setBooks(books);
-        return Optional.of(client);
+        return Optional.of(this.setBooks(client));
     }
 
     @Override
     public Iterable<Client> getAll() {
         //language=PostgreSQL
         String sql = "SELECT * FROM clients";
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Client.class));
+        List<Client> clients = jdbcTemplate.query(sql, new ClientRowMapper());
+        return clients.stream().map(this::setBooks).collect(Collectors.toList());
+    }
+
+    private Client setBooks(Client cl) {
+        //language=PostgreSQL
+        String sqlBooks = "SELECT * FROM books INNER JOIN purchases ON books.bookid = purchases.bookid WHERE clientid = ?";
+        List<Book> books = jdbcTemplate.query(sqlBooks,new BookRowMapper(), cl.getId());
+        cl.setBooks(books);
+        return cl;
     }
 
     @Override
@@ -76,8 +80,8 @@ public class ClientDbRepository implements IRepository<Client> {
         Set<Integer> deleteBooks = new HashSet<>();
 
 
-        String booksId = "SELECT bookid FROM purchases WHERE clientid=?";
-        List<Integer> oldBookIds = jdbcTemplate.query(booksId, BeanPropertyRowMapper.newInstance(Integer.class), entity.getId());
+        String booksId = "SELECT bookid FROM purchases WHERE clientid = ?";
+        List<Integer> oldBookIds = jdbcTemplate.query(booksId, ((resultSet, i) -> resultSet.getInt("bookid")), entity.getId());
         for (Integer bookId : oldBookIds) {
             if (addBooks.contains(bookId)) {
                 addBooks.remove(bookId);
@@ -115,4 +119,7 @@ public class ClientDbRepository implements IRepository<Client> {
         jdbcTemplate.update(sqlDelete, id);
         return Optional.empty();
     }
+
+
+
 }

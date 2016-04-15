@@ -6,7 +6,6 @@ import com.BookStore.Models.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by victor on 4/13/16.
@@ -59,17 +58,17 @@ public class ControllerServiceClient implements ControllerService {
     }
 
     @Override
-    public Optional<List<Book>> clientBooks(Integer id) {
+    public List<Book> clientBooks(Integer id) {
         return controllerService.clientBooks(id);
     }
 
     @Override
-    public Optional<Client> clientWhoSpentMost() {
+    public Client clientWhoSpentMost() {
         return controllerService.clientWithMostBooks();
     }
 
     @Override
-    public Optional<Client> clientWithMostBooks() {
+    public Client clientWithMostBooks() {
         return controllerService.clientWithMostBooks();
     }
 
