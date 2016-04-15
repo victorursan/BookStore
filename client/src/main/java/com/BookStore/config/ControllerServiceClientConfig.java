@@ -13,19 +13,19 @@ import org.springframework.remoting.rmi.RmiProxyFactoryBean;
 @Configuration
 public class ControllerServiceClientConfig {
 
-        @Bean
-        public RmiProxyFactoryBean controllerService() {
-            RmiProxyFactoryBean rmiProxy = new RmiProxyFactoryBean();
-            rmiProxy.setServiceUrl("rmi://localhost:1099/ControllerService");
-            rmiProxy.setServiceInterface(ControllerService.class);
-            return rmiProxy;
-        }
-
-        @Bean
-        public ControllerServiceClient controllerServiceClient() {
-            return new ControllerServiceClient();
-        }
-
-
+    @Bean
+    public RmiProxyFactoryBean controllerService() {
+        RmiProxyFactoryBean rmiProxy = new RmiProxyFactoryBean();
+        rmiProxy.setServiceUrl("rmi://localhost:1099/ControllerService");
+        rmiProxy.setServiceInterface(ControllerService.class);
+        return rmiProxy;
     }
+
+    @Bean
+    public ControllerServiceClient controllerServiceClient() {
+        return new ControllerServiceClient();
+    }
+
+
+}
 

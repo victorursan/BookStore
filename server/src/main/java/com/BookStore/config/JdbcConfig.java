@@ -20,6 +20,7 @@ public class JdbcConfig {
         return new JdbcTemplate(dataSource());
     }
 
+
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
@@ -27,7 +28,7 @@ public class JdbcConfig {
         dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
         dataSource.setUsername("victor");
         dataSource.setPassword("papple");
-        dataSource.setInitialSize(2);
+        dataSource.setInitialSize(4);
         dataSource.setMaxActive(5);
         return dataSource;
 

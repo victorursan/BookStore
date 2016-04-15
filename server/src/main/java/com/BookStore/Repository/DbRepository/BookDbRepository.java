@@ -5,33 +5,15 @@ import com.BookStore.Model.Validators.ValidatorException;
 import com.BookStore.Models.Book;
 import com.BookStore.Repository.Exceptions.RepositoryException;
 import com.BookStore.Repository.IRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
 import java.util.Optional;
 
 
-@Repository
-@Service
 public class BookDbRepository implements IRepository<Book> {
     private IValidator<Book> validator;
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
 
     public BookDbRepository(JdbcTemplate jdbcTemplate, IValidator<Book> validator) {
         this.validator = validator;

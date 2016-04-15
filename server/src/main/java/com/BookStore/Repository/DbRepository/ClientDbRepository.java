@@ -6,7 +6,6 @@ import com.BookStore.Models.Book;
 import com.BookStore.Models.Client;
 import com.BookStore.Repository.Exceptions.RepositoryException;
 import com.BookStore.Repository.IRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.HashSet;
@@ -18,7 +17,6 @@ import java.util.stream.Collectors;
 public class ClientDbRepository implements IRepository<Client> {
     private IValidator<Client> validator;
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public ClientDbRepository(JdbcTemplate jdbcTemplate, IValidator<Client> validator) {
@@ -56,6 +54,7 @@ public class ClientDbRepository implements IRepository<Client> {
     public Iterable<Client> getAll() {
         //language=PostgreSQL
         String sql = "SELECT * FROM clients";
+
         List<Client> clients = jdbcTemplate.query(sql, new ClientRowMapper());
         return clients.stream().map(this::setBooks).collect(Collectors.toList());
     }
@@ -63,7 +62,7 @@ public class ClientDbRepository implements IRepository<Client> {
     private Client setBooks(Client cl) {
         //language=PostgreSQL
         String sqlBooks = "SELECT * FROM books INNER JOIN purchases ON books.bookid = purchases.bookid WHERE clientid = ?";
-        List<Book> books = jdbcTemplate.query(sqlBooks,new BookRowMapper(), cl.getId());
+        List<Book> books = jdbcTemplate.query(sqlBooks, new BookRowMapper(), cl.getId());
         cl.setBooks(books);
         return cl;
     }
@@ -72,8 +71,8 @@ public class ClientDbRepository implements IRepository<Client> {
     public Optional<Client> update(Client entity) throws ValidatorException {
         validator.validate(entity);
         //language=PostgreSQL
-        String sqlUPDATE = "update clients set firstname = ?, lastname = ? WHERE clientid = ?";
-        jdbcTemplate.update(sqlUPDATE, entity.getFirstName(), entity.getLastName(),entity.getId());
+        String sqlUPDATE = "UPDATE clients SET firstname = ?, lastname = ? WHERE clientid = ?";
+        jdbcTemplate.update(sqlUPDATE, entity.getFirstName(), entity.getLastName(), entity.getId());
 
         //language=PostgreSQL
         Set<Integer> addBooks = entity.getBooks().stream().map(Book::getId).collect(Collectors.toSet());
@@ -119,7 +118,6 @@ public class ClientDbRepository implements IRepository<Client> {
         jdbcTemplate.update(sqlDelete, id);
         return Optional.empty();
     }
-
 
 
 }

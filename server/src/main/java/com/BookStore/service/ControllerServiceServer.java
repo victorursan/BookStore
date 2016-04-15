@@ -11,6 +11,7 @@ import com.BookStore.Repository.DbRepository.ClientDbRepository;
 import com.BookStore.Repository.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,24 +19,22 @@ import java.util.Optional;
 /**
  * Created by victor on 4/13/16.
  */
-public class ControllerServiceServer implements ControllerService {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
-    private IRepository<Book> bookrepo;
-    private IRepository<Client> clientrepo;
+@Service
+public class ControllerServiceServer implements ControllerService {
+
     private Controller ctrl;
 
-    public ControllerServiceServer() {
+    @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        IRepository<Book> bookrepo = new BookDbRepository(jdbcTemplate, new BookValidator());
+        IRepository<Client> clientrepo = new ClientDbRepository(jdbcTemplate, new ClientValidator());
+        ctrl = new Controller(bookrepo, clientrepo);
     }
 
 
     @Override
     public String getAllOptions() {
-        bookrepo = new BookDbRepository(jdbcTemplate, new BookValidator());
-        clientrepo = new ClientDbRepository(jdbcTemplate, new ClientValidator());
-        ctrl = new Controller(bookrepo, clientrepo);
-        System.out.println(jdbcTemplate.toString());
         return "Options:" +
                 "\n1. Add client" +
                 "\n2. Add book" +
@@ -60,8 +59,9 @@ public class ControllerServiceServer implements ControllerService {
 
     @Override
     public void addClient(String firstName, String lastName) {
-            ctrl.addClient(firstName, lastName);
+        ctrl.addClient(firstName, lastName);
     }
+
     @Override
     public void addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price) {
         ctrl.addBook(title, auth, isbn, genre, publisher, price);
