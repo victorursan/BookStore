@@ -1,9 +1,11 @@
-package com.BookStore.Model;
+package com.BookStore.Models;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
-public class BaseEntity<ID> {
+import java.io.Serializable;
+
+public class BaseEntity<ID> implements Serializable {
     private ID id;
 
     public BaseEntity(ID id) {

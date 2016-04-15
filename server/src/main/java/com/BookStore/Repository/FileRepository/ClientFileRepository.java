@@ -1,9 +1,9 @@
 package com.BookStore.Repository.FileRepository;
 
-import com.BookStore.Model.Book;
-import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
+import com.BookStore.Models.Book;
+import com.BookStore.Models.Client;
 import com.BookStore.Repository.Exceptions.RepositoryException;
 import com.BookStore.Repository.IRepository;
 import com.BookStore.Repository.InMemoryRepository;

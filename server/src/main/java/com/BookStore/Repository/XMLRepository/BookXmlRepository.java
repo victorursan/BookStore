@@ -1,8 +1,8 @@
 package com.BookStore.Repository.XMLRepository;
 
-import com.BookStore.Model.Book;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
+import com.BookStore.Models.Book;
 import com.BookStore.Repository.Exceptions.RepositoryException;
 import com.BookStore.Repository.InMemoryRepository;
 import com.BookStore.util.XmlReader;

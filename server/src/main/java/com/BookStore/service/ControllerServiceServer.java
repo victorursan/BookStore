@@ -2,35 +2,37 @@ package com.BookStore.service;
 
 import com.BookStore.Controller.Controller;
 import com.BookStore.ControllerService;
-import com.BookStore.Model.Book;
-import com.BookStore.Model.Client;
+import com.BookStore.Model.Validators.BookValidator;
+import com.BookStore.Model.Validators.ClientValidator;
+import com.BookStore.Models.Book;
+import com.BookStore.Models.Client;
+import com.BookStore.Repository.DbRepository.BookDbRepository;
+import com.BookStore.Repository.DbRepository.ClientDbRepository;
+import com.BookStore.Repository.IRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.function.Supplier;
 
 /**
  * Created by victor on 4/13/16.
  */
 public class ControllerServiceServer implements ControllerService {
-    private ExecutorService executorService;
-    private Controller ctrl;
-    private String LINE_SEPARATOR = System.getProperty("line.separator");
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
-    public ControllerServiceServer(ExecutorService executorService, Controller ctrl) {
-        this.executorService = executorService;
-        this.ctrl = ctrl;
+    private IRepository<Book> bookrepo = new BookDbRepository(jdbcTemplate, new BookValidator());
+    private IRepository<Client> clientrepo = new ClientDbRepository(jdbcTemplate, new ClientValidator());
+    private Controller ctrl = new Controller(bookrepo, clientrepo);
+
+    public ControllerServiceServer() {
     }
 
-    private <T> CompletableFuture<T> sendRequestWithMessage(Supplier<T> supplier) {
-        return CompletableFuture.supplyAsync(supplier, executorService);
-    }
 
     @Override
-    public CompletableFuture<String> getAllOptions() {
-        return sendRequestWithMessage(() -> "Options:" +
+    public String getAllOptions() {
+        return "Options:" +
                 "\n1. Add client" +
                 "\n2. Add book" +
                 "\n3. Delete client" +
@@ -49,206 +51,96 @@ public class ControllerServiceServer implements ControllerService {
                 "\n16. Client purchase" +
                 "\n17. Client return" +
                 "\n18. Purchases by one client" +
-                "\n0. Exit");
+                "\n0. Exit";
     }
 
     @Override
-    public CompletableFuture<String> addClient(String firstName, String lastName) {
-        return sendRequestWithMessage(() -> {
+    public void addClient(String firstName, String lastName) {
             ctrl.addClient(firstName, lastName);
-            return "Success";
-        });
+    }
+    @Override
+    public void addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price) {
+        ctrl.addBook(title, auth, isbn, genre, publisher, price);
     }
 
     @Override
-    public CompletableFuture<String> addBook(String title, String auth, Long isbn, String genre, String publisher, Integer price) {
-        return sendRequestWithMessage(() -> {
-            ctrl.addBook(title, auth, isbn, genre, publisher, price);
-            return "Success";
-        });
+    public void updateClient(Integer id, String firstName, String lastName) {
+        ctrl.updateClient(id, firstName, lastName);
     }
 
     @Override
-    public CompletableFuture<String> updateClient(Integer id, String firstName, String lastName) {
-        return sendRequestWithMessage(() -> {
-            ctrl.updateClient(id, firstName, lastName);
-            return "Success";
-        });
+    public void deleteClient(Integer id) {
+        ctrl.deleteClient(id);
     }
 
     @Override
-    public CompletableFuture<String> deleteClient(Integer id) {
-        return sendRequestWithMessage(() -> {
-            ctrl.deleteClient(id);
-            return "Success";
-        });
+    public void updateBook(Integer id, String title, String auth, Long isbn, String genre, String publisher, Integer price, Boolean available) {
+        ctrl.updateBook(id, title, auth, isbn, genre, publisher, price, available);
     }
 
     @Override
-    public CompletableFuture<String> updateBook(Integer id, String title, String auth, Long isbn, String genre, String publisher, Integer price, Boolean available) {
-        return sendRequestWithMessage(() -> {
-            ctrl.updateBook(id, title, auth, isbn, genre, publisher, price, available);
-            return "Success";
-        });
+    public void deleteBook(Integer id) {
+        ctrl.deleteBook(id);
     }
 
     @Override
-    public CompletableFuture<String> deleteBook(Integer id) {
-        return sendRequestWithMessage(() -> {
-            ctrl.deleteBook(id);
-            return "Success";
-        });
+    public Optional<List<Book>> clientBooks(Integer id) {
+        return ctrl.clientBooks(id);
     }
 
     @Override
-    public CompletableFuture<String> clientBooks(Integer id) {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Optional<List<Book>> optBooks = ctrl.clientBooks(id);
-            if (optBooks.isPresent()) {
-                for (Book book : optBooks.get()) {
-                    toReturn += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
-                            book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
-                }
-            }
-            return toReturn;
-        });
+    public Optional<Client> clientWhoSpentMost() {
+        return ctrl.clientWithMostBooks();
     }
 
     @Override
-    public CompletableFuture<String> clientWhoSpentMost() {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Optional<Client> clientOpt = ctrl.clientWhoSpentMost();
-            if (clientOpt.isPresent()) {
-                Client client = clientOpt.get();
-                toReturn = String.format("%d, %s, %s" + LINE_SEPARATOR, client.getId(), client.getFirstName(),
-                        client.getLastName());
-            }
-            return toReturn;
-        });
+    public Optional<Client> clientWithMostBooks() {
+        return ctrl.clientWithMostBooks();
     }
 
     @Override
-    public CompletableFuture<String> clientWithMostBooks() {
-        return sendRequestWithMessage(() -> {
-            String toRet = "";
-            Optional<Client> clientOpt = ctrl.clientWithMostBooks();
-            if (clientOpt.isPresent()) {
-                Client client = clientOpt.get();
-                toRet = String.format("%d, %s, %s" + LINE_SEPARATOR, client.getId(), client.getFirstName(),
-                        client.getLastName());
-            }
-            return toRet;
-        });
+    public Iterable<Client> getAllClients() {
+        return ctrl.getAllClients();
     }
 
     @Override
-    public CompletableFuture<String> getAllClients() {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Iterable<Client> optClient = ctrl.getAllClients();
-            for (Client client : optClient) {
-                toReturn += String.format("%d, %s, %s" + LINE_SEPARATOR, client.getId(), client.getFirstName(),
-                        client.getLastName());
-            }
-            return toReturn;
-        });
+    public Iterable<Book> getAllBooks() {
+        return ctrl.getAllBooks();
     }
 
     @Override
-    public CompletableFuture<String> getAllBooks() {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Iterable<Book> optBooks = ctrl.getAllBooks();
-            for (Book book : optBooks) {
-                toReturn += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
-                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
-            }
-            return toReturn;
-        });
+    public List<Book> availableBooks() {
+        return ctrl.availableBooks();
     }
 
     @Override
-    public CompletableFuture<String> availableBooks() {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Iterable<Book> optBooks = ctrl.availableBooks();
-            for (Book book : optBooks) {
-                toReturn += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
-                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
-            }
-            return toReturn;
-        });
+    public List<Book> filterBooksByGenre(String genre) {
+        return ctrl.filterBooksByGenre(genre);
     }
 
     @Override
-    public CompletableFuture<String> filterBooksByGenre(String genre) {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Iterable<Book> optBooks = ctrl.filterBooksByGenre(genre);
-            for (Book book : optBooks) {
-                toReturn += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
-                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
-            }
-            return toReturn;
-        });
+    public List<Book> filterBooksByAuthor(String auth) {
+        return ctrl.filterBooksByAuthor(auth);
     }
 
     @Override
-    public CompletableFuture<String> filterBooksByAuthor(String auth) {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Iterable<Book> optBooks = ctrl.filterBooksByAuthor(auth);
-            for (Book book : optBooks) {
-                toReturn += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
-                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
-            }
-            return toReturn;
-        });
+    public List<Book> filterBooksCheaperThan(Integer price) {
+        return ctrl.filterBooksCheaperThan(price);
     }
 
     @Override
-    public CompletableFuture<String> filterBooksCheaperThan(Integer price) {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Iterable<Book> optBooks = ctrl.filterBooksCheaperThan(price);
-            for (Book book : optBooks) {
-                toReturn += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
-                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
-            }
-            return toReturn;
-        });
+    public List<Book> filterBooksMoreExpensiveThan(Integer price) {
+        return ctrl.filterBooksMoreExpensiveThan(price);
     }
 
     @Override
-    public CompletableFuture<String> filterBooksMoreExpensiveThan(Integer price) {
-        return sendRequestWithMessage(() -> {
-            String toReturn = "";
-            Iterable<Book> optBooks = ctrl.filterBooksMoreExpensiveThan(price);
-            for (Book book : optBooks) {
-                toReturn += String.format("%d, %s, %s, %s, %s, %s, %s" + LINE_SEPARATOR, book.getId(), book.getTitle(), book.getAuthor(),
-                        book.getISBN().toString(), book.getGenre(), book.getPublisher(), book.getPrice().toString());
-            }
-            return toReturn;
-        });
+    public void returnBook(Integer clientId, Integer bookId) {
+        ctrl.returnBook(clientId, bookId);
     }
 
     @Override
-    public CompletableFuture<String> returnBook(Integer clientId, Integer bookId) {
-        return sendRequestWithMessage(() -> {
-            ctrl.returnBook(clientId, bookId);
-            return "Success";
-        });
+    public void buyBook(Integer clientId, Integer bookId) {
+        ctrl.buyBook(clientId, bookId);
     }
-
-    @Override
-    public CompletableFuture<String> buyBook(Integer clientId, Integer bookId) {
-        return sendRequestWithMessage(() -> {
-            ctrl.buyBook(clientId, bookId);
-            return "Success";
-        });
-    }
-
 
 }

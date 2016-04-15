@@ -1,6 +1,6 @@
 package com.BookStore.Model.Validators;
 
-import com.BookStore.Model.Client;
+import com.BookStore.Models.Client;
 
 public class ClientValidator implements IValidator<Client> {
     @Override

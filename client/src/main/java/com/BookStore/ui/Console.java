@@ -1,20 +1,19 @@
 package com.BookStore.ui;
 
-import com.BookStore.ControllerService;
+import com.BookStore.service.ControllerServiceClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by victor on 4/13/16.
  */
 public class Console {
-    private ControllerService controller;
+    private ControllerServiceClient controller;
 
 
-    public Console(ControllerService controller) {
+    public Console(ControllerServiceClient controller) {
         this.controller = controller;
     }
 
@@ -68,17 +67,6 @@ public class Console {
         }
     }
 
-    private void printMessage(CompletableFuture<String> completableFuture) {
-        completableFuture.handle((String message, Throwable error) -> {
-            if (error != null) {
-                error.printStackTrace();
-            } else {
-                println(message);
-            }
-            return this;
-        });
-    }
-
     private void addClient() {
         String firstName = readString("Enter first name: ");
         String lastName = readString("Enter last name:");
@@ -126,67 +114,67 @@ public class Console {
 
     private void clientBooks() {
         Integer id = readInteger("Display books for client: ");
-        printMessage(controller.clientBooks(id));
+        print(controller.clientBooks(id));
     }
 
     private void clientReturnMode() {
-        printMessage(controller.getAllClients());
+        print(controller.getAllClients());
         Integer client = readInteger("Which client wants to return?");
-        printMessage(controller.clientBooks(client));
+        print(controller.clientBooks(client));
         Integer book = readInteger("Which book is wanted for return?");
-        printMessage(controller.returnBook(client, book));
+        controller.returnBook(client, book);
     }
 
     private void clientBuyMode() {
-        printMessage(controller.getAllClients());
+        print(controller.getAllClients());
         Integer client = readInteger("Which client wants to purchase? ");
-        printMessage(controller.availableBooks());
+        print(controller.availableBooks());
         Integer book = readInteger("Which book is wanted for buying? ");
-        printMessage(controller.buyBook(client, book));
+        controller.buyBook(client, book);
     }
 
     private void mostMoneyClient() {
-        printMessage(controller.clientWhoSpentMost());
+        print(controller.clientWhoSpentMost());
     }
 
     private void mostBooksClient() {
-        printMessage(controller.clientWithMostBooks());
+        print(controller.clientWithMostBooks());
     }
 
     private void expensiveBooks() {
         Integer price = readInteger("Books more expensive than: ");
-        printMessage(controller.filterBooksMoreExpensiveThan(price));
+        print(controller.filterBooksMoreExpensiveThan(price));
     }
 
     private void cheaperBooks() {
         Integer price = readInteger("Books cheaper than: ");
-        printMessage(controller.filterBooksCheaperThan(price));
+        print(controller.filterBooksCheaperThan(price));
     }
 
     private void authorBooks() {
         String auth = readString("Enter author:");
-        printMessage(controller.filterBooksByAuthor(auth));
+        print(controller.filterBooksByAuthor(auth));
     }
 
     private void genreBooks() {
         String genre = readString("Enter genre:");
-        printMessage(controller.filterBooksByGenre(genre));
+        print(controller.filterBooksByGenre(genre));
     }
 
     private void showAvailableBooks() {
-        printMessage(controller.availableBooks());
+        print(controller.availableBooks());
     }
 
     private void showAllBooks() {
-        printMessage(controller.getAllBooks());
+        print(controller.getAllBooks());
     }
 
     private void showAllClients() {
-        printMessage(controller.getAllClients());
+        print(controller.getAllClients());
     }
 
     private void getAllOptions() {
-        printMessage(controller.getAllOptions());
+        print(controller.getAllOptions());
         Integer option = readInteger("Option: ");
         switch (option) {
             case 1:

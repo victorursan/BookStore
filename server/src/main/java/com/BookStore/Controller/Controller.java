@@ -1,10 +1,10 @@
 package com.BookStore.Controller;
 
 import com.BookStore.Controller.Exceptions.ControllerException;
-import com.BookStore.Model.BaseEntity;
-import com.BookStore.Model.Book;
-import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.ValidatorException;
+import com.BookStore.Models.BaseEntity;
+import com.BookStore.Models.Book;
+import com.BookStore.Models.Client;
 import com.BookStore.Repository.IRepository;
 import com.BookStore.Repository.InMemoryRepository;
 
@@ -21,7 +21,7 @@ public class Controller {
      * Default constructor
      */
     public Controller() {
-        this(new InMemoryRepository<>(), new InMemoryRepository<>());
+        this(new InMemoryRepository<Book>(), new InMemoryRepository<Client>());
     }
 
     /**
@@ -70,7 +70,8 @@ public class Controller {
      */
     public void addBook(String title, String author, Long ISBN, String genre, String publisher, Integer price)
             throws ValidatorException {
-        Integer validID = getValidIDForIterable(bookRepository.getAll());
+        Integer validID = 121;
+                //getValidIDForIterable(bookRepository.getAll());
         Book book = new Book(validID, title, author, ISBN, genre, publisher, price, true);
         bookRepository.add(book);
     }
@@ -83,7 +84,8 @@ public class Controller {
      * @throws ValidatorException if the client is not valid
      */
     public void addClient(String firstName, String lastName) throws ValidatorException {
-        Integer validID = getValidIDForIterable(clientRepository.getAll());
+        Integer validID = 199;
+                //getValidIDForIterable(clientRepository.getAll());
         Client client = new Client(validID, firstName, lastName);
         clientRepository.add(client);
     }
@@ -310,24 +312,14 @@ public class Controller {
         return books;
     }
 
-    public Optional<List<Book>> booksWithISBN(long isbn) {
-        return Optional.ofNullable(getStreamFromIterable(bookRepository.getAll())
-                .filter(book -> book.getISBN() == isbn)
-                .collect(Collectors.toList()));
-    }
-
-    public Map<Long, Integer> uniqueAvailableBooks() {
-        return getStreamFromIterable(availableBooks()).collect(Collectors.groupingBy(Book::getISBN, Collectors.summingInt(e -> 1)));
-    }
-
-    public List<Book> getp412() {
-        Stream<Book> stream = getStreamFromIterable(bookRepository.getAll());
-        Map<Boolean, List<Book>> map = stream.sorted(Comparator.comparing(Book::getTitle))
-                .collect(Collectors.partitioningBy(book -> book.getPublisher().equals("Manning")));
-
-        List<Book> books = map.get(true);
-        books.addAll(map.get(false));
-        return books;
-    }
+//    public Optional<List<Book>> booksWithISBN(long isbn) {
+//        return Optional.ofNullable(getStreamFromIterable(bookRepository.getAll())
+//                .filter(book -> book.getISBN() == isbn)
+//                .collect(Collectors.toList()));
+//    }
+//
+//    public Map<Long, Integer> uniqueAvailableBooks() {
+//        return getStreamFromIterable(availableBooks()).collect(Collectors.groupingBy(Book::getISBN, Collectors.summingInt(e -> 1)));
+//    }
 
 }

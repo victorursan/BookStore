@@ -1,8 +1,8 @@
 package com.BookStore.Repository;
 
-import com.BookStore.Model.BaseEntity;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
+import com.BookStore.Models.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;

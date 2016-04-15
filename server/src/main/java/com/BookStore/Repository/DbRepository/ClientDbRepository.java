@@ -1,31 +1,30 @@
 package com.BookStore.Repository.DbRepository;
 
-import com.BookStore.Model.Book;
-import com.BookStore.Model.Client;
 import com.BookStore.Model.Validators.IValidator;
 import com.BookStore.Model.Validators.ValidatorException;
+import com.BookStore.Models.Book;
+import com.BookStore.Models.Client;
 import com.BookStore.Repository.Exceptions.RepositoryException;
 import com.BookStore.Repository.IRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.sql.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ClientDbRepository implements IRepository<Client> {
-    private String url;
-    private String username;
-    private String password;
     private IValidator<Client> validator;
-    private IRepository<Book> bookRepo;
 
-    public ClientDbRepository(String url, String username, String password, IValidator<Client> validator, IRepository<Book> bookRepo) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public ClientDbRepository(JdbcTemplate jdbcTemplate, IValidator<Client> validator) {
         this.validator = validator;
-        this.bookRepo = bookRepo;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
@@ -34,18 +33,9 @@ public class ClientDbRepository implements IRepository<Client> {
             throw new RepositoryException("Book entity must not be null");
         }
         validator.validate(entity);
-
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection
-                     .prepareStatement("INSERT INTO clients (clientid, firstname, lastname) VALUES (?, ?, ?)")) {
-            statement.setInt(1, entity.getId());
-            statement.setString(2, entity.getFirstName());
-            statement.setString(3, entity.getLastName());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RepositoryException(e.getMessage());
-        }
-
+        //language=PostgreSQL
+        String sql = "INSERT INTO clients (clientid, firstname, lastname) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, entity.getId(), entity.getFirstName(), entity.getLastName());
 
         if (entity.getBooks().size() > 0) {
             for (Book item : entity.getBooks()) {
@@ -56,92 +46,44 @@ public class ClientDbRepository implements IRepository<Client> {
 
     @Override
     public Optional<Client> get(int id) {
-        Client client = null;
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM clients WHERE clientid=?")) {
-            statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int clientId = resultSet.getInt("clientid");
-                    String firstName = resultSet.getString("firstname");
-                    String lastName = resultSet.getString("lastname");
-                    client = new Client(clientId, firstName, lastName);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RepositoryException(e.getMessage());
-        }
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM purchases WHERE clientid=?")) {
-            statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    int bookId = resultSet.getInt("bookid");
-                    if (client != null) {
-                        bookRepo.get(bookId).ifPresent(client::buyBook);
-                    }
-                }
-            }
-            if (client != null) {
-                return Optional.of(client);
-            }
-        } catch (SQLException e) {
-            throw new RepositoryException(e.getMessage());
-        }
-        return Optional.empty();
+        //language=PostgreSQL
+        String sqlSelect = "SELECT * FROM clients WHERE clientid=?";
+        Client client = jdbcTemplate.queryForObject(sqlSelect, BeanPropertyRowMapper.newInstance(Client.class), id);
+        if (client == null) return Optional.empty();
+        //language=PostgreSQL
+        String sqlBooks = "SELECT * FROM books INNER JOIN purchases ON books.bookid = purchases.bookid WHERE clientid = ?";
+        List<Book> books = jdbcTemplate.query(sqlBooks, BeanPropertyRowMapper.newInstance(Book.class), id);
+        client.setBooks(books);
+        return Optional.of(client);
     }
 
     @Override
     public Iterable<Client> getAll() {
-        Set<Client> clients = new HashSet<>();
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT clientid FROM clients");
-             ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                int clientId = resultSet.getInt("clientid");
-                this.get(clientId).ifPresent(clients::add);
-            }
-            return clients;
-        } catch (SQLException e) {
-            throw new RepositoryException(e.getMessage());
-        }
+        //language=PostgreSQL
+        String sql = "SELECT * FROM clients";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Client.class));
     }
 
     @Override
     public Optional<Client> update(Client entity) throws ValidatorException {
-        if (entity == null) {
-            throw new RepositoryException("entity must not be null");
-        }
         validator.validate(entity);
+        //language=PostgreSQL
+        String sqlUPDATE = "update clients set firstname = ?, lastname = ? WHERE clientid = ?";
+        jdbcTemplate.update(sqlUPDATE, entity.getFirstName(), entity.getLastName(),entity.getId());
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection
-                     .prepareStatement("UPDATE clients SET firstname=?, lastname=? WHERE clientid=?")) {
-            statement.setString(1, entity.getFirstName());
-            statement.setString(2, entity.getLastName());
-            statement.setInt(3, entity.getId());
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        //language=PostgreSQL
         Set<Integer> addBooks = entity.getBooks().stream().map(Book::getId).collect(Collectors.toSet());
         Set<Integer> deleteBooks = new HashSet<>();
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT bookid FROM purchases WHERE clientid=?")) {
-            statement.setInt(1, entity.getId());
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    int bookId = resultSet.getInt("bookid");
-                    if (addBooks.contains(bookId)) {
-                        addBooks.remove(bookId);
-                    } else {
-                        deleteBooks.add(bookId);
-                    }
-                }
+
+
+        String booksId = "SELECT bookid FROM purchases WHERE clientid=?";
+        List<Integer> oldBookIds = jdbcTemplate.query(booksId, BeanPropertyRowMapper.newInstance(Integer.class), entity.getId());
+        for (Integer bookId : oldBookIds) {
+            if (addBooks.contains(bookId)) {
+                addBooks.remove(bookId);
+            } else {
+                deleteBooks.add(bookId);
             }
-        } catch (SQLException e) {
-            throw new RepositoryException(e.getMessage());
         }
 
         for (Integer item : addBooks) {
@@ -155,40 +97,22 @@ public class ClientDbRepository implements IRepository<Client> {
     }
 
     private void removePurchase(Integer cid, Integer bid) {
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM purchases WHERE clientid=? AND bookid=?")) {
-            statement.setInt(1, cid);
-            statement.setInt(2, bid);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        //language=PostgreSQL
+        String addPurchaseBook = "DELETE FROM purchases WHERE clientid=? AND bookid=?";
+        jdbcTemplate.update(addPurchaseBook, cid, bid);
     }
 
     private void addPurchase(Integer cid, Integer bid) {
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection
-                     .prepareStatement("INSERT INTO purchases (clientid, bookid) VALUES (?, ?)")) {
-            statement.setInt(1, cid);
-            statement.setInt(2, bid);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RepositoryException(e.getMessage());
-        }
+        //language=PostgreSQL
+        String addPurchaseBook = "INSERT INTO purchases (clientid, bookid) VALUES (?, ?)";
+        jdbcTemplate.update(addPurchaseBook, cid, bid);
     }
 
     @Override
     public Optional<Client> delete(int id) {
-        Optional<Client> client = get(id);
-
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM clients WHERE clientid=?")) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-            return Optional.empty();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return client;
+        //language=PostgreSQL
+        String sqlDelete = "DELETE FROM clients WHERE clientid = ?";
+        jdbcTemplate.update(sqlDelete, id);
+        return Optional.empty();
     }
 }

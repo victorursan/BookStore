@@ -1,6 +1,6 @@
 package com.BookStore.util;
 
-import com.BookStore.Model.BaseEntity;
+import com.BookStore.Models.BaseEntity;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

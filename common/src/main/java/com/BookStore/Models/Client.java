@@ -1,13 +1,14 @@
-package com.BookStore.Model;
+package com.BookStore.Models;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Client extends BaseEntity<Integer> {
+public class Client extends BaseEntity<Integer> implements Serializable {
     private String firstName;
     private String lastName;
     private List<Book> books;
