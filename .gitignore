@@ -76,3 +76,10 @@ application.windows32
 application.windows64
 application.macosx
 # OSX
+
+
+#app specific
+
+client/target
+common/target
+server/target
