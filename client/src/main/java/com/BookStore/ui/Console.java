@@ -5,6 +5,8 @@ import com.BookStore.service.ControllerServiceClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by victor on 4/13/16.
@@ -67,6 +69,15 @@ public class Console {
         }
     }
 
+    private <E> void printEntityList(List<E> elements) {
+        elements.forEach(this::println);
+    }
+
+    private static <E> List<E> makeCollection(Iterable<E> iter) {
+        List<E> list = new ArrayList<E>();
+        iter.forEach(list::add);
+        return list;
+    }
     private void addClient() {
         String firstName = readString("Enter first name: ");
         String lastName = readString("Enter last name:");
@@ -103,78 +114,81 @@ public class Console {
     }
 
     private void deleteClient() {
+        printEntityList(makeCollection(controller.getAllClients()));
         Integer id = readInteger("Id of client to remove: ");
         controller.deleteClient(id);
     }
 
     private void deleteBook() {
+        printEntityList(makeCollection(controller.getAllBooks()));
         Integer id = readInteger("Id of book to remove: ");
         controller.deleteBook(id);
     }
 
     private void clientBooks() {
+        printEntityList(makeCollection(controller.getAllClients()));
         Integer id = readInteger("Display books for client: ");
-        print(controller.clientBooks(id));
+        printEntityList(controller.clientBooks(id));
     }
 
     private void clientReturnMode() {
-        print(controller.getAllClients());
+        printEntityList(makeCollection(controller.getAllClients()));
         Integer client = readInteger("Which client wants to return?");
-        print(controller.clientBooks(client));
+        printEntityList(controller.clientBooks(client));
         Integer book = readInteger("Which book is wanted for return?");
         controller.returnBook(client, book);
     }
 
     private void clientBuyMode() {
-        print(controller.getAllClients());
+        printEntityList(makeCollection(controller.getAllClients()));
         Integer client = readInteger("Which client wants to purchase? ");
-        print(controller.availableBooks());
+        printEntityList(controller.availableBooks());
         Integer book = readInteger("Which book is wanted for buying? ");
         controller.buyBook(client, book);
     }
 
     private void mostMoneyClient() {
-        print(controller.clientWhoSpentMost());
+        println(controller.clientWhoSpentMost());
     }
 
     private void mostBooksClient() {
-        print(controller.clientWithMostBooks());
+        println(controller.clientWithMostBooks());
     }
 
     private void expensiveBooks() {
         Integer price = readInteger("Books more expensive than: ");
-        print(controller.filterBooksMoreExpensiveThan(price));
+        printEntityList(controller.filterBooksMoreExpensiveThan(price));
     }
 
     private void cheaperBooks() {
         Integer price = readInteger("Books cheaper than: ");
-        print(controller.filterBooksCheaperThan(price));
+        printEntityList(controller.filterBooksCheaperThan(price));
     }
 
     private void authorBooks() {
         String auth = readString("Enter author:");
-        print(controller.filterBooksByAuthor(auth));
+        printEntityList(controller.filterBooksByAuthor(auth));
     }
 
     private void genreBooks() {
         String genre = readString("Enter genre:");
-        print(controller.filterBooksByGenre(genre));
+        printEntityList(controller.filterBooksByGenre(genre));
     }
 
     private void showAvailableBooks() {
-        print(controller.availableBooks());
+        printEntityList(controller.availableBooks());
     }
 
     private void showAllBooks() {
-        print(controller.getAllBooks());
+        printEntityList(makeCollection(controller.getAllBooks()));
     }
 
     private void showAllClients() {
-        print(controller.getAllClients());
+        printEntityList(makeCollection(controller.getAllClients()));
     }
 
     private void getAllOptions() {
-        print(controller.getAllOptions());
+        println(controller.getAllOptions());
         Integer option = readInteger("Option: ");
         switch (option) {
             case 1:
