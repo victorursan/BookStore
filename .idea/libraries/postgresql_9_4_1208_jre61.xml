@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="postgresql-9.4.1208.jre61">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/data/postgresql-9.4.1208.jre6.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

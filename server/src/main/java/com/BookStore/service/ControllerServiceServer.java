@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by victor on 4/13/16.
- */
 
 @Service
 public class ControllerServiceServer implements ControllerService {

@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-/**
- * Created by victor on 4/13/16.
- */
+
 public class ControllerServiceClient implements ControllerService {
 
     @Autowired
