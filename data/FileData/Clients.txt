@@ -1,3 +1,0 @@
-2, Laura, Pop
-1, Maria, Ion
-3, Victor, Ursan
