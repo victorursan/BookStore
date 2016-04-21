@@ -1,5 +1,6 @@
 package com.BookStore
 
+import com.BookStore.ui.Console
 import com.caucho.hessian.client.HessianProxyFactory
 
 /**
@@ -7,12 +8,11 @@ import com.caucho.hessian.client.HessianProxyFactory
   */
 
 object Main extends App {
-  val url = "http://localhost:8080/hessian/books"
-  val factory: HessianProxyFactory = new HessianProxyFactory
-  val controllerService = factory.create(url).asInstanceOf[ControllerService]
-
   override def main(args: Array[String]) {
-    println("books(): " + controllerService.getAllBooks)
+    val url = "http://localhost:8080/hessian/books"
+    val factory: HessianProxyFactory = new HessianProxyFactory
+    val controllerService = factory.create(url).asInstanceOf[ControllerService]
+    new Console(controllerService).run()
   }
 
 }
