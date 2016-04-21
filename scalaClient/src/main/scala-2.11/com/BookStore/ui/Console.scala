@@ -3,120 +3,87 @@ package com.BookStore.ui
 import com.BookStore.ControllerService
 import com.BookStore.Models.{Book, Client}
 
-import scala.collection.JavaConverters._
 import scala.annotation.tailrec
+import scala.collection.JavaConverters._
 import scala.io.StdIn
 
 /**
   * Created by victor on 4/21/16.
   */
 class Console(controller: ControllerService) {
+  val options: Map[Int, () => Unit] = Map(1 -> addClient, 2 -> addBook, 3 -> deleteClient, 4 -> deleteBook,
+    5 -> updateClient, 6 -> updateBook, 7 -> showAllClients, 8 -> showAllBooks, 9 -> showAvailableBooks,
+    10 -> genreBooks, 11 -> authorBooks, 12 -> cheaperBooks, 13 -> expensiveBooks, 14 -> mostBooksClient,
+    15 -> mostMoneyClient, 16 -> clientBuyMode, 17 -> clientReturnMode, 18 -> clientBooks)
 
   def run(): Unit = allOptions()
 
   @tailrec
-  private def readString(message: String): String = {
+  private def read[T](readType: => T)(message: String): T = {
     print(message)
     try
-      StdIn.readLine
+      readType
     catch {
-      case e: Exception => readString(message)
+      case e: Exception => read[T](readType)(message)
     }
   }
 
-  @tailrec
-  private def readInteger(message: String): Int = {
-    print(message)
-    try
-      StdIn.readInt
-    catch {
-      case e: Exception => readInteger(message)
-    }
-  }
+  private val readString: String => String = read(StdIn.readLine)
 
-  @tailrec
-  private def readLong(message: String): Long = {
-    print(message)
-    try
-      StdIn.readLong
-    catch {
-      case e: Exception => readLong(message)
-    }
-  }
+  private val readInteger: String => Int = read(StdIn.readInt)
 
-  @tailrec
-  private def readBool(message: String): Boolean = {
-    print(message)
-    try
-      StdIn.readBoolean
-    catch {
-      case e: Exception => readBool(message)
-    }
-  }
+  private val readLong: String => Long = read(StdIn.readLong)
+
+  private val readBool: String => Boolean = read(StdIn.readBoolean)
 
   private def printEntityList[E](elements: List[E]) = elements foreach println
 
   private def makeCollection[E](iterable: Iterable[E]): List[E] = iterable.toList
 
-  private def addClient(): Unit = {
-    val firstName: String = readString("Enter first name: ")
-    val lastName: String = readString("Enter last name:")
-    controller.addClient(firstName, lastName)
-  }
+  private def addClient(): Unit = controller.addClient(readString("Enter first name: "),
+                                                       readString("Enter last name:"))
 
-  private def addBook(): Unit = {
-    val title: String = readString("Enter title: ")
-    val auth: String = readString("Enter author:")
-    val isbn: Long = readLong("Enter ISBN: ")
-    val genre: String = readString("Enter genre: ")
-    val publisher: String = readString("Enter publisher: ")
-    val price: Int = readInteger("Enter price: ")
-    controller.addBook(title, auth, isbn, genre, publisher, price)
-  }
+  private def addBook(): Unit = controller.addBook(readString("Enter title: "),
+                                                   readString("Enter author:"),
+                                                   readLong("Enter ISBN: "),
+                                                   readString("Enter genre: "),
+                                                   readString("Enter publisher: "),
+                                                   readInteger("Enter price: "))
 
-  private def updateClient(): Unit = {
-    val id: Integer = readInteger("Id of client to update: ")
-    val firstName: String = readString("Enter first name: ")
-    val lastName: String = readString("Enter last name:")
-    controller.updateClient(id, firstName, lastName)
-  }
+  private def updateClient(): Unit = controller.updateClient(readInteger("Id of client to update: "),
+                                                             readString("Enter first name: "),
+                                                             readString("Enter last name:"))
 
-  private def updateBook(): Unit = {
-    val id: Integer = readInteger("Id of book to update: ")
-    val title: String = readString("Enter title: ")
-    val auth: String = readString("Enter author:")
-    val isbn: Long = readLong("Enter ISBN: ")
-    val genre: String = readString("Enter genre: ")
-    val publisher: String = readString("Enter publisher: ")
-    val price: Integer = readInteger("Enter price: ")
-    val available: Boolean = readBool("Is Available (true/ false):")
-    controller.updateBook(id, title, auth, isbn, genre, publisher, price, available)
-  }
+  private def updateBook(): Unit = controller.updateBook(readInteger("Id of book to update: "),
+                                                         readString("Enter title: "),
+                                                         readString("Enter author:"),
+                                                         readLong("Enter ISBN: "),
+                                                         readString("Enter genre: "),
+                                                         readString("Enter publisher: "),
+                                                         readInteger("Enter price: "),
+                                                         readBool("Is Available (true/ false):"))
 
   private def deleteClient(): Unit = {
     printEntityList(makeCollection[Client](controller.getAllClients.asScala))
-    val id: Integer = readInteger("Id of client to remove: ")
-    controller.deleteClient(id)
+    controller.deleteClient(readInteger("Id of client to remove: "))
   }
 
   private def deleteBook(): Unit = {
     printEntityList(makeCollection[Book](controller.getAllBooks.asScala))
-    val id: Integer = readInteger("Id of book to remove: ")
-    controller.deleteBook(id)
+    controller.deleteBook(readInteger("Id of book to remove: "))
   }
 
   private def clientBooks(): Unit = {
     printEntityList(makeCollection[Client](controller.getAllClients.asScala))
-    val id: Integer = readInteger("Display books for client: ")
-    printEntityList(controller.clientBooks(id).asScala.toList)
+    printEntityList(controller.clientBooks(readInteger("Display books for client: ")).asScala.toList)
   }
 
   private def clientReturnMode(): Unit = {
     printEntityList(makeCollection[Client](controller.getAllClients.asScala))
     val client: Integer = readInteger("Which client wants to return?")
-    printEntityList(controller.clientBooks(client).asScala.toList)
+    printEntityList(controller.clientBooks(readInteger("Which client wants to return?")).asScala.toList)
     val book: Integer = readInteger("Which book is wanted for return?")
-    controller.returnBook(client, book)
+    controller.returnBook(client, readInteger("Which book is wanted for return?"))
   }
 
   private def clientBuyMode(): Unit = {
@@ -131,25 +98,21 @@ class Console(controller: ControllerService) {
 
   private def mostBooksClient(): Unit = println(controller.clientWithMostBooks)
 
-  private def expensiveBooks(): Unit = {
-    val price: Integer = readInteger("Books more expensive than: ")
-    printEntityList(controller.filterBooksMoreExpensiveThan(price).asScala.toList)
-  }
+  private def expensiveBooks(): Unit =
+    printEntityList(controller.filterBooksMoreExpensiveThan(readInteger("Books more expensive than: ")).asScala.toList)
 
-  private def cheaperBooks(): Unit = {
-    val price: Integer = readInteger("Books cheaper than: ")
-    printEntityList(controller.filterBooksCheaperThan(price).asScala.toList)
-  }
 
-  private def authorBooks(): Unit = {
-    val auth: String = readString("Enter author:")
-    printEntityList(controller.filterBooksByAuthor(auth).asScala.toList)
-  }
+  private def cheaperBooks(): Unit =
+    printEntityList(controller.filterBooksCheaperThan(readInteger("Books cheaper than: ")).asScala.toList)
 
-  private def genreBooks(): Unit = {
-    val genre: String = readString("Enter genre:")
-    printEntityList(controller.filterBooksByGenre(genre).asScala.toList)
-  }
+
+  private def authorBooks(): Unit =
+    printEntityList(controller.filterBooksByAuthor(readString("Enter author:")).asScala.toList)
+
+
+  private def genreBooks(): Unit =
+    printEntityList(controller.filterBooksByGenre(readString("Enter genre:")).asScala.toList)
+
 
   private def showAvailableBooks(): Unit = printEntityList(controller.availableBooks.asScala.toList)
 
@@ -161,28 +124,9 @@ class Console(controller: ControllerService) {
   private def allOptions(): Unit = {
     println(controller.getAllOptions)
     val option: Int = readInteger("Option: ")
-    option match {
-      case 1 => addClient()
-      case 2 => addBook()
-      case 3 => deleteClient()
-      case 4 => deleteBook()
-      case 5 => updateClient()
-      case 6 => updateBook()
-      case 7 => showAllClients()
-      case 8 => showAllBooks()
-      case 9 => showAvailableBooks()
-      case 10 => genreBooks()
-      case 11 => authorBooks()
-      case 12 => cheaperBooks()
-      case 13 => expensiveBooks()
-      case 14 => mostBooksClient()
-      case 15 => mostMoneyClient()
-      case 16 => clientBuyMode()
-      case 17 => clientReturnMode()
-      case 18 => clientBooks()
-      case 0 => return
-      case _ => println("Invalid option, try again.")
+    if (option != 0) {
+      options.getOrElse(option, () => println("Invalid option"))()
+      allOptions()
     }
-    allOptions()
   }
 }
