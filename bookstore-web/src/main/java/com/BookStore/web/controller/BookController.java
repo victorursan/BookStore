@@ -1,7 +1,7 @@
 package com.BookStore.web.controller;
 
 import com.BookStore.core.models.Book;
-import com.BookStore.core.service.BookService;
+import com.BookStore.service.BookService;
 import com.BookStore.web.dto.BooksDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
