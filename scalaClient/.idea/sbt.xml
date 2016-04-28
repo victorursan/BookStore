@@ -6,13 +6,15 @@
     <option name="customVMPath" value="/opt/homebrew-cask/Caskroom/java/1.8.0_74-b02" />
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/scalaClient" />
+        <option name="createEmptyContentRootDirectories" value="true" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/scalaClient" />
-            <option value="$PROJECT_DIR$/scalaClient/project" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/project" />
           </set>
         </option>
+        <option name="resolveSbtClassifiers" value="true" />
         <option name="sbtVersion" value="0.13.8" />
         <option name="useAutoImport" value="true" />
         <option name="useOurOwnAutoImport" value="true" />

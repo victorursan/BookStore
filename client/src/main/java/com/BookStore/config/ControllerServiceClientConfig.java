@@ -4,21 +4,18 @@ import com.BookStore.ControllerService;
 import com.BookStore.service.ControllerServiceClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.remoting.caucho.HessianProxyFactoryBean;
 import org.springframework.remoting.rmi.RmiProxyFactoryBean;
-
-/**
- * Created by victor on 4/14/16.
- */
 
 @Configuration
 public class ControllerServiceClientConfig {
 
     @Bean
-    public RmiProxyFactoryBean controllerService() {
-        RmiProxyFactoryBean rmiProxy = new RmiProxyFactoryBean();
-        rmiProxy.setServiceUrl("rmi://localhost:1099/ControllerService");
-        rmiProxy.setServiceInterface(ControllerService.class);
-        return rmiProxy;
+    public HessianProxyFactoryBean controllerService() {
+        HessianProxyFactoryBean factory = new HessianProxyFactoryBean();
+        factory.setServiceUrl("http://localhost:8080/hessian/books");
+        factory.setServiceInterface(ControllerService.class);
+        return factory;
     }
 
     @Bean
@@ -26,6 +23,6 @@ public class ControllerServiceClientConfig {
         return new ControllerServiceClient();
     }
 
-
 }
+
 

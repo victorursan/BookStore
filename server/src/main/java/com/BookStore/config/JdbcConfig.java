@@ -8,9 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
-/**
- * Created by victor on 4/14/16.
- */
 
 @Configuration
 public class JdbcConfig {
@@ -19,7 +16,6 @@ public class JdbcConfig {
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
-
 
     @Bean
     public DataSource dataSource() {

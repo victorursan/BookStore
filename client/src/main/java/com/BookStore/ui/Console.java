@@ -8,9 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by victor on 4/13/16.
- */
+
 public class Console {
     private ControllerServiceClient controller;
 
@@ -74,7 +72,7 @@ public class Console {
     }
 
     private static <E> List<E> makeCollection(Iterable<E> iter) {
-        List<E> list = new ArrayList<E>();
+        List<E> list = new ArrayList<>();
         iter.forEach(list::add);
         return list;
     }

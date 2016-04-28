@@ -5,10 +5,6 @@ import com.BookStore.Models.Client;
 
 import java.util.List;
 
-/**
- * Created by victor on 4/13/16.
- */
-
 public interface ControllerService {
 
     String getAllOptions();
