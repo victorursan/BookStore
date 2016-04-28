@@ -3,14 +3,23 @@ package com.BookStore.models;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "clients")
 public class Client extends BaseEntity<Integer> implements Serializable {
+    @Column(name = "name", nullable = false)
     private String firstName;
+
+    @Column(name = "name", nullable = false)
     private String lastName;
+
     private List<Book> books;
 
     public Client() {
@@ -76,6 +85,26 @@ public class Client extends BaseEntity<Integer> implements Serializable {
 
     public int moneySpent() {
         return this.getBooks().stream().map(Book::getPrice).reduce(0, Integer::sum);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Client client = (Client) o;
+
+        return firstName.equals(client.firstName) && lastName.equals(client.lastName) &&
+                (books != null ? books.equals(client.books) : client.books == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + (books != null ? books.hashCode() : 0);
+        return result;
     }
 
     @Override
