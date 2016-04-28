@@ -5,7 +5,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 
 @Configuration
-@ComponentScan("ro.ubb.stcatalog.core")
+@ComponentScan("com.BookStore.web.core")
 @PropertySources({@PropertySource(value = "classpath:local/db.properties"),
 })
 public class AppLocalConfig {

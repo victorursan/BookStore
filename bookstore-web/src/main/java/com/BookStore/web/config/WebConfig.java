@@ -14,7 +14,7 @@ import java.util.List;
  * Web configuration. Detects JSON and XML libraries in classpath and registers default JSON and XML converters.
  */
 @Configuration
-@ComponentScan({"ro.ubb.stcatalog.web.controller"})
+@ComponentScan({"com.BookStore.web.controller"})
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 

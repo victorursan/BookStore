@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Configuration
-@EnableJpaRepositories("com.BookStore.repositories")
+@EnableJpaRepositories("com.BookStore.core.repositories")
 @EnableTransactionManagement
 @EnableCaching
 public class JPAConfig {
@@ -65,7 +65,7 @@ public class JPAConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.BookStore.models");
+        factory.setPackagesToScan("com.BookStore.core.models");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
         return factory.getObject();
