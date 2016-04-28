@@ -2,16 +2,19 @@ package com.BookStore.ui
 
 import com.BookStore.ControllerService
 import com.BookStore.Models.{Book, Client}
+import com.sun.net.httpserver.Authenticator.Success
 
 import scala.annotation.tailrec
 import scala.collection.JavaConverters._
+import scala.concurrent.Future
 import scala.io.StdIn
+import scala.util.Success
 
 /**
   * Created by victor on 4/21/16.
   */
-class Console(controller: ControllerService) {
-  val options: Map[Int, () => Unit] = Map(1 -> addClient, 2 -> addBook, 3 -> deleteClient, 4 -> deleteBook,
+class Console(val controller: ControllerService) {
+  private[this] val options: Map[Int, () => Unit] = Map(1 -> addClient, 2 -> addBook, 3 -> deleteClient, 4 -> deleteBook,
     5 -> updateClient, 6 -> updateBook, 7 -> showAllClients, 8 -> showAllBooks, 9 -> showAvailableBooks,
     10 -> genreBooks, 11 -> authorBooks, 12 -> cheaperBooks, 13 -> expensiveBooks, 14 -> mostBooksClient,
     15 -> mostMoneyClient, 16 -> clientBuyMode, 17 -> clientReturnMode, 18 -> clientBooks)
@@ -24,7 +27,7 @@ class Console(controller: ControllerService) {
     try
       readType
     catch {
-      case e: Exception => read[T](readType)(message)
+      case e: Exception => read(readType)(message)
     }
   }
 
@@ -81,8 +84,7 @@ class Console(controller: ControllerService) {
   private def clientReturnMode(): Unit = {
     printEntityList(makeCollection[Client](controller.getAllClients.asScala))
     val client: Integer = readInteger("Which client wants to return?")
-    printEntityList(controller.clientBooks(readInteger("Which client wants to return?")).asScala.toList)
-    val book: Integer = readInteger("Which book is wanted for return?")
+    printEntityList(controller.clientBooks(client).asScala.toList)
     controller.returnBook(client, readInteger("Which book is wanted for return?"))
   }
 

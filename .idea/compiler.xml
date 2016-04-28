@@ -22,12 +22,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="bookstore-core" />
+        <module name="bookstore-web" />
         <module name="client" />
         <module name="common" />
         <module name="server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="bookstore-core" target="1.5" />
+      <module name="bookstore-web" target="1.5" />
       <module name="client" target="1.8" />
       <module name="common" target="1.8" />
       <module name="server" target="1.8" />
