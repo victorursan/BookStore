@@ -1,6 +1,6 @@
 package com.BookStore;
 
-import com.BookStore.service.ControllerServiceClient;
+import com.BookStore.core.service.ControllerServiceClient;
 import com.BookStore.ui.Console;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

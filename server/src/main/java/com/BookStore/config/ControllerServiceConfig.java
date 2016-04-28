@@ -1,7 +1,7 @@
 package com.BookStore.config;
 
 import com.BookStore.ControllerService;
-import com.BookStore.service.ControllerServiceServer;
+import com.BookStore.core.service.ControllerServiceServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.caucho.HessianServiceExporter;

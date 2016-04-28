@@ -1,4 +1,4 @@
-package com.BookStore.service;
+package com.BookStore.core.service;
 
 import com.BookStore.core.models.Book;
 

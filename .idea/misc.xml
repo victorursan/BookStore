@@ -68,9 +68,6 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/client/pom.xml" />
-        <option value="$PROJECT_DIR$/common/pom.xml" />
-        <option value="$PROJECT_DIR$/server/pom.xml" />
         <option value="$PROJECT_DIR$/bookstore-web/pom.xml" />
         <option value="$PROJECT_DIR$/bookstore-core/pom.xml" />
       </list>

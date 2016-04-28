@@ -24,9 +24,6 @@
         <processorPath useClasspath="true" />
         <module name="bookstore-core" />
         <module name="bookstore-web" />
-        <module name="client" />
-        <module name="common" />
-        <module name="server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
