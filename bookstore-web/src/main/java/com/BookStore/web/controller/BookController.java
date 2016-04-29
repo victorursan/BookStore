@@ -4,6 +4,9 @@ import com.BookStore.core.models.Book;
 import com.BookStore.core.service.BookService;
 import com.BookStore.web.dto.BooksDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,6 +21,8 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @RequestMapping(value = "/books", method = RequestMethod.GET, produces = "application/vnd.api+json")
+    @ResponseBody
     public BooksDto getBooks() {
 
         List<Book> disciplineList = bookService.findAll();
