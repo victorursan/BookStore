@@ -7,6 +7,7 @@
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/scalaClient" />
+        <option name="jdk" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/scalaClient" />
@@ -18,5 +19,7 @@
         <option name="useOurOwnAutoImport" value="true" />
       </SbtProjectSettings>
     </option>
+    <option name="maximumHeapSize" value="1024" />
+    <option name="vmParameters" value="-XX:MaxPermSize=512M" />
   </component>
 </project>

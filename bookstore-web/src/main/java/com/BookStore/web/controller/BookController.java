@@ -22,8 +22,9 @@ public class BookController {
     private BookService bookService;
 
     @RequestMapping(value = "/books", method = RequestMethod.GET, produces = "application/vnd.api+json")
+    public
     @ResponseBody
-    public BooksDto getBooks() {
+    BooksDto getBooks() {
 
         List<Book> disciplineList = bookService.findAll();
 
