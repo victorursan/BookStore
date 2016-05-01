@@ -1,15 +1,5 @@
 package com.BookStore.web.ui
 
-import com.BookStore.ControllerService
-import com.BookStore.Models.{Book, Client}
-import com.sun.net.httpserver.Authenticator.Success
-
-import scala.annotation.tailrec
-import scala.collection.JavaConverters._
-import scala.concurrent.Future
-import scala.io.StdIn
-import scala.util.Success
-
 /**
   * Created by victor on 4/21/16.
   */

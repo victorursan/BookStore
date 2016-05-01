@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/BookStore.iml" filepath="$PROJECT_DIR$/BookStore.iml" />
       <module fileurl="file://$PROJECT_DIR$/bookstore-core/bookstore-core.iml" filepath="$PROJECT_DIR$/bookstore-core/bookstore-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/bookstore-web/bookstore-web.iml" filepath="$PROJECT_DIR$/bookstore-web/bookstore-web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/scalaClient/.idea/modules/scalaclient-build.iml" filepath="$PROJECT_DIR$/scalaClient/.idea/modules/scalaclient-build.iml" />
     </modules>
   </component>
 </project>
