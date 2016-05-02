@@ -3,24 +3,26 @@ package com.BookStore.core.models;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "clients")
 public class Client extends BaseEntity<Integer> implements Serializable {
-    @Column(name = "name", nullable = false)
+    @Column(name = "firstName", nullable = false)
     private String firstName;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    private List<Book> books;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name="client_book",
+            joinColumns = @JoinColumn( name="client_id"),
+            inverseJoinColumns = @JoinColumn( name="book_id")
+    )
+    private Set<Book> books = new HashSet<>();
 
     public Client() {
         super(1);
@@ -30,14 +32,6 @@ public class Client extends BaseEntity<Integer> implements Serializable {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.books = new ArrayList<>();
-    }
-
-    public Client(Integer id, String firstName, String lastName, List<Book> books) {
-        super(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.books = books;
     }
 
     @Getter
@@ -61,12 +55,12 @@ public class Client extends BaseEntity<Integer> implements Serializable {
     }
 
     @Getter
-    public List<Book> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
 
     @Setter
-    public void setBooks(List<Book> books) {
+    public void setBooks(Set<Book> books) {
         this.books = books;
     }
 
