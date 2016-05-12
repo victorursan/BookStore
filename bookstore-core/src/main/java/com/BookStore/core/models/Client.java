@@ -25,11 +25,9 @@ public class Client extends BaseEntity<Integer> implements Serializable {
     private Set<Book> books = new HashSet<>();
 
     public Client() {
-        super(1);
     }
 
-    public Client(Integer id, String firstName, String lastName) {
-        super(id);
+    public Client(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }

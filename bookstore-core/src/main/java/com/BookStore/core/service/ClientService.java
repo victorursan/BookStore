@@ -9,4 +9,10 @@ import java.util.List;
  */
 public interface ClientService {
     List<Client> findAll();
+
+    Client updateClient(Integer clientId, String firstName, String lastName);
+
+    Client createClient(String firstName, String lastName);
+
+    void deleteClient(Integer clientId);
 }

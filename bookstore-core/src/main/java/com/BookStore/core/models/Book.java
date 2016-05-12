@@ -5,6 +5,7 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
 @Entity
 @Table(name="books")
 public class Book extends BaseEntity<Integer> implements Serializable {
@@ -29,9 +30,11 @@ public class Book extends BaseEntity<Integer> implements Serializable {
     @Column(name="available", nullable = false)
     private Boolean available;
 
-    public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher,
+    public Book() {
+    }
+
+    public Book(String title, String author, Long ISBN, String genre, String publisher,
                 Integer price, Boolean available) {
-        super(id);
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
@@ -41,8 +44,7 @@ public class Book extends BaseEntity<Integer> implements Serializable {
         this.available = available;
     }
 
-    public Book(Integer id, String title, String author, Long ISBN, String genre, String publisher, Integer price) {
-        super(id);
+    public Book(String title, String author, Long ISBN, String genre, String publisher, Integer price) {
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
@@ -50,10 +52,6 @@ public class Book extends BaseEntity<Integer> implements Serializable {
         this.publisher = publisher;
         this.price = price;
         this.available = true;
-    }
-
-    public Book() {
-        super(1);
     }
 
     @Getter

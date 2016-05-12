@@ -7,16 +7,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @MappedSuperclass
-public class BaseEntity<ID extends Serializable> implements Serializable {
+public abstract class BaseEntity<ID extends Serializable> implements Serializable {
     @Id
     @TableGenerator(name = "TABLE_GENERATOR", initialValue = 0, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "TABLE_GENERATOR")
     @Column(unique = true, nullable = false)
     private ID id;
-
-    BaseEntity(ID id) {
-        this.id = id;
-    }
 
     @Getter
     public ID getId() {

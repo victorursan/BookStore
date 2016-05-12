@@ -7,7 +7,6 @@
         <element id="directory" name="classes">
           <element id="module-output" name="bookstore-web" />
           <element id="module-output" name="bookstore-core" />
-          <element id="module-output" name="BookStore" />
         </element>
         <element id="directory" name="lib">
           <element id="file-copy" path="$APPLICATION_HOME_DIR$/redist/annotations-java8.jar" />

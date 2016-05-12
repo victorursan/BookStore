@@ -18,8 +18,30 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
 
     @Override
-    @Transactional
     public List<Client> findAll() {
         return clientRepository.findAll();
     }
+
+    @Override
+    @Transactional
+    public Client updateClient(Integer clientId, String firstName, String lastName) {
+
+        Client client = clientRepository.findOne(clientId);
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+
+        return client;
+    }
+
+    @Override
+    public Client createClient(String firstName, String lastName) {
+        return clientRepository.save(new Client(firstName, lastName));
+    }
+
+    @Override
+    public void deleteClient(Integer clientId) {
+        clientRepository.delete(clientId);
+    }
+
+
 }
