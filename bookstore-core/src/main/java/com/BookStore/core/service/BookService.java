@@ -9,4 +9,10 @@ import java.util.List;
  */
 public interface BookService {
     List<Book> findAll();
+
+    Book updateBook(Integer bookId, String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available);
+
+    Book createBook(String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available);
+
+    void deleteBook(Integer bookId);
 }

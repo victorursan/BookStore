@@ -18,9 +18,32 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    @Transactional
     public List<Book> findAll() {
         return bookRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Book updateBook(Integer bookId, String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) {
+        Book book = bookRepository.findOne(bookId);
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setISBN(ISBN);
+        book.setGenre(genre);
+        book.setPublisher(publisher);
+        book.setPrice(price);
+        book.setAvailable(available);
+        return book;
+    }
+
+    @Override
+    public Book createBook(String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) {
+        return bookRepository.save(new Book(title, author, ISBN, genre, publisher, price, available));
+    }
+
+    @Override
+    public void deleteBook(Integer bookId) {
+        bookRepository.delete(bookId);
     }
 
 }
