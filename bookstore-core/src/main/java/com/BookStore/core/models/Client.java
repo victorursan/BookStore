@@ -6,9 +6,10 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "clients")
+@Table(name = "client")
 public class Client extends BaseEntity<Integer> implements Serializable {
     @Column(name = "firstName", nullable = false)
     private String firstName;
@@ -16,13 +17,8 @@ public class Client extends BaseEntity<Integer> implements Serializable {
     @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name="client_book",
-            joinColumns = @JoinColumn( name="client_id"),
-            inverseJoinColumns = @JoinColumn( name="book_id")
-    )
-    private Set<Book> books = new HashSet<>();
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<ClientBook> clientBooks = new HashSet<>();
 
     public Client() {
     }
@@ -54,24 +50,21 @@ public class Client extends BaseEntity<Integer> implements Serializable {
 
     @Getter
     public Set<Book> getBooks() {
-        return books;
-    }
-
-    @Setter
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+        return Collections.unmodifiableSet(
+                        clientBooks.stream()
+                        .map(ClientBook::getBook)
+                        .collect(Collectors.toSet()));
     }
 
     public void buyBook(Book book) {
-        books.add(book);
+        ClientBook clientBook = new ClientBook();
+        clientBook.setBook(book);
+        clientBook.setClient(this);
+        clientBooks.add(clientBook);
     }
 
     public boolean returnBook(Book book) {
-        for (Book b : books) {
-            if (Objects.equals(b.getId(), book.getId())) {
-                return books.remove(b);
-            }
-        }
+        clientBooks.stream().filter(clientBook -> clientBook.getBook().equals(book)).forEach(clientBooks::remove);
         return false;
     }
 
@@ -87,20 +80,14 @@ public class Client extends BaseEntity<Integer> implements Serializable {
 
         Client client = (Client) o;
 
-        return firstName.equals(client.firstName) && lastName.equals(client.lastName) &&
-                (books != null ? books.equals(client.books) : client.books == null);
+        return firstName.equals(client.firstName) && lastName.equals(client.lastName);
+
     }
 
     @Override
     public int hashCode() {
         int result = firstName.hashCode();
         result = 31 * result + lastName.hashCode();
-        result = 31 * result + (books != null ? books.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "{ " + getId() + ". First Name: " + firstName + ", Last Name: " + lastName + " Books: [" + books + "] }";
     }
 }

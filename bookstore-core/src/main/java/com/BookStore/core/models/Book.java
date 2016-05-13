@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="books")
+@Table(name="book")
 public class Book extends BaseEntity<Integer> implements Serializable {
     @Column(name="title", nullable = false)
     private String title;

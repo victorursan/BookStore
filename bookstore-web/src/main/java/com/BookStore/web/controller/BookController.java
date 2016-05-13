@@ -34,7 +34,6 @@ public class BookController {
     @RequestMapping(value = "/books/{bookId}", method = RequestMethod.PUT, consumes = "application/vnd.api+json")
     public Map<String, BookDto> updateBook(@PathVariable final Integer bookId,
                                              @RequestBody final BookDto bookDto) {
-
         Book book = bookService.updateBook(bookId, bookDto.getTitle(), bookDto.getAuthor(), bookDto.getISBN(), bookDto.getGenre(),
                 bookDto.getPublisher(), bookDto.getPrice(), bookDto.isAvailable());
 
