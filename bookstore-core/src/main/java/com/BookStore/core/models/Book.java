@@ -15,8 +15,8 @@ public class Book extends BaseEntity<Integer> implements Serializable {
     @Column(name="author", nullable = false)
     private String author;
 
-    @Column(name="ISBN", nullable = false)
-    private Long ISBN;
+    @Column(name="isbn", nullable = false)
+    private Long isbn;
 
     @Column(name="genre", nullable = false)
     private String genre;
@@ -33,21 +33,21 @@ public class Book extends BaseEntity<Integer> implements Serializable {
     public Book() {
     }
 
-    public Book(String title, String author, Long ISBN, String genre, String publisher,
+    public Book(String title, String author, Long isbn, String genre, String publisher,
                 Integer price, Boolean available) {
         this.title = title;
         this.author = author;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
         this.genre = genre;
         this.publisher = publisher;
         this.price = price;
         this.available = available;
     }
 
-    public Book(String title, String author, Long ISBN, String genre, String publisher, Integer price) {
+    public Book(String title, String author, Long isbn, String genre, String publisher, Integer price) {
         this.title = title;
         this.author = author;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
         this.genre = genre;
         this.publisher = publisher;
         this.price = price;
@@ -55,13 +55,13 @@ public class Book extends BaseEntity<Integer> implements Serializable {
     }
 
     @Getter
-    public Long getISBN() {
-        return ISBN;
+    public Long getIsbn() {
+        return isbn;
     }
 
     @Setter
-    public void setISBN(Long ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(Long isbn) {
+        this.isbn = isbn;
     }
 
     @Getter
@@ -131,7 +131,7 @@ public class Book extends BaseEntity<Integer> implements Serializable {
 
         Book book = (Book) o;
 
-        return title.equals(book.title) && author.equals(book.author) && ISBN.equals(book.ISBN) &&
+        return title.equals(book.title) && author.equals(book.author) && isbn.equals(book.isbn) &&
                 genre.equals(book.genre) && publisher.equals(book.publisher) && price.equals(book.price) &&
                 available.equals(book.available);
     }
@@ -140,7 +140,7 @@ public class Book extends BaseEntity<Integer> implements Serializable {
     public int hashCode() {
         int result = title.hashCode();
         result = 31 * result + author.hashCode();
-        result = 31 * result + ISBN.hashCode();
+        result = 31 * result + isbn.hashCode();
         result = 31 * result + genre.hashCode();
         result = 31 * result + publisher.hashCode();
         result = 31 * result + price.hashCode();
@@ -150,7 +150,7 @@ public class Book extends BaseEntity<Integer> implements Serializable {
 
     @Override
     public String toString() {
-        return "{ " + getId() + ", " + title + ", " + author + ", " + ISBN + ", " + genre + ", " + publisher +
+        return "{ " + getId() + ", " + title + ", " + author + ", " + isbn + ", " + genre + ", " + publisher +
                 ", " + price + ", " + available + " }";
     }
 }

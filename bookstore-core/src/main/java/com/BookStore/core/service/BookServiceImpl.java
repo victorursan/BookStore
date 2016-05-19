@@ -24,11 +24,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public Book updateBook(Integer bookId, String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) {
+    public Book updateBook(Integer bookId, String title, String author, Long isbn, String genre, String publisher, Integer price, Boolean available) {
         Book book = bookRepository.findOne(bookId);
         book.setTitle(title);
         book.setAuthor(author);
-        book.setISBN(ISBN);
+        book.setIsbn(isbn);
         book.setGenre(genre);
         book.setPublisher(publisher);
         book.setPrice(price);

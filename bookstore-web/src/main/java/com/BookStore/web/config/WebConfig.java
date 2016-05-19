@@ -10,11 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import java.util.List;
 
-/**
- * Web configuration. Detects JSON and XML libraries in classpath and registers default JSON and XML converters.
- */
 @Configuration
-@ComponentScan({"com.BookStore.web.controller"})
+@ComponentScan({"com.BookStore.web.controller", "com.BookStore.web.converter"})
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
