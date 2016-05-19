@@ -39,9 +39,8 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/clients/{clientId}", method = RequestMethod.PUT, consumes = "application/vnd.api+json")
-    public Map<String, ClientDto> updateClient(@PathVariable final Integer clientId,
-                                                @RequestBody final ClientDto clientDto) {
-
+    public Map<String, ClientDto> updateClient(@PathVariable final Integer clientId,  @RequestBody final Map<String, ClientDto> clientRequestDtoMap) {
+        ClientDto clientDto = clientRequestDtoMap.get("client");
         Client client = clientService.updateClient(clientId, clientDto.getFirstName(), clientDto.getLastName(), clientDto.getBooks());
 
         Map<String, ClientDto> clientDtoMap = new HashMap<>();
@@ -51,7 +50,8 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/clients", method = RequestMethod.POST, consumes = "application/vnd.api+json", produces = "application/vnd.api+json")
-    public Map<String, ClientDto> createClient(@RequestBody final ClientDto clientDto) {
+    public Map<String, ClientDto> createClient(@RequestBody final Map<String, ClientDto> clientRequestDtoMap) {
+        ClientDto clientDto = clientRequestDtoMap.get("client");
         System.out.println(clientDto.getFirstName() + clientDto.getLastName());
         Client client = clientService.createClient(clientDto.getFirstName(), clientDto.getLastName());
 

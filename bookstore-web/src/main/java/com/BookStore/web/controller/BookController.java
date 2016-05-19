@@ -39,18 +39,20 @@ public class BookController {
         return new BooksDataDto(bookDtos);
     }
     @RequestMapping(value = "/books/{bookId}", method = RequestMethod.PUT, consumes = "application/vnd.api+json")
-    public Map<String, BookDto> updateBook(@PathVariable final Integer bookId, @RequestBody final BookDto bookDto) {
+    public Map<String, BookDto> updateBook(@PathVariable final Integer bookId, @RequestBody final Map<String, BookDto> bookRequestDtoMap) {
+        BookDto bookDto = bookRequestDtoMap.get("book");
         Book book = bookService.updateBook(bookId, bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getGenre(),
                 bookDto.getPublisher(), bookDto.getPrice(), bookDto.getAvailable());
 
-        Map<String, BookDto> bookDtoMap = new HashMap<>();
-        bookDtoMap.put("book", bookConverter.convertModelToDto(book));
+        Map<String, BookDto> bookDtoMapResult = new HashMap<>();
+        bookDtoMapResult.put("book", bookConverter.convertModelToDto(book));
 
-        return bookDtoMap;
+        return bookDtoMapResult;
     }
 
     @RequestMapping(value = "/books", method = RequestMethod.POST, consumes = "application/vnd.api+json", produces = "application/vnd.api+json")
-    public Map<String, BookDto> createBook(@RequestBody final BookDto bookDto) {
+    public Map<String, BookDto> createBook(@RequestBody final Map<String, BookDto> bookRequestDtoMap) {
+        BookDto bookDto = bookRequestDtoMap.get("book");
         System.out.println("book: " + bookDto.getTitle() +  bookDto.getAuthor() + bookDto.getIsbn() + bookDto.getGenre());
         Book book = bookService.createBook(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getGenre(),
                 bookDto.getPublisher(), bookDto.getPrice(), bookDto.getAvailable());
