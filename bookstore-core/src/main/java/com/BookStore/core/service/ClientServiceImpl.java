@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by victor on 4/28/16.
@@ -25,20 +26,28 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> findAll() {
-        return clientRepository.findAll();
+        List<Client> clients = clientRepository.findAll();
+        return clients;
     }
 
     @Override
     @Transactional
     public Client updateClient(Integer clientId, String firstName, String lastName, Set<Integer> books) {
-
         Client client = clientRepository.findOne(clientId);
         client.setFirstName(firstName);
         client.setLastName(lastName);
 
-        client.getBooks().stream().map(Book::getId).forEach(books::remove);
-        List<Book> disciplineList = bookRepository.findAll(books);
-        disciplineList.stream().forEach(client::buyBook);
+        Set<Integer> clientBooks = client.getBooks().stream().map(Book::getId).collect(Collectors.toSet());
+
+        Set<Integer> toRemove = clientBooks.stream().filter(book -> !books.contains(book)).collect(Collectors.toSet());
+        Set<Integer> toAdd = books.stream().filter(book -> !clientBooks.contains(book)).collect(Collectors.toSet());
+                clientBooks.stream().filter(books::contains).collect(Collectors.toSet());
+
+        List<Book> bookListAdd = bookRepository.findAll(toAdd);
+        bookListAdd.stream().forEach(client::buyBook);
+
+        List<Book> bookListReturn = bookRepository.findAll(toRemove);
+        bookListReturn.stream().forEach(client::returnBook);
 
         return client;
     }

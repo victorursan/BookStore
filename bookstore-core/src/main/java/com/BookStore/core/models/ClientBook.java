@@ -51,8 +51,8 @@ public class ClientBook implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = client.hashCode();
-        result = 31 * result + book.hashCode();
+        int result = client.getId().hashCode();
+        result = 31 * result + book.getId().hashCode();
         return result;
     }
 }

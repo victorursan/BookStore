@@ -5,7 +5,9 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -17,7 +19,7 @@ public class Client extends BaseEntity<Integer> implements Serializable {
     @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ClientBook> clientBooks = new HashSet<>();
 
     public Client() {
@@ -50,13 +52,18 @@ public class Client extends BaseEntity<Integer> implements Serializable {
 
     @Getter
     public Set<Book> getBooks() {
-        return Collections.unmodifiableSet(
-                        clientBooks.stream()
-                        .map(ClientBook::getBook)
-                        .collect(Collectors.toSet()));
+        System.out.println("getBooks");
+
+        Set<Book> bookSet = Collections.unmodifiableSet(
+                                        clientBooks.stream()
+                                        .map(ClientBook::getBook)
+                                        .collect(Collectors.toSet()));
+        System.out.println(bookSet);
+        return bookSet;
     }
 
     public void buyBook(Book book) {
+        book.setAvailable(false);
         ClientBook clientBook = new ClientBook();
         clientBook.setBook(book);
         clientBook.setClient(this);
@@ -64,7 +71,11 @@ public class Client extends BaseEntity<Integer> implements Serializable {
     }
 
     public boolean returnBook(Book book) {
-        clientBooks.stream().filter(clientBook -> clientBook.getBook().equals(book)).forEach(clientBooks::remove);
+
+        book.setAvailable(true);
+        Set<ClientBook> clientBooksToremove = clientBooks.stream().filter(clientBook -> clientBook.getBook().getId().equals(book.getId())).collect(Collectors.toSet());;
+        clientBooksToremove.forEach( clientBook -> clientBooks.remove(clientBook));
+
         return false;
     }
 

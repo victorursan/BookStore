@@ -3,7 +3,9 @@ package com.BookStore.core.models;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
@@ -29,6 +31,9 @@ public class Book extends BaseEntity<Integer> implements Serializable {
 
     @Column(name="available", nullable = false)
     private Boolean available;
+
+//    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private Set<ClientBook> clientBooks = new HashSet<>();
 
     public Book() {
     }

@@ -21,23 +21,14 @@ public class BookStoreServiceImpl implements BookStoreService {
     @Autowired
     private ClientRepository clientRepository;
 
-    @Override
-    public void buyBook(Client client, Book book) {
-
-    }
 
     @Override
-    public void returnBook(Client client, Book book) {
-
-    }
-
-    @Override
-    public List<Book> getAvailableBooks() {
+    public List<Book> booksMoreExpensiveThan(Integer value) {
         return null;
     }
 
     @Override
-    public List<Client> getClients() {
+    public List<Client> clientThatSpentMost() {
         return null;
     }
 }

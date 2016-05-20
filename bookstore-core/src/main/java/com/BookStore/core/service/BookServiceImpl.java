@@ -19,7 +19,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
-        return bookRepository.findAll();
+        System.out.println("findall books");
+        List<Book> bookList= bookRepository.findAll();
+        System.out.println(bookList.toString());
+        return bookList;
     }
 
     @Override
