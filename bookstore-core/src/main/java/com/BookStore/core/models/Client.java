@@ -12,6 +12,16 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "client")
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "clientWithBooks", attributeNodes = {
+                @NamedAttributeNode(value = "clientBooks", subgraph = "clientBooksGraph")
+        }, subgraphs = {
+                @NamedSubgraph(name = "clientBooksGraph", attributeNodes = {
+                        @NamedAttributeNode(value = "book")
+                })
+        }
+        )
+})
 public class Client extends BaseEntity<Integer> implements Serializable {
     @Column(name = "firstName", nullable = false)
     private String firstName;
@@ -19,7 +29,7 @@ public class Client extends BaseEntity<Integer> implements Serializable {
     @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ClientBook> clientBooks = new HashSet<>();
 
     public Client() {
@@ -52,13 +62,10 @@ public class Client extends BaseEntity<Integer> implements Serializable {
 
     @Getter
     public Set<Book> getBooks() {
-        System.out.println("getBooks");
-
         Set<Book> bookSet = Collections.unmodifiableSet(
                                         clientBooks.stream()
                                         .map(ClientBook::getBook)
                                         .collect(Collectors.toSet()));
-        System.out.println(bookSet);
         return bookSet;
     }
 

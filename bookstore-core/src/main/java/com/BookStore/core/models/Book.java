@@ -32,9 +32,6 @@ public class Book extends BaseEntity<Integer> implements Serializable {
     @Column(name="available", nullable = false)
     private Boolean available;
 
-//    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private Set<ClientBook> clientBooks = new HashSet<>();
-
     public Book() {
     }
 

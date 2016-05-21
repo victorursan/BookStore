@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface BookStoreService {
     List<Book> booksMoreExpensiveThan(Integer value);
-    List<Client> clientThatSpentMost();
+    Client clientThatSpentMost();
 }

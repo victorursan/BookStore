@@ -26,7 +26,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> findAll() {
-        List<Client> clients = clientRepository.findAll();
+//        List<Client> clients = clientRepository.findAllWithBooksSpring();
+//        List<Client> clients = clientRepository.findAllWithBooksJpql();
+        List<Client> clients = clientRepository.findAllWithBooksJpaCriteria();
+//        List<Client> clients = clientRepository.findAllWithBooksSqlQuery();
+
+
         return clients;
     }
 

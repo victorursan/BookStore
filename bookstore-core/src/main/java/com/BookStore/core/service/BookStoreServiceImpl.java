@@ -7,7 +7,10 @@ import com.BookStore.core.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by victor on 5/13/16.
@@ -24,11 +27,14 @@ public class BookStoreServiceImpl implements BookStoreService {
 
     @Override
     public List<Book> booksMoreExpensiveThan(Integer value) {
-        return null;
+        return bookRepository.findAll().stream().filter(book -> book.getPrice() < value).collect(Collectors.toList());
     }
 
     @Override
-    public List<Client> clientThatSpentMost() {
+    public Client clientThatSpentMost() {
+        Optional<Client> client = clientRepository.findAll().stream().max(Comparator.comparingInt(Client::moneySpent));
+        if (client.isPresent())
+            return client.get();
         return null;
     }
 }
