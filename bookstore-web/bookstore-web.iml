@@ -7,16 +7,15 @@
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/web.xml" />
         </descriptors>
         <webroots>
-          <root url="file://$MODULE_DIR$/src/main/webapp/WEB-INF" relative="/WEB-INF" />
-          <root url="file://$MODULE_DIR$/src/main/webapp/dist" relative="/" />
+          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
-          <root url="file://$MODULE_DIR$/target/generated-sources/annotations" />
-          <root url="file://$MODULE_DIR$/src/main/webapp/app" />
           <root url="file://$MODULE_DIR$/src/main/webapp/addon" />
+          <root url="file://$MODULE_DIR$/src/main/webapp/app" />
           <root url="file://$MODULE_DIR$/src/main/webapp/public" />
+          <root url="file://$MODULE_DIR$/target/generated-sources/annotations" />
         </sourceRoots>
       </configuration>
     </facet>
