@@ -4,19 +4,5 @@
     <option name="customLauncherEnabled" value="true" />
     <option name="customLauncherPath" value="/usr/local/Cellar/sbt/0.13.9/libexec/sbt-launch.jar" />
     <option name="customVMPath" value="/opt/homebrew-cask/Caskroom/java/1.8.0_74-b02" />
-    <option name="linkedExternalProjectsSettings">
-      <SbtProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/scalaClient" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/scalaClient" />
-            <option value="$PROJECT_DIR$/scalaClient/project" />
-          </set>
-        </option>
-        <option name="sbtVersion" value="0.13.8" />
-        <option name="useAutoImport" value="true" />
-        <option name="useOurOwnAutoImport" value="true" />
-      </SbtProjectSettings>
-    </option>
   </component>
 </project>

@@ -14,8 +14,10 @@
       <entry name="!?*.aj" />
     </wildcardResourcePatterns>
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="false">
-        <processorPath useClasspath="true" />
+      <profile default="true" name="Default" enabled="true">
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/bookstore-web" />
+        </processorPath>
       </profile>
       <profile default="false" name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -24,17 +26,12 @@
         <processorPath useClasspath="true" />
         <module name="bookstore-core" />
         <module name="bookstore-web" />
-        <module name="client" />
-        <module name="common" />
-        <module name="server" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="bookstore-core" target="1.5" />
-      <module name="bookstore-web" target="1.5" />
-      <module name="client" target="1.8" />
-      <module name="common" target="1.8" />
-      <module name="server" target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="BookStore" target="1.8" />
+      <module name="bookstore-core" target="1.8" />
+      <module name="bookstore-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

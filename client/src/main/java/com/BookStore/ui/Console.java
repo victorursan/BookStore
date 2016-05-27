@@ -1,6 +1,6 @@
 package com.BookStore.ui;
 
-import com.BookStore.service.ControllerServiceClient;
+import com.BookStore.core.service.ControllerServiceClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
