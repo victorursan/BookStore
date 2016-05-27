@@ -30,11 +30,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> findAll() {
+        log.trace("findAll");
 //        List<Client> clients = clientRepository.findAllWithBooksSpring();
 //        List<Client> clients = clientRepository.findAllWithBooksJpql();
         List<Client> clients = clientRepository.findAllWithBooksJpaCriteria();
 //        List<Client> clients = clientRepository.findAllWithBooksSqlQuery();
-        log.trace("findAll: clients={}");
+        log.trace("findAll: clients = {}", clients);
 
         return clients;
     }
@@ -42,6 +43,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public Client updateClient(Integer clientId, String firstName, String lastName, Set<Integer> books) {
+        log.trace("updateClient: clientId = {}, firstName = {},lastName = {}, books = {}", clientId, firstName, lastName, books);
         Client client = clientRepository.findOne(clientId);
         client.setFirstName(firstName);
         client.setLastName(lastName);
@@ -57,17 +59,19 @@ public class ClientServiceImpl implements ClientService {
 
         List<Book> bookListReturn = bookRepository.findAll(toRemove);
         bookListReturn.stream().forEach(client::returnBook);
-
+        log.trace("updateClient: client = {}", client );
         return client;
     }
 
     @Override
     public Client createClient(String firstName, String lastName) {
+        log.trace("createClient: firstName = {}, lastName = {}", firstName, lastName);
         return clientRepository.save(new Client(firstName, lastName));
     }
 
     @Override
     public void deleteClient(Integer clientId) {
+        log.trace("deleteClient: clientId = {}", clientId);
         clientRepository.delete(clientId);
     }
 

@@ -4,6 +4,8 @@ import com.BookStore.core.models.Client;
 import com.BookStore.core.service.BookStoreService;
 import com.BookStore.web.converter.ClientConverter;
 import com.BookStore.web.dto.ClientDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BookStoreController {
 
+    private static final Logger log = LoggerFactory.getLogger(BookStoreController.class);
+
     @Autowired
     private BookStoreService bookStoreService;
 
@@ -25,9 +29,9 @@ public class BookStoreController {
 
     @RequestMapping(value = "/bookStore", method = RequestMethod.GET, produces = "application/vnd.api+json")
     public ClientDto clientThatSpentMost() {
-        System.out.println("clientThatSpentMost");
+        log.trace("clientThatSpentMost");
         Client client = bookStoreService.clientThatSpentMost();
-        System.out.println(client);
+        log.trace("clientThatSpentMost: client = {}", client);
         return clientConverter.convertModelToDto(client);
     }
 }

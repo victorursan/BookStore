@@ -23,15 +23,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
+        log.trace("findAll()");
         List<Book> bookList= bookRepository.findAll();
         log.trace("findAll: books={}", bookList);
-        System.out.println(bookList.toString());
         return bookList;
     }
 
     @Override
     @Transactional
     public Book updateBook(Integer bookId, String title, String author, Long isbn, String genre, String publisher, Integer price, Boolean available) {
+        log.trace("updateBook: bookId = {}, title = {}, author = {}, isbn = {}, genre = {}, publisher = {}, price = {}," +
+                " available = {})", bookId, title, author, isbn, genre, publisher, price, available);
         Book book = bookRepository.findOne(bookId);
         book.setTitle(title);
         book.setAuthor(author);
@@ -40,16 +42,22 @@ public class BookServiceImpl implements BookService {
         book.setPublisher(publisher);
         book.setPrice(price);
         book.setAvailable(available);
+        log.trace("updateBook: book = {}", book);
         return book;
     }
 
     @Override
     public Book createBook(String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) {
-        return bookRepository.save(new Book(title, author, ISBN, genre, publisher, price, available));
+        log.trace("createBook:, title = {}, author = {}, isbn = {}, genre = {}, publisher = {}, price = {}," +
+                " available = {})", title, author, ISBN, genre, publisher, price, available);
+        Book book = bookRepository.save(new Book(title, author, ISBN, genre, publisher, price, available));
+        log.trace("createBook: book = {}", book);
+        return book;
     }
 
     @Override
     public void deleteBook(Integer bookId) {
+        log.trace("deleteBook: bookId = {}", bookId);
         bookRepository.delete(bookId);
     }
 
