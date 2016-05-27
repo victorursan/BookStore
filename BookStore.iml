@@ -7,14 +7,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/bookstore-web/src/main/webapp/app" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/bookstore-web/src/main/webapp/addon" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/bookstore-web/src/main/webapp/public" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/bookstore-web/src/main/webapp/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/bookstore-web/src/main/webapp/tests/unit" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/bookstore-web/src/main/webapp/tests/integration" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/bookstore-web/src/main/webapp/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/bookstore-web/src/main/webapp/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/client" />
       <excludeFolder url="file://$MODULE_DIR$/common" />
       <excludeFolder url="file://$MODULE_DIR$/documentation" />
