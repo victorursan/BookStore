@@ -4,6 +4,8 @@ import com.BookStore.core.models.Book;
 import com.BookStore.core.models.Client;
 import com.BookStore.core.repositories.BookRepository;
 import com.BookStore.core.repositories.ClientRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class ClientServiceImpl implements ClientService {
 
+    private static final Logger log = LoggerFactory.getLogger(ClientServiceImpl.class);
+
     @Autowired
     private ClientRepository clientRepository;
 
@@ -30,7 +34,7 @@ public class ClientServiceImpl implements ClientService {
 //        List<Client> clients = clientRepository.findAllWithBooksJpql();
         List<Client> clients = clientRepository.findAllWithBooksJpaCriteria();
 //        List<Client> clients = clientRepository.findAllWithBooksSqlQuery();
-
+        log.trace("findAll: clients={}");
 
         return clients;
     }

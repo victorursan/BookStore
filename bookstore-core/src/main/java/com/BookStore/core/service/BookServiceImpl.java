@@ -2,6 +2,8 @@ package com.BookStore.core.service;
 
 import com.BookStore.core.models.Book;
 import com.BookStore.core.repositories.BookRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +16,15 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
 
+    private static final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
+
     @Autowired
     private BookRepository bookRepository;
 
     @Override
     public List<Book> findAll() {
-        System.out.println("findall books");
         List<Book> bookList= bookRepository.findAll();
+        log.trace("findAll: books={}", bookList);
         System.out.println(bookList.toString());
         return bookList;
     }

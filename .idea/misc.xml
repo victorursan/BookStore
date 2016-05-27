@@ -42,6 +42,7 @@
     <entry_points version="2.0" />
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/bookstore-web" />
     <file type="web" url="file://$PROJECT_DIR$/server" />
   </component>
   <component name="JavaScriptSettings">
@@ -70,6 +71,7 @@
       <list>
         <option value="$PROJECT_DIR$/bookstore-web/pom.xml" />
         <option value="$PROJECT_DIR$/bookstore-core/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
