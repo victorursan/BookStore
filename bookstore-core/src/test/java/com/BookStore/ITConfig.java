@@ -4,9 +4,6 @@ import com.BookStore.core.JPAConfig;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
-/**
- * Created by radu.
- */
 @Configuration
 @ComponentScan(value = "com.BookStore.core",
         excludeFilters = {@ComponentScan.Filter(value = {JPAConfig.class}, type = FilterType.ASSIGNABLE_TYPE)})

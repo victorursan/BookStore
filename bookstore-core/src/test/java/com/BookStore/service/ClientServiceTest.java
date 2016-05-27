@@ -5,6 +5,7 @@ import com.BookStore.core.models.Client;
 import com.BookStore.core.service.ClientService;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +41,19 @@ public class ClientServiceTest {
         assertEquals("there should be 4 clients", 4, clients.size());
     }
 
+    @Ignore
     @Test
     public void updateClient() throws Exception {
         fail("Not yet implemented");
     }
 
+    @Ignore
     @Test
     public void createClient() throws Exception {
         fail("Not yet implemented");
     }
 
+    @Ignore
     @Test
     public void deleteClient() throws Exception {
         fail("Not yet implemented");
