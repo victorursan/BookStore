@@ -1,0 +1,9 @@
+<h2>{{title}}</h2>
+
+{{#each entities as |book|}}
+    <p> {{#link-to "bookdetails" book.id}} {{book.title}} - {{book.author}} - {{book.isbn}} - {{book.genre}} - {{book.publisher}} - {{book.price}} - {{book.available}} {{/link-to}}
+        <button {{action "onDeleteButtonClick" book.id}} > Delete  </button>
+    </p>
+{{/each}}
+
+{{yield}}

@@ -1,0 +1,9 @@
+<h2>{{title}}</h2>
+
+  {{#each entities as |client|}}
+    <p> {{#link-to "clientdetails" client.id}} {{client.firstName}} - {{client.lastName}} {{/link-to}}
+    <button {{action "onDeleteButtonClick" client.id}} > Delete  </button>
+    </p>
+  {{/each}}
+
+  {{yield}}

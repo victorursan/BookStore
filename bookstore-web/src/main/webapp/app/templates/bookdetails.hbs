@@ -1,0 +1,39 @@
+<h2> Book details </h2>
+
+
+<div id="bookdetails">
+
+    <label>Title: </label>
+    <input type="text" id="title" name="title" value="{{model.title}}" onblur={{action "onInputBlur"}}/>
+    <br/>
+
+    <label>Author: </label>
+    <input type="text" id="author" name="author" value="{{model.author}}" onblur={{action "onInputBlur"}}/>
+    <br/>
+
+    <label>ISBN: </label>
+    <input type="text" id="isbn" name="isbn" value="{{model.isbn}}" onblur={{action "onInputBlur"}}/>
+    <br/>
+
+    <label>Genre: </label>
+    <input type="text" id="genre" name="genre" value="{{model.genre}}" onblur={{action "onInputBlur"}}/>
+    <br/>
+
+    <label>Publisher: </label>
+    <input type="text" id="publisher" name="publisher" value="{{model.publisher}}" onblur={{action "onInputBlur"}}/>
+    <br/>
+
+    <label>Price: </label>
+    <input type="text" id="price" name="price" value="{{model.price}}" onblur={{action "onInputBlur"}}/>
+    <br/>
+
+    <label>Available: </label>
+    <input type="checkbox" id="available" name="available" value="{{model.available}}" onblur={{action "onInputBlur"}}/>
+    <br/>
+
+    <button {{action "onUpdateButtonClick" model}}> Update </button>
+
+</div>
+
+
+{{outlet}}
