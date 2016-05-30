@@ -1,0 +1,9 @@
+<h2>{{title}}</h2>
+
+<ul>
+  {{#each entities as |entity|}}
+    <li>{{person}}</li>
+  {{/each}}
+</ul>
+
+{{yield}}

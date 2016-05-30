@@ -1,0 +1,16 @@
+<h2> Filter Students </h2>
+
+<div id="filterStudent">
+
+    <label>Name: </label>
+  {{input type="text" value=name}}
+    <br/>
+
+    <button
+      {{action "onFilterButtonClick"}}> Filter
+    </button>
+
+</div>
+
+
+{{outlet}}

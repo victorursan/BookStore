@@ -1,0 +1,25 @@
+<h2> Add Student </h2>
+
+<div id="addStudent">
+
+<label>Serial number: </label>
+{{input type="text" value=serialNumber}}
+<br/>
+
+
+<label>Name: </label>
+{{input type="text" value=name}}
+<br/>
+
+<label>Group: </label>
+{{input type="text" value=groupNumber}}
+<br/>
+
+<button
+{{action "onAddButtonClick"}}> Finish
+</button>
+
+  </div>
+
+
+  {{outlet}}

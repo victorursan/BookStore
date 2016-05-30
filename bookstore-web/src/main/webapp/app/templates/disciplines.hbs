@@ -1,0 +1,11 @@
+<h2>List of disciplines</h2>
+
+
+
+{{#each model as |discipline|}}
+{{!--<p>{{discipline.name}} - {{discipline.credits}} - {{discipline.teacher}}</p>--}}
+  {{#link-to "disciplines.edit" discipline.id}} {{discipline.name}} {{discipline.credits}} {{discipline.teacher}} {{/link-to}}
+  <br/>
+{{/each}}
+
+{{outlet}}

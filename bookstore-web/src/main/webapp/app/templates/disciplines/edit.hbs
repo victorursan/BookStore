@@ -1,0 +1,41 @@
+<h2> Discipline details </h2>
+
+<div id="disciplineEdit">
+
+    <label>Name: </label>
+    <input type="text" id="name" name="name" value="{{model.discipline.name}}" onblur={{action "onInputBlur"}}/> <br/>
+
+    <label>Credits: </label>
+    <input type="text" id="credits" name="credits" value="{{model.discipline.credits}}"
+           onblur={{action "onInputBlur"}}/> <br/>
+
+    <label>Teacher: </label>
+    <input type="text" id="teacher" name="teacher" value="{{model.discipline.teacher}}"
+           onblur={{action "onInputBlur"}}/> <br/>
+
+
+    <br/>
+
+    <table>
+        <tr>
+            <td><label>Student </label></td>
+            <td><label>Grade </label></td>
+        </tr>
+      {{#each model.discipline.studentDisciplines as |studentDiscipline|}}
+          <tr>
+              <td>{{studentDiscipline.student.name}}</td>
+              <td><input type="text" id="{{studentDiscipline.student.name}}" name="{{studentDiscipline.student.name}}"
+                         value="{{studentDiscipline.grade}}"
+                         onblur={{action "onGradeInputBlur" studentDiscipline}}/>
+              </td>
+          </tr>
+      {{/each}}
+    </table>
+
+    <br/>
+
+    <button {{action "onUpdateButtonClick" model.discipline}}> Update discipline</button>
+
+</div>
+
+{{outlet}}

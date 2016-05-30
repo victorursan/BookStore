@@ -1,0 +1,11 @@
+<h2>{{title}}</h2>
+
+  {{#each entities as |student|}}
+    <p> {{#link-to "studentdetails" student.id}} {{student.serialNumber}} - {{student.name}} {{student.groupNumber}} {{/link-to}}
+      {{#if isAdmin}}
+    <button {{action "onDeleteButtonClick" student.id}} > Delete  </button>
+      {{/if}}
+    </p>
+  {{/each}}
+
+  {{yield}}

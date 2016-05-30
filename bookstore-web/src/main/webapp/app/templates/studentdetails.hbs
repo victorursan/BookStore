@@ -1,0 +1,51 @@
+<h2> Student details </h2>
+
+
+<div id="studentdetails">
+
+    <label>Serial number: </label>
+    <input type="text" id="serialNumber" name="serialNumber" value="{{model.student.serialNumber}}"
+           onblur={{action "onInputBlur"}}/> <br/>
+
+    <label>Name: </label>
+    <input type="text" id="name" name="name" value="{{model.student.name}}" onblur={{action "onInputBlur"}}/> <br/>
+
+    <label>Group: </label>
+    <input type="text" id="groupNumber" name="groupNumber" value="{{model.student.groupNumber}}"
+           onblur={{action "onInputBlur"}}/> <br/>
+
+    <table>
+        <tr>
+            <td>
+                <label>Selected disciplines: </label><br/>
+                <select id="selectedDisciplines" name="selectedDisciplines" multiple="multiple">
+                  {{#each model.student.disciplines as |discipline|}}
+                      <option value="{{discipline.id}}">{{discipline.name}}</option>
+                  {{/each}}
+                </select>
+            </td>
+            <td>
+                <label>Available disciplines: </label><br/>
+                <select id="availableDisciplines" name="availableDisciplines">
+                  {{#each model.disciplines as |discipline|}}
+                      <option value="{{discipline.id}}">{{discipline.name}}</option>
+                  {{/each}}
+                </select>
+                <button {{action "onAddDisciplineButtonClick"}}> Add Discipline</button>
+            </td>
+        </tr>
+    </table>
+
+
+    <br/>
+
+
+    <button {{action "onUpdateButtonClick" model.student}}> Update</button>
+
+</div>
+
+
+
+
+
+{{outlet}}

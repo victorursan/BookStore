@@ -1,0 +1,21 @@
+
+
+
+{{students-list title="List of students:" isAdmin=isAdmin entities=model.students onDelete=(action "deleteStudent")}}
+
+<br/>
+<p> {{#link-to "students.new" }} Add Student {{/link-to}} </p>
+<br/>
+
+<p> {{#link-to "students.filter" }} Filter Students {{/link-to}} </p>
+<br/>
+
+  {{outlet}}
+
+
+
+
+
+
+
+
