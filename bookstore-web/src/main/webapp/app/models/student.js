@@ -6,7 +6,7 @@ export default DS.Model.extend({
   name: DS.attr(),
   groupNumber: DS.attr(),
   disciplines: DS.hasMany('discipline')
-  // studentDisciplines: DS.hasMany('studentDiscipline')
+  // studentDisciplines: DS.hasMany('studentDiscipline') 
 
   // toString: Ember.computed('serialNumber', 'name', 'groupNumbermber', function() {
   //   return `${this.get('serialNumber')} ${this.get('name')} ${this.get('groupNumber')}`;
