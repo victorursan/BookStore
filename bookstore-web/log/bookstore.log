@@ -1,0 +1,28 @@
+2016-05-27T15:31:51,132 TRACE [main]: BookController                       - updateBook: bookRequestDtoMap = {book=Mock for BookDto, hashCode: 1976870338}  
+2016-05-27T15:31:51,138 TRACE [main]: BookController                       - updateBook: book = { null, ana, ana, 1, ana, ana, 1, true }  
+2016-05-27T15:31:51,143 TRACE [main]: BookController                       - createBook: bookRequestDtoMap = {book=Mock for BookDto, hashCode: 1786294176} 
+2016-05-27T15:31:51,143 TRACE [main]: BookController                       - createBook: book = { null, ana, ana, 1, ana, ana, 1, true } 
+2016-05-27T15:31:51,150 TRACE [main]: BookController                       - getBooks 
+2016-05-27T15:31:51,150 TRACE [main]: BookController                       - getBooks: books = [] 
+2016-05-27T15:31:51,172 TRACE [main]: BookStoreController                  - clientThatSpentMost 
+2016-05-27T15:31:51,172 TRACE [main]: BookStoreController                  - clientThatSpentMost: client = BaseEntity{ id=null} 
+2016-05-27T15:31:51,181 TRACE [main]: ClientController                     - updateClient: clientRequestDtoMap = {client=Mock for ClientDto, hashCode: 195228908} 
+2016-05-27T15:31:51,182 TRACE [main]: ClientController                     - updateClient: client = BaseEntity{ id=null} 
+2016-05-27T15:31:51,185 TRACE [main]: ClientController                     - createClient: clientRequestDtoMap = {client=Mock for ClientDto, hashCode: 1965237677} 
+2016-05-27T15:31:51,186 TRACE [main]: ClientController                     - createClient: client = BaseEntity{ id=null} 
+2016-05-27T15:31:51,187 TRACE [main]: ClientController                     - getClients 
+2016-05-27T15:31:51,187 TRACE [main]: ClientController                     - getClients: clients = [] 
+2016-05-27T16:35:20,738 TRACE [main]: BookController                       - updateBook: bookRequestDtoMap = {book=Mock for BookDto, hashCode: 1976870338}  
+2016-05-27T16:35:20,740 TRACE [main]: BookController                       - updateBook: book = { null, ana, ana, 1, ana, ana, 1, true }  
+2016-05-27T16:35:20,742 TRACE [main]: BookController                       - createBook: bookRequestDtoMap = {book=Mock for BookDto, hashCode: 1786294176} 
+2016-05-27T16:35:20,743 TRACE [main]: BookController                       - createBook: book = { null, ana, ana, 1, ana, ana, 1, true } 
+2016-05-27T16:35:20,747 TRACE [main]: BookController                       - getBooks 
+2016-05-27T16:35:20,747 TRACE [main]: BookController                       - getBooks: books = [] 
+2016-05-27T16:35:20,762 TRACE [main]: BookStoreController                  - clientThatSpentMost 
+2016-05-27T16:35:20,762 TRACE [main]: BookStoreController                  - clientThatSpentMost: client = BaseEntity{ id=null} 
+2016-05-27T16:35:20,769 TRACE [main]: ClientController                     - updateClient: clientRequestDtoMap = {client=Mock for ClientDto, hashCode: 195228908} 
+2016-05-27T16:35:20,770 TRACE [main]: ClientController                     - updateClient: client = BaseEntity{ id=null} 
+2016-05-27T16:35:20,772 TRACE [main]: ClientController                     - createClient: clientRequestDtoMap = {client=Mock for ClientDto, hashCode: 1965237677} 
+2016-05-27T16:35:20,773 TRACE [main]: ClientController                     - createClient: client = BaseEntity{ id=null} 
+2016-05-27T16:35:20,774 TRACE [main]: ClientController                     - getClients 
+2016-05-27T16:35:20,774 TRACE [main]: ClientController                     - getClients: clients = [] 

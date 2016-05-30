@@ -38,6 +38,7 @@ public class ClientRepositoryImpl extends CustomRepositorySupport<Client, Intege
                 .addJoin("b", "cb.book")
                 .addEntity("cl", Client.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
         List<Client> clients = query.list();
 
         return clients;

@@ -7,12 +7,8 @@
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/web.xml" />
         </descriptors>
         <webroots>
-<<<<<<< HEAD
-          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
-=======
           <root url="file://$MODULE_DIR$/src/main/webapp/dist" relative="/" />
           <root url="file://$MODULE_DIR$/src/main/webapp/WEB-INF" relative="/WEB-INF" />
->>>>>>> 295013525c1112315df5c211af94841f28a43aca
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
@@ -50,9 +46,17 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/webapp/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/webapp/tests/unit" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/webapp/tests/integration" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT/app" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT/addon" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT/public" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT/tests/unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT/tests/integration" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/dist" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT" />
+      <excludeFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/target/bookstore-web-1.0-SNAPSHOT/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-status" />

@@ -16,10 +16,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Created by victor on 5/27/16.
@@ -41,22 +41,24 @@ public class ClientServiceTest {
         assertEquals("there should be 4 clients", 4, clients.size());
     }
 
-    @Ignore
     @Test
     public void updateClient() throws Exception {
-        fail("Not yet implemented");
+        Client client = clientService.updateClient(1, "name1", "name2", Collections.emptySet());
+        assertEquals("the name should be 'name1'", client.getFirstName(), "name1");
     }
 
-    @Ignore
     @Test
     public void createClient() throws Exception {
-        fail("Not yet implemented");
+        Client client = clientService.createClient("name5", "name5");
+        assertEquals("the name should be 'name5'", client.getFirstName(), "name5");
     }
 
     @Ignore
     @Test
     public void deleteClient() throws Exception {
-        fail("Not yet implemented");
+        clientService.deleteClient(1);
+        List<Client> clients = clientService.findAll();
+        assertEquals("there should be 3 clients", 3, clients.size());
     }
 
 }

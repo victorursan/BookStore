@@ -41,8 +41,10 @@ public class BookStoreServiceImpl implements BookStoreService {
     public Client clientThatSpentMost() {
         log.trace("clientThatSpentMost");
         Optional<Client> client = clientRepository.findAll().stream().max(Comparator.comparingInt(Client::moneySpent));
-        if (client.isPresent())
+        if (client.isPresent()) {
+            log.trace("clientThatSpentMost: client = {}", client.get());
             return client.get();
+        }
         log.trace("clientThatSpentMost: client = {}", client);
         return null;
     }
