@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:sec="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="http://www.springframework.org/schema/security
+      http://www.springframework.org/schema/security/spring-security-3.2.xsd
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!-- Specifies login/logout and remember-me handlers. -->
+    <http use-expressions="true" entry-point-ref="http403ForbiddenEntryPoint">
+        <intercept-url pattern="/api/students" access="isAuthenticated()"/>
+        <intercept-url pattern="/api/disciplines" access="permitAll"/>
+
+        <sec:form-login authentication-failure-handler-ref="myFailureHandler"/>
+
+        <logout delete-cookies="JSESSIONID" logout-success-url="/"/>
+
+    </http>
+
+    <beans:bean id="http403ForbiddenEntryPoint"
+                class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+
+
+    <beans:bean id="myFailureHandler"
+                class="com.BookStore.web.security.MySimpleUrlAuthenticationFailureHandler"/>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="bookStoreUserDetailsService">
+            <password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+
+    <beans:bean id="passwordEncoder"
+    class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+</beans:beans>
