@@ -15,6 +15,8 @@ Router.map(function() {
   this.route('clientdetails', {path: '/clientdetails/:client_id'});
   this.route('bookdetails', {path: '/bookdetails/:book_id'});
   this.route('bookstore');
+  this.route('login');
 });
 
 export default Router;
+
