@@ -42,6 +42,7 @@
     <entry_points version="2.0" />
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file url="file://$PROJECT_DIR$/.idea/libraries" />
     <file type="web" url="file://$PROJECT_DIR$/bookstore-web" />
     <file type="web" url="file://$PROJECT_DIR$/server" />
   </component>
