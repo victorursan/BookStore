@@ -11,6 +11,7 @@
     <modules>
         <module>bookstore-core</module>
         <module>bookstore-web</module>
+        <module>bookstore-hessian</module>
     </modules>
 
     <build>

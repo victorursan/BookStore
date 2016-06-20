@@ -26,12 +26,18 @@
         <processorPath useClasspath="true" />
         <module name="bookstore-core" />
         <module name="bookstore-web" />
+        <module name="common" />
+        <module name="server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="BookStore" target="1.8" />
       <module name="bookstore-core" target="1.8" />
+      <module name="bookstore-hessian" target="1.8" />
       <module name="bookstore-web" target="1.8" />
+      <module name="client" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="server" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
