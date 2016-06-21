@@ -18,19 +18,14 @@ export default Ember.Controller.extend({
       var title =     this.get('title');
       var author =    this.get('author');
       var isbn =      this.get('isbn');
-      var genre =     this.get('genre');
-      var publisher = this.get('publisher');
-      var price =     this.get('price');
+      var year =     this.get('year');
       // var available = this.get('available');
 
       var book = this.store.createRecord('book', {
         title: title,
         author: author,
         isbn: isbn,
-        genre: genre,
-        publisher: publisher,
-        price: price,
-        available: true
+        year: year
       });
 
       book.save().then(transitionToBooks).catch(failure);
@@ -39,10 +34,7 @@ export default Ember.Controller.extend({
         title: '',
         author: '',
         isbn: '',
-        genre: '',
-        publisher: '',
-        price: '',
-        available: true
+        year: ''
       });
 
     }
