@@ -8,16 +8,14 @@ import lombok.ToString;
 import java.util.Set;
 
 /**
- * Created by victor on 5/12/16.
+ * Created by victor on 6/21/16.
  */
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class ClientDto extends BaseDto{
-    private String firstName;
-    private String lastName;
+public class AuthorDto extends BaseDto {
+    private String name;
     private Set<Integer> books;
-
 }

@@ -1,6 +1,7 @@
 package com.BookStore.core.service;
 
 import com.BookStore.core.models.Book;
+import com.BookStore.core.repositories.AuthorRepository;
 import com.BookStore.core.repositories.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,10 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private AuthorRepository authorRepository;
+
+
     @Override
     public List<Book> findAll() {
         log.trace("findAll()");
@@ -31,29 +36,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public Book updateBook(Integer bookId, String title, String author, Long isbn, String genre, String publisher, Integer price, Boolean available) {
-        log.trace("updateBook: bookId = {}, title = {}, author = {}, isbn = {}, genre = {}, publisher = {}, price = {}," +
-                " available = {})", bookId, title, author, isbn, genre, publisher, price, available);
+    public Book updateBook(Integer bookId, String title, Long ISBN, Integer year, Integer authorId) {
         Book book = bookRepository.findOne(bookId);
         book.setTitle(title);
-        book.setAuthor(author);
-        book.setIsbn(isbn);
-        book.setGenre(genre);
-        book.setPublisher(publisher);
-        book.setPrice(price);
-        book.setAvailable(available);
-        log.trace("updateBook: book = {}", book);
+        book.setAuthor(authorRepository.getOne(authorId));
+        book.setIsbn(ISBN);
+        book.setYear(year);
         return book;
     }
 
     @Override
-    public Book createBook(String title, String author, Long ISBN, String genre, String publisher, Integer price, Boolean available) {
-        log.trace("createBook:, title = {}, author = {}, isbn = {}, genre = {}, publisher = {}, price = {}," +
-                " available = {})", title, author, ISBN, genre, publisher, price, available);
-        Book book = bookRepository.save(new Book(title, author, ISBN, genre, publisher, price, available));
-        log.trace("createBook: book = {}", book);
-        return book;
+    public Book createBook(String title, Long ISBN, Integer year, Integer authorId) {
+        return bookRepository.save(new Book(title,ISBN, year, authorRepository.getOne(authorId)));
     }
+
 
     @Override
     public void deleteBook(Integer bookId) {

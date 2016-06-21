@@ -10,19 +10,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookConverter extends BaseConverter<Book,BookDto>{
 
+
     @Override
     public BookDto convertModelToDto(Book book) {
         BookDto bookDto = new BookDto();
-
         bookDto.setId(book.getId());
-        bookDto.setIsbn(book.getIsbn());
-        bookDto.setGenre(book.getGenre());
-        bookDto.setPublisher(book.getPublisher());
-        bookDto.setPrice(book.getPrice());
-        bookDto.setAuthor(book.getAuthor());
         bookDto.setTitle(book.getTitle());
-        bookDto.setAvailable(book.isAvailable());
-
+        bookDto.setIsbn(book.getIsbn());
+        bookDto.setYear(book.getYear());
+        bookDto.setAuthor(book.getAuthor().getId());
         return bookDto;
     }
 }

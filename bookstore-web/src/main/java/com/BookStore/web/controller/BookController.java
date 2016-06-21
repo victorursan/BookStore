@@ -43,12 +43,12 @@ public class BookController {
 
         return new BooksDataDto(bookDtos);
     }
+
     @RequestMapping(value = "/books/{bookId}", method = RequestMethod.PUT, consumes = "application/vnd.api+json")
     public Map<String, BookDto> updateBook(@PathVariable final Integer bookId, @RequestBody final Map<String, BookDto> bookRequestDtoMap) {
         log.trace("updateBook: bookRequestDtoMap = {} ", bookRequestDtoMap);
         BookDto bookDto = bookRequestDtoMap.get("book");
-        Book book = bookService.updateBook(bookId, bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getGenre(),
-                bookDto.getPublisher(), bookDto.getPrice(), bookDto.getAvailable());
+        Book book = bookService.updateBook(bookId, bookDto.getTitle(), bookDto.getIsbn(), bookDto.getYear(), bookDto.getAuthor());
         log.trace("updateBook: book = {} ", book);
         Map<String, BookDto> bookDtoMapResult = new HashMap<>();
         bookDtoMapResult.put("book", bookConverter.convertModelToDto(book));
@@ -60,8 +60,7 @@ public class BookController {
     public Map<String, BookDto> createBook(@RequestBody final Map<String, BookDto> bookRequestDtoMap) {
         BookDto bookDto = bookRequestDtoMap.get("book");
         log.trace("createBook: bookRequestDtoMap = {}", bookRequestDtoMap);
-        Book book = bookService.createBook(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getGenre(),
-                bookDto.getPublisher(), bookDto.getPrice(), bookDto.getAvailable());
+        Book book = bookService.createBook(bookDto.getTitle(), bookDto.getIsbn(), bookDto.getYear(), bookDto.getAuthor());
         log.trace("createBook: book = {}", book);
 
         Map<String, BookDto> bookDtoMap = new HashMap<>();

@@ -15,11 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class BookDto extends BaseDto {
     private Long isbn;
-    private String genre;
-    private String publisher;
-    private Integer price;
-    private String author;
     private String title;
-    private Boolean available;
-
+    private Integer year;
+    private Integer author;
 }

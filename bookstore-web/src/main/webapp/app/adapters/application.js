@@ -2,7 +2,7 @@ import DS from "ember-data";
 
 // define URL prefix
 export default DS.RESTAdapter.extend({
-  namespace: 'api',
+  namespace: 'myapp/api',
   // request headers
   headers: {
     'Accept': 'application/vnd.api+json',
