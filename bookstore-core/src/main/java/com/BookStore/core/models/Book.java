@@ -24,8 +24,7 @@ public class Book extends BaseEntity<Integer> implements Serializable {
     @Column(name="year", nullable = false)
     private Integer year;
 
-    @ManyToOne
-    @JoinColumn(name="id")
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private Author author;
 
     @Override

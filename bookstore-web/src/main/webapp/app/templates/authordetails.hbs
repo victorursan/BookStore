@@ -1,0 +1,35 @@
+<h2> Author details </h2>
+
+
+<div id="authordetails">
+
+    <label> Name: </label>
+    <input type="text" id="name" name="name" value="{{model.author.name}}" onblur={{action "onInputBlur"}}/> <br/>
+
+    <table>
+        <tr>
+            <td>
+                <label>Select books: </label><br/>
+                <select id="selectedBooks" name="selectedBooks" multiple="multiple">
+
+                  {{#each model.author.books as |book|}}
+                      <option value="{{book.id}}">{{book.title}} - {{book.isbn}} - {{book.year}}</option>
+                  {{/each}}
+                </select>
+                <br/>
+                <button {{action "onRemoveBookButtonClick"}}> Remove Book</button>
+            </td>
+            <td>
+            </td>
+        </tr>
+    </table>
+
+    <br/>
+
+    <button {{action "onUpdateButtonClick" model.author}}> Update </button>
+
+</div>
+
+
+
+{{outlet}}

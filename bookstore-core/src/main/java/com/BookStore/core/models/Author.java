@@ -22,7 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NamedEntityGraphs({
         @NamedEntityGraph(name = "authorWithBooks", attributeNodes = {
-                @NamedAttributeNode(value = "book")
+                @NamedAttributeNode(value = "list_of_books")
         })
 })
 public class Author extends BaseEntity<Integer> implements Serializable {

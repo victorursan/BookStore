@@ -6,15 +6,15 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('clients', function() {
-    this.route('newclient');
+  this.route('authors', function() {
+    this.route('newauthor');
   });
   this.route('books', function() {
     this.route('newbook');
   });
-  this.route('clientdetails', {path: '/clientdetails/:client_id'});
+  this.route('authordetails', {path: '/authordetails/:author_id'});
   this.route('bookdetails', {path: '/bookdetails/:book_id'});
-  this.route('bookstore');
+  
 });
 
 export default Router;
